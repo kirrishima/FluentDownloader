@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="FluentDownloader.Pages.UnhandledExceptionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:FluentDownloader.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <ScrollViewer
+        HorizontalScrollBarVisibility="Auto"
+        HorizontalScrollMode="Enabled"
+        VerticalScrollBarVisibility="Auto"
+        VerticalScrollMode="Enabled">
+        <StackPanel Padding="20">
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}">Unhandled Exception</TextBlock>
+            <TextBlock
+                x:Name="ContentTextBlock"
+                FontSize="16"
+                TextWrapping="NoWrap" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <UapAppxPackageBuildMode>SideloadOnly</UapAppxPackageBuildMode>
+    <AppxShowAllApps>False</AppxShowAllApps>
+    <AppxBuildConfigurationSelection>x86|x64|arm64</AppxBuildConfigurationSelection>
+    <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
+    <Source>G:\fd\FluentDownloader_ARCHIVE_MUST_STAY_PRIVATE\src\FluentDownloader\Assets\logo.png</Source>
+    <SmallTileSource>G:\fd\FluentDownloader_ARCHIVE_MUST_STAY_PRIVATE\src\FluentDownloader\Assets\logo.png</SmallTileSource>
+    <MediumTileSource>G:\fd\FluentDownloader_ARCHIVE_MUST_STAY_PRIVATE\src\FluentDownloader\Assets\logo.png</MediumTileSource>
+    <WideTileSource>G:\fd\FluentDownloader_ARCHIVE_MUST_STAY_PRIVATE\src\FluentDownloader\Assets\logo.png</WideTileSource>
+    <LargeTileSource>G:\fd\FluentDownloader_ARCHIVE_MUST_STAY_PRIVATE\src\FluentDownloader\Assets\logo.png</LargeTileSource>
+    <AppIconSource>G:\fd\FluentDownloader_ARCHIVE_MUST_STAY_PRIVATE\src\FluentDownloader\Assets\logo.png</AppIconSource>
+    <SplashScreenSource>G:\fd\FluentDownloader_ARCHIVE_MUST_STAY_PRIVATE\src\FluentDownloader\Assets\logo.png</SplashScreenSource>
+    <PackageLogoSource>G:\fd\FluentDownloader_ARCHIVE_MUST_STAY_PRIVATE\src\FluentDownloader\Assets\logo.png</PackageLogoSource>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Update="App.xaml">
+      <SubType>Designer</SubType>
+    </None>
+    <Page Update="Pages\UnhandledExceptionPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Settings\NotificationsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Settings\DownloadPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Settings\DependenciesPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Settings\CustomYtdlpParamsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\ColorPickerControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Settings\SaveTemlatePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Settings\HomePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\LanguageSelectorControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\ThemeChangeButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <None Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </None>
+    <Page Update="Pages\MainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

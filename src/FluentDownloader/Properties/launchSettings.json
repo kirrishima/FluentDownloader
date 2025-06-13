@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "FluentDownloader (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "FluentDownloader (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

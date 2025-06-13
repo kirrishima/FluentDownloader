@@ -1,0 +1,106 @@
+<UserControl
+    x:Class="FluentDownloader.Controls.ColorPickerControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:FluentDownloader.Converters"
+    xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:FluentDownloader.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <!--  Storyboard для анимации исчезновения  -->
+        <Storyboard x:Key="FadeOutStoryboard" x:Name="FadeOutStoryboard">
+            <DoubleAnimation
+                Storyboard.TargetName="RootGrid"
+                Storyboard.TargetProperty="Opacity"
+                From="1"
+                To="0"
+                Duration="0:0:0.15" />
+        </Storyboard>
+        <Storyboard x:Key="FadeInStoryboard" x:Name="FadeInStoryboard">
+            <DoubleAnimation
+                Storyboard.TargetName="RootGrid"
+                Storyboard.TargetProperty="Opacity"
+                From="0"
+                To="1"
+                Duration="0:0:0.15" />
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid
+        x:Name="RootGrid"
+        Background="{StaticResource SystemControlAcrylicElementBrush}"
+        Visibility="Collapsed">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid Padding="20" CornerRadius="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--  Пример: блок с ColorPicker и слайдерами  -->
+                <ctk:ColorPicker
+                    x:Name="ColorPicker"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    ColorSpectrumShape="Box"
+                    IsAlphaEnabled="True"
+                    IsAlphaSliderVisible="True"
+                    IsColorChannelTextInputVisible="True"
+                    IsColorPaletteVisible="True"
+                    IsColorSliderVisible="True"
+                    IsColorSpectrumVisible="True"
+                    ShowAccentColors="True"
+                    Color="{Binding SelectedColor, Mode=TwoWay}" />
+
+                <Slider
+                    x:Name="OpacitySlider"
+                    x:Uid="/LeftSidebar/OpacitySlider"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="0,0,10,0"
+                    HorizontalAlignment="Stretch"
+                    FontSize="16"
+                    Header="Opacity"
+                    IsEnabled="{Binding AreSlidersVisible}"
+                    Maximum="100"
+                    Minimum="0"
+                    Visibility="{Binding AreSlidersVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Value="{Binding Opacity, Mode=TwoWay}" />
+
+                <Slider
+                    x:Name="TintOpacitySlider"
+                    x:Uid="/LeftSidebar/TintOpacitySlider"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Stretch"
+                    FontSize="16"
+                    Header="Tint Opacity"
+                    IsEnabled="{Binding AreSlidersVisible}"
+                    Maximum="100"
+                    Minimum="0"
+                    Visibility="{Binding AreSlidersVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Value="{Binding TintOpacity, Mode=TwoWay}" />
+
+                <Button
+                    x:Uid="ConfirmButtonTextContent"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    Click="Button_Click"
+                    FontSize="16"
+                    Style="{StaticResource AccentButtonStyle}" />
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,53 @@
+<Page
+    x:Class="FluentDownloader.Dialogs.GenericInfoDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FluentDownloader.Converters"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch">
+
+    <Page.Resources>
+        <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Page.Resources>
+
+    <Grid MaxWidth="600" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel
+            Grid.Row="1"
+            Margin="0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            Orientation="Vertical"
+            Spacing="15">
+
+            <TextBlock
+                MaxWidth="600"
+                VerticalAlignment="Center"
+                Text="{Binding VersionText}"
+                TextWrapping="Wrap" />
+
+            <TextBlock
+                MaxWidth="600"
+                VerticalAlignment="Center"
+                Text="{Binding PathText}"
+                TextWrapping="Wrap" />
+
+            <Button
+                HorizontalAlignment="Left"
+                Command="{Binding ButtonCommand}"
+                Content="{Binding ButtonText}"
+                Visibility="{Binding IsButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+            <HyperlinkButton NavigateUri="{Binding GithubLink}" Style="{StaticResource Round16pxFontHyperLink}">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Margin="0,0,5,0" Symbol="Link" />
+                    <TextBlock Text="{Binding GithubLinkText}" />
+                </StackPanel>
+            </HyperlinkButton>
+        </StackPanel>
+    </Grid>
+</Page>

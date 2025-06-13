@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing"
+  mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework
+  object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Header.Text" xml:space="preserve">
+    <value>Fluent Video Downloader</value>
+    <comment>Main Page app name hader</comment>
+  </data>
+  <data name="VideoUrlLabel.Text" xml:space="preserve">
+  <value>Video URL:</value>
+</data>
+  <data name="UrlTextBox.PlaceholderText" xml:space="preserve">
+  <value>Enter video or playlist URL</value>
+</data>
+
+  <data name="OpenEditUrlButton.Content" xml:space="preserve">
+  <value>Expand</value>
+</data>
+  <data name="OpenEditUrlButton.ToolTipService.ToolTip" xml:space="preserve">
+  <value>Open advanced URL settings</value>
+</data>
+  <data name="SaveToLabel.Text" xml:space="preserve">
+    <value>Save to:</value>
+</data>
+  <data name="SavePathTextBox.PlaceholderText" xml:space="preserve">
+    <value>Select destination folder</value>
+</data>
+  <data name="SavePathTextBox.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Select folder video will be saved to.</value>
+</data>
+  <data name="SavePathTeachingTip.Title" xml:space="preserve">
+    <value>Select Destination Folder</value>
+</data>
+  <data name="SavePathTeachingTip.Subtitle" xml:space="preserve">
+    <value>Choose the folder where the video will be saved.</value>
+</data>
+  <data name="SavePathButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Click to select folder with explorer.</value>
+</data>
+  <data name="SavePathButtonTextBlock.Text" xml:space="preserve">
+    <value>Browse</value>
+</data>
+  <!-- Format TextBlock -->
+  <data name="FormatTextBlock.Text" xml:space="preserve">
+    <value>Format:</value>
+  </data>
+
+  <!-- FormatComboBox -->
+  <data name="FormatComboBox.Header" xml:space="preserve">
+    <value>Resolution</value>
+  </data>
+  <data name="FormatComboBox.PlaceholderText" xml:space="preserve">
+    <value>Choose format</value>
+  </data>
+  <data name="FormatComboBox.ToolTipService.ToolTip" xml:space="preserve">
+    <value>--format: This option allows you to specify the format(s) of the video and/or audio to download.</value>
+  </data>
+  <data name="FormatComboBoxItem1.Content" xml:space="preserve">
+    <value>Bestvideo</value>
+  </data>
+  <data name="FormatComboBoxItem2.Content" xml:space="preserve">
+    <value>Bestaudio</value>
+  </data>
+  <data name="FormatComboBoxItem3.Content" xml:space="preserve">
+    <value>Bestvideo+Bestaudio</value>
+  </data>
+
+  <!-- VideoFormatComboBox -->
+  <data name="VideoFormatComboBox.Header" xml:space="preserve">
+    <value>Video format</value>
+  </data>
+  <data name="VideoFormatComboBox.PlaceholderText" xml:space="preserve">
+    <value>Choose format</value>
+  </data>
+  <data name="VideoFormatComboBox.ToolTipService.ToolTip" xml:space="preserve">
+    <value>--merge-output-format: This option specifies the container format for the final output file when merging video and audio streams. If not merging, format can be distinct from chosen.</value>
+  </data>
+
+  <!-- AudioFormatComboBox -->
+  <data name="AudioFormatComboBox.Header" xml:space="preserve">
+    <value>Audio format</value>
+  </data>
+  <data name="AudioFormatComboBox.PlaceholderText" xml:space="preserve">
+    <value>Choose format</value>
+  </data>
+  <data name="AudioFormatComboBox.ToolTipService.ToolTip" xml:space="preserve">
+    <value>--audio-format: This option specifies the format in which the audio should be downloaded or converted. If the specified format is not available, yt-dlp will attempt to convert the audio to the desired format.</value>
+  </data>
+
+  <!-- RecodeVideFormatComboBox -->
+  <data name="RecodeVideFormatComboBox.Header" xml:space="preserve">
+    <value>Recode video</value>
+  </data>
+  <data name="RecodeVideFormatComboBox.PlaceholderText" xml:space="preserve">
+    <value>Choose</value>
+  </data>
+  <data name="RecodeVideFormatComboBox.ToolTipService.ToolTip" xml:space="preserve">
+    <value>This option allows you to recode the video into a different format after downloading. Significantly uses CPU, can be *slow*.</value>
+  </data>
+
+  <!-- FormatTeachingTip -->
+  <data name="FormatTeachingTip.Title" xml:space="preserve">
+    <value>Select a format</value>
+  </data>
+  <data name="FormatTeachingTip.Subtitle" xml:space="preserve">
+    <value>You need to select a format for the download.</value>
+  </data>
+
+  <data name="EditTextDialog.Title" xml:space="preserve">
+    <value>Edit URL</value>
+  </data>
+  <data name="EditTextDialog.CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="EditTextDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+
+  <data name="DownloadButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Use this button to download video formats and video in selected format</value>
+  </data>
+  <data name="DownloadButtonGetFormatsTextBlock.Text" xml:space="preserve">
+    <value>Get Formats</value>
+  </data>
+  <data name="DownloadButtonDownloadTextBlock.Text" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="DownloadButtonCancelPanelTextBlock.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ResetDownloadFieldsButtonText.Text" xml:space="preserve">
+    <value>Reset all</value>
+</data>
+  <data name="ResetDownloadFieldsButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Resets the state of input fields, buttons and clears logs</value>
+</data>
+
+  <data name="LogsBlockHeader.Text" xml:space="preserve">
+    <value>Download Logs:</value>
+</data>
+
+  <!-- кнопки разные -->
+  <data name="SaveButtonTextContent.Content" xml:space="preserve">
+    <value>Save</value>
+</data>
+  <data name="ResetButtonTextContent.Content" xml:space="preserve">
+    <value>Reset</value>
+</data>
+  <data name="ResetToDefaultButtonTextContent.Content" xml:space="preserve">
+    <value>Default</value>
+</data>
+  <data name="ConfirmButtonTextContent.Content" xml:space="preserve">
+    <value>Confirm</value>
+</data>
+  <data name="NotImplementedYetInfoBar.Message" xml:space="preserve">
+  <value>This feature has not been implemented in this version of the application yet. It may be added in one of the upcoming updates.</value>
+</data>
+
+</root>

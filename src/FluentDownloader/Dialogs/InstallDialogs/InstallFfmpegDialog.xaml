@@ -1,0 +1,57 @@
+<Page
+    x:Class="FluentDownloader.Dialogs.InstallDialogs.InstallFfmpegDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        Spacing="10">
+
+        <!--  Заголовок  -->
+        <TextBlock
+            x:Uid="/Dialogs/InstallFfmpegDialogTitle"
+            Style="{StaticResource TitleTextBlockStyle}"
+            TextAlignment="Center" />
+
+        <!--  Описание  -->
+        <TextBlock
+            Margin="0,10,0,0"
+            FontSize="16"
+            TextWrapping="Wrap">
+            <Run x:Uid="/Dialogs/InstallFfmpegDescriptionPart1" />
+            <Bold>
+                <Run x:Uid="/Dialogs/InstallFfmpegDescriptionPart2" />
+            </Bold>
+            <Run x:Uid="/Dialogs/InstallFfmpegDescriptionPart3" />
+        </TextBlock>
+
+        <!--  Ссылка на GitHub  -->
+        <HyperlinkButton x:Uid="/Dialogs/FfmpegGithubReposNavigateUri" Style="{StaticResource Round16pxFontHyperLink}">
+            <StackPanel Orientation="Horizontal">
+                <SymbolIcon Margin="0,0,5,0" Symbol="Link" />
+                <TextBlock x:Uid="/Dialogs/FfmpegGithubReposNavigateUriText" />
+            </StackPanel>
+        </HyperlinkButton>
+
+        <!--  Примечание  -->
+        <TextBlock TextWrapping="Wrap">
+            <Run x:Uid="/Dialogs/InstallFfmpegNotePart1" />
+            <Bold>
+                <Run x:Uid="/Dialogs/InstallFfmpegNotePart2" />
+            </Bold>
+            <Run x:Uid="/Dialogs/InstallFfmpegNotePart3" />
+        </TextBlock>
+
+        <!--  Подпись  -->
+        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+            <FontIcon
+                Margin="0,0,5,0"
+                VerticalAlignment="Center"
+                Glyph="&#xE946;" />
+            <TextBlock
+                x:Uid="/Dialogs/InstallFfmpegCaption"
+                VerticalAlignment="Center"
+                Style="{StaticResource BodyTextBlockStyle}" />
+        </StackPanel>
+    </StackPanel>
+</Page>

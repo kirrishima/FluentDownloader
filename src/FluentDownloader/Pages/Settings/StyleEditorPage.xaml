@@ -1,0 +1,233 @@
+<Page
+    x:Class="FluentDownloader.Pages.StyleEditorPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="using:FluentDownloader.Behavior"
+    xmlns:controls="using:FluentDownloader.Controls"
+    xmlns:converters="using:FluentDownloader.Converters"
+    xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fd="using:FluentDownloader"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:FluentDownloader.Pages"
+    xmlns:localization="using:FluentDownloader.ViewModels.Localization"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:vm="using:FluentDownloader.ViewModels"
+    Background="Transparent"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <converters:InverseNullToBooleanConverter x:Key="InverseNullToBooleanConverter" />
+    </Page.Resources>
+
+    <ScrollViewer Background="Transparent" VerticalScrollBarVisibility="Auto">
+        <Border x:Name="border">
+            <StackPanel
+                Grid.Column="0"
+                MaxWidth="1000"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                Spacing="5">
+                <StackPanel.ChildrenTransitions>
+                    <EntranceThemeTransition FromVerticalOffset="50" />
+                    <RepositionThemeTransition IsStaggeringEnabled="False" />
+                </StackPanel.ChildrenTransitions>
+                <!--  Пример для UseThemeButton  -->
+                <TextBlock x:Uid="/Settings/AppearanceThemeSectionHeader" Style="{StaticResource SettingsSectionHeader}" />
+                <!--  тема  -->
+                <ctk:SettingsCard HeaderIcon="{ui:FontIcon Glyph=&#xE706;}">
+                    <ctk:SettingsCard.Header>
+                        <TextBlock x:Uid="/Settings/AppearanceSectionThemeHeader" Style="{StaticResource SettingsCardHeader}" />
+                    </ctk:SettingsCard.Header>
+                    <ctk:SettingsCard.Description>
+                        <TextBlock x:Uid="/Settings/AppearanceSectionThemeDescription" Style="{StaticResource SettingsCardDescriptionWithUIs}" />
+                    </ctk:SettingsCard.Description>
+                    <controls:ThemeChangeButton x:Name="ThemeChangeButton" Margin="-10,0,0,0" />
+                </ctk:SettingsCard>
+
+                <!--  акцентный цвет  -->
+                <ctk:SettingsExpander HeaderIcon="{ui:FontIcon Glyph=&#xE790;}">
+                    <ctk:SettingsExpander.Header>
+                        <TextBlock x:Uid="/Settings/AppearanceSectionAccentColorHeader" Style="{StaticResource SettingsCardHeader}" />
+                    </ctk:SettingsExpander.Header>
+                    <ctk:SettingsExpander.Description>
+                        <TextBlock
+                            x:Uid="/Settings/AppearanceSectionAccentColorDescription"
+                            HorizontalAlignment="Left"
+                            FontSize="14" />
+                    </ctk:SettingsExpander.Description>
+                    <ctk:SettingsExpander.Items>
+
+                        <!--  использовать системный  -->
+                        <ctk:SettingsCard>
+                            <ctk:SettingsCard.Header>
+                                <TextBlock x:Uid="/Settings/AccentColorSystemHeader" Style="{StaticResource SettingsCardHeader}" />
+                            </ctk:SettingsCard.Header>
+                            <ctk:SettingsCard.Description>
+                                <TextBlock x:Uid="/Settings/AccentColorSystemDescription" Style="{StaticResource SettingsCardDescriptionWithUIs}" />
+                            </ctk:SettingsCard.Description>
+                            <ToggleSwitch
+                                x:Name="UseSystemAcentColorToggleSwitch"
+                                IsOn="{x:Bind fd:App.AppSettings.Appearance.AccentColor, Converter={StaticResource InverseNullToBooleanConverter}}"
+                                Toggled="UseSystemAcentColorToggleSwitch_Toggled" />
+                        </ctk:SettingsCard>
+
+                        <!--  настроить цвет (выбрать)  -->
+
+                        <ctk:SettingsCard IsEnabled="{Binding IsOn, ElementName=UseSystemAcentColorToggleSwitch, Converter={StaticResource InverseBooleanConverter}}">
+                            <ctk:SettingsCard.Header>
+                                <TextBlock x:Uid="/Settings/AccentColorPickHeader" Style="{StaticResource SettingsCardHeader}" />
+                            </ctk:SettingsCard.Header>
+                            <ctk:SettingsCard.Description>
+                                <TextBlock x:Uid="/Settings/AccentColorPickDescription" Style="{StaticResource SettingsCardDescriptionWithUIs}" />
+                            </ctk:SettingsCard.Description>
+
+                            <StackPanel
+                                x:Name="SelectCustomAccentColorBlock"
+                                Orientation="Horizontal"
+                                Spacing="10">
+                                <Button
+                                    x:Name="AccentColorPreview2"
+                                    VerticalAlignment="Stretch"
+                                    Background="{Binding Background}"
+                                    Content="{Binding Text}" />
+                                <Button
+                                    x:Name="SelectAccentColorButton"
+                                    Click="SelectAccentColorButton_Click"
+                                    Style="{ThemeResource AccentButtonStyle}">
+                                    <TextBlock x:Uid="/Settings/SelectAccentColorButtonTextBlock" />
+                                </Button>
+                            </StackPanel>
+                        </ctk:SettingsCard>
+                    </ctk:SettingsExpander.Items>
+                    <Button
+                        x:Name="AccentColorPreview1"
+                        Background="{Binding Background}"
+                        Content="{Binding Text}" />
+                </ctk:SettingsExpander>
+
+                <!--  фоновый цвет  -->
+                <!--  слюда  -->
+                <TextBlock x:Uid="/Settings/AppearanceBackgroundSectionHeader" Style="{StaticResource SettingsSectionHeader}" />
+                <ctk:SettingsCard>
+                    <ctk:SettingsCard.Header>
+                        <Grid>
+                            <StackPanel Margin="3,0,0,0" Orientation="Horizontal">
+                                <RadioButton
+                                    x:Name="MicaRadioButton"
+                                    MinWidth="10"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Checked="MicaRadioButton_Checked"
+                                    GroupName="BackgroundOptions" />
+                                <StackPanel Margin="10,0,0,0">
+                                    <TextBlock x:Uid="/Settings/AppearanceMicaHeader" Style="{StaticResource SettingsCardHeader}" />
+                                    <TextBlock x:Uid="/Settings/AppearanceMicaDescription" Style="{StaticResource SettingsCardDescription}" />
+                                </StackPanel>
+                            </StackPanel>
+                            <!--  Прозрачный оверлей, который участвует в hit testing и пересылает события  -->
+                            <Grid Background="Transparent">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:ForwardPointerEventsBehavior TargetRadioButton="{Binding ElementName=MicaRadioButton}" />
+                                </i:Interaction.Behaviors>
+                            </Grid>
+                        </Grid>
+                    </ctk:SettingsCard.Header>
+                </ctk:SettingsCard>
+
+                <!--  акрил  -->
+                <ctk:SettingsCard>
+                    <ctk:SettingsCard.Header>
+                        <Grid>
+                            <StackPanel Margin="3,0,0,0" Orientation="Horizontal">
+                                <RadioButton
+                                    x:Name="AcrylicColorRadioButton"
+                                    MinWidth="10"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Checked="AcrylicColorRadioButton_Checked"
+                                    GroupName="BackgroundOptions" />
+                                <StackPanel Margin="10,0,0,0">
+                                    <TextBlock x:Uid="/Settings/AppearanceAcrylicHeader" Style="{StaticResource SettingsCardHeader}" />
+                                    <TextBlock x:Uid="/Settings/AppearanceAcrylicDescription" Style="{StaticResource SettingsCardDescription}" />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!--  Прозрачный оверлей, который участвует в hit testing и пересылает события  -->
+                            <Grid Background="Transparent">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:ForwardPointerEventsBehavior TargetRadioButton="{Binding ElementName=AcrylicColorRadioButton}" />
+                                </i:Interaction.Behaviors>
+                            </Grid>
+                        </Grid>
+                    </ctk:SettingsCard.Header>
+                </ctk:SettingsCard>
+
+                <!--  сплошной  -->
+                <ctk:SettingsCard>
+                    <ctk:SettingsCard.Header>
+                        <!--  Контейнер, объединяющий контент и прозрачный слой для пересылки событий  -->
+                        <Grid x:Name="RadioContainer">
+                            <!--  Основной контент  -->
+                            <StackPanel Margin="3,0,0,0" Orientation="Horizontal">
+                                <RadioButton
+                                    x:Name="SolidColorRadioButton"
+                                    MinWidth="10"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Checked="SolidColorRadioButton_Checked"
+                                    GroupName="BackgroundOptions" />
+                                <StackPanel Margin="10,0,0,0">
+                                    <TextBlock x:Uid="/Settings/AppearanceSolidHeader" Style="{StaticResource SettingsCardHeader}" />
+                                    <TextBlock x:Uid="/Settings/AppearanceSolidDescription" Style="{StaticResource SettingsCardDescription}" />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!--  Прозрачный оверлей, который участвует в hit testing и пересылает события  -->
+                            <Grid Background="Transparent">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:ForwardPointerEventsBehavior TargetRadioButton="{Binding ElementName=SolidColorRadioButton}" />
+                                </i:Interaction.Behaviors>
+                            </Grid>
+                        </Grid>
+                    </ctk:SettingsCard.Header>
+                </ctk:SettingsCard>
+
+
+                <ctk:SettingsCard HeaderIcon="{ui:FontIcon Glyph=&#xE771;}">
+                    <ctk:SettingsCard.Header>
+                        <TextBlock x:Uid="/Settings/AppearanceSectionWindowBGColorHeader" Style="{StaticResource SettingsCardHeader}" />
+                    </ctk:SettingsCard.Header>
+                    <ctk:SettingsCard.Description>
+                        <TextBlock x:Uid="/Settings/AppearanceSectionWindowBGDescription" Style="{StaticResource SettingsCardDescriptionWithUIs}" />
+                    </ctk:SettingsCard.Description>
+                    <Button
+                        x:Name="ShowColorPickerButton"
+                        HorizontalAlignment="Stretch"
+                        Click="ShowColorPickerButton_Click"
+                        Style="{StaticResource AccentButtonStyle}">
+                        <TextBlock x:Uid="/Settings/AppearanceSectionWindowBGSelectColorButton" />
+                    </Button>
+                </ctk:SettingsCard>
+
+                <!--  сбросить фон  -->
+                <ctk:SettingsCard HeaderIcon="{ui:FontIcon Glyph=&#xE72C;}">
+                    <ctk:SettingsCard.Header>
+                        <TextBlock x:Uid="/Settings/AppearanceSectionResetHeader" Style="{StaticResource SettingsCardHeader}" />
+                    </ctk:SettingsCard.Header>
+                    <ctk:SettingsCard.Description>
+                        <TextBlock x:Uid="/Settings/AppearanceSectionResetDescription" Style="{StaticResource SettingsCardDescriptionWithUIs}" />
+                    </ctk:SettingsCard.Description>
+                    <Button
+                        x:Name="ResetToDefaultButton"
+                        x:Uid="/LeftSideBar/ResetToDefaultButton"
+                        HorizontalAlignment="Stretch"
+                        Click="ResetToDefaultButton_Click"
+                        Style="{ThemeResource AccentButtonStyle}" />
+                </ctk:SettingsCard>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</Page>

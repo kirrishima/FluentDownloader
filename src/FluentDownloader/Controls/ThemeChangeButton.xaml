@@ -1,0 +1,27 @@
+<UserControl
+    x:Class="FluentDownloader.Controls.ThemeChangeButton"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:vm="using:FluentDownloader.ViewModels">
+
+    <HyperlinkButton
+        x:Uid="/LeftSideBar/ChangeThemeButton"
+        Command="{Binding ToggleThemeCommand}"
+        Style="{StaticResource Round16pxFontHyperLink}">
+        <StackPanel Orientation="Horizontal">
+            <FontIcon
+                Margin="0,0,5,0"
+                VerticalAlignment="Center"
+                Glyph="&#xE706;" />
+            <Viewbox Height="20" Stretch="Uniform">
+                <TextBlock
+                    Margin="0"
+                    Padding="0"
+                    VerticalAlignment="Center"
+                    Text="{Binding CurrentTheme, Converter={StaticResource ThemeToTextConverter}}" />
+            </Viewbox>
+        </StackPanel>
+    </HyperlinkButton>
+
+</UserControl>

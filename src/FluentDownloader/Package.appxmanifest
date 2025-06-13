@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4"
+  xmlns:uap18="http://schemas.microsoft.com/appx/manifest/uap/windows10/18"
+  IgnorableNamespaces="uap rescap com desktop uap3 uap4 uap18">
+
+  <Identity
+    Name="81fea056-4fd0-4cc2-9fec-cce63cc7fdec"
+    Publisher="CN=Force"
+    Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="81fea056-4fd0-4cc2-9fec-cce63cc7fdec"
+    PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+
+  <Properties>
+    <DisplayName>FluentDownloader</DisplayName>
+    <PublisherDisplayName>Force</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0"
+      MaxVersionTested="10.0.19041.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0"
+      MaxVersionTested="10.0.19041.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="$targetentrypoint$" uap18:TrustLevel="mediumIL">
+      <uap:VisualElements
+        DisplayName="FluentDownloader"
+        Description="FluentDownloader"
+        BackgroundColor="transparent"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"  Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+
+        <!--Specify
+        which CLSID to activate when app notification clicked-->
+        <desktop:Extension Category="windows.toastNotificationActivation">
+          <desktop:ToastNotificationActivation
+            ToastActivatorCLSID="A1E25C3C-3BA2-4A1F-A299-17EBB7A102B3" />
+        </desktop:Extension>
+
+        <!--Register
+        COM CLSID LocalServer32 registry key-->
+        <com:Extension Category="windows.comServer">
+          <com:ComServer>
+            <com:ExeServer Executable="FluentDownloader.exe"
+              Arguments="----AppNotificationActivated:"
+              DisplayName="App notification activator">
+              <com:Class Id="A1E25C3C-3BA2-4A1F-A299-17EBB7A102B3"
+                DisplayName="App notification activator" />
+            </com:ExeServer>
+          </com:ComServer>
+        </com:Extension>
+        <desktop:Extension Category="windows.fullTrustProcess" />
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+    <uap3:Capability Name="backgroundMediaPlayback" />
+    <uap3:Capability Name="userNotificationListener" />
+    <Capability Name="internetClient" />
+    <uap4:Capability Name="userDataTasks" />
+    <Capability Name="privateNetworkClientServer" />
+    <rescap:Capability Name="unvirtualizedResources" />
+    <rescap:Capability Name="allowElevation" />
+  </Capabilities>
+</Package>

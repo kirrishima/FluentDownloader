@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="FluentDownloader.Pages.Settings.NotificationsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:converters="using:FluentDownloader.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fd="using:FluentDownloader"
+    xmlns:local="using:FluentDownloader.Pages.Settings"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </Page.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
+        <Border>
+            <StackPanel Style="{StaticResource SettingsStackPanel}">
+                <StackPanel.ChildrenTransitions>
+                    <EntranceThemeTransition FromVerticalOffset="50" />
+                    <RepositionThemeTransition IsStaggeringEnabled="False" />
+                </StackPanel.ChildrenTransitions>
+                <StackPanel>
+                    <InfoBar
+                        x:Uid="/Settings/DesktopNotificationsAreNotSupported"
+                        IsClosable="False"
+                        IsOpen="{Binding IsSupported, Converter={StaticResource InverseBooleanConverter}}"
+                        Severity="Warning" />
+
+                    <!--  показывать  -->
+                    <controls:SettingsCard HeaderIcon="{ui:FontIcon Glyph=&#xEC42;}" IsEnabled="{Binding IsSupported}">
+                        <controls:SettingsCard.Header>
+                            <TextBlock x:Uid="/Settings/EnableDesktopNotificationsHeader" Style="{StaticResource SettingsCardHeader}" />
+                        </controls:SettingsCard.Header>
+                        <controls:SettingsCard.Description>
+                            <TextBlock x:Uid="/Settings/EnableDesktopNotificationsDescription" Style="{StaticResource SettingsCardDescription}" />
+                        </controls:SettingsCard.Description>
+                        <ToggleSwitch IsOn="{x:Bind fd:App.AppSettings.Notifications.EnableDesktopNotifications, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+                </StackPanel>
+
+                <!--  звук  -->
+                <controls:SettingsCard HeaderIcon="{ui:FontIcon Glyph=&#xE8D6;}" IsEnabled="{Binding IsSupported}">
+                    <controls:SettingsCard.Header>
+                        <TextBlock x:Uid="/Settings/EnableDesktopNotificationsSoundHeader" Style="{StaticResource SettingsCardHeader}" />
+                    </controls:SettingsCard.Header>
+                    <controls:SettingsCard.Description>
+                        <TextBlock x:Uid="/Settings/EnableDesktopNotificationsSoundDescription" Style="{StaticResource SettingsCardDescription}" />
+                    </controls:SettingsCard.Description>
+                    <ToggleSwitch IsOn="{x:Bind fd:App.AppSettings.Notifications.EnableSoundWhenPopup, Mode=TwoWay}" />
+                </controls:SettingsCard>
+
+                <controls:SettingsExpander HeaderIcon="{ui:FontIcon Glyph=&#xE8B9;}">
+                    <controls:SettingsExpander.Header>
+                        <TextBlock x:Uid="/Settings/DesktopNotificationsShowThumbnailHeader" Style="{StaticResource SettingsCardHeader}" />
+                    </controls:SettingsExpander.Header>
+
+                    <controls:SettingsExpander.Items>
+                        <controls:SettingsCard IsEnabled="{Binding IsOn, ElementName=ShowImageToggle}">
+                            <controls:SettingsCard.Header>
+                                <TextBlock x:Uid="/Settings/DesktopNotificationsThumbnailSizeHeader" Style="{StaticResource SettingsCardHeader}" />
+                            </controls:SettingsCard.Header>
+                            <controls:SettingsCard.Description>
+                                <TextBlock x:Uid="/Settings/DesktopNotificationsThumbnailSizeDescription" Style="{StaticResource SettingsCardDescription}" />
+                            </controls:SettingsCard.Description>
+                            <ComboBox x:Name="NotificationImageSizeComboBox" SelectionChanged="NotificationImageSizeComboBox_SelectionChanged" />
+                        </controls:SettingsCard>
+                    </controls:SettingsExpander.Items>
+                    <ToggleSwitch x:Name="ShowImageToggle" IsOn="{x:Bind fd:App.AppSettings.Notifications.ShowImageAtNotifications, Mode=TwoWay}" />
+                </controls:SettingsExpander>
+
+                <!--  показывать только когда неактивно окно  -->
+                <controls:SettingsCard HeaderIcon="{ui:FontIcon Glyph=&#xE708;}" IsEnabled="{Binding IsSupported}">
+                    <controls:SettingsCard.Header>
+                        <TextBlock x:Uid="/Settings/DesktopNotificationsShowOnlyIfInnactiveHeader" Style="{StaticResource SettingsCardHeader}" />
+                    </controls:SettingsCard.Header>
+                    <controls:SettingsCard.Description>
+                        <TextBlock x:Uid="/Settings/DesktopNotificationsShowOnlyIfInnactiveDescription" Style="{StaticResource SettingsCardDescription}" />
+                    </controls:SettingsCard.Description>
+                    <ToggleSwitch IsOn="{x:Bind fd:App.AppSettings.Notifications.ShowOnlyIfTheWindowIsInactive, Mode=TwoWay}" />
+                </controls:SettingsCard>
+
+                <controls:SettingsCard HeaderIcon="{ui:FontIcon Glyph=&#xE945;}" IsEnabled="{Binding IsSupported}">
+                    <controls:SettingsCard.Header>
+                        <TextBlock x:Uid="/Settings/DesktopNotificationsActionHeader" Style="{StaticResource SettingsCardHeader}" />
+                    </controls:SettingsCard.Header>
+                    <controls:SettingsCard.Description>
+                        <TextBlock x:Uid="/Settings/DesktopNotificationsActionDescription" Style="{StaticResource SettingsCardDescription}" />
+                    </controls:SettingsCard.Description>
+                    <ToggleSwitch IsOn="{x:Bind fd:App.AppSettings.Notifications.OpenWindowWhenClicked, Mode=TwoWay}" />
+                </controls:SettingsCard>
+
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</Page>

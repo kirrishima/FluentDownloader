@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing"
+  mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework
+  object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="NotificationDialogCloseButton" xml:space="preserve">
+    <value>OK</value>
+</data>
+  <data name="NotificationDialogPrimaryButtonText" xml:space="preserve">
+    <value>Install</value>
+</data>
+  <data name="NotificationDialogCloseButtonText" xml:space="preserve">
+    <value>Do not install</value>
+</data>
+
+  <!-- Dependency info -->
+  <data name="DependencyInfoVersion" xml:space="preserve">
+    <value>Vesrion: {0}</value>
+</data>
+  <data name="DependencyInfoPath" xml:space="preserve">
+    <value>Path to {0}: "{1}"</value>
+</data>
+  <data name="DependencyInfoRevealInExplorer" xml:space="preserve">
+    <value>View In Explorer</value>
+</data>
+  <!-- ffmpeg info -->
+  <data name="FfmpegInfoTitle" xml:space="preserve">
+    <value>Ffmpeg Info</value>
+</data>
+  <data name="FfmpegInfoGithubLinkText" xml:space="preserve">
+    <value>See GitHub page</value>
+</data>
+  <!-- Ytdlp info -->
+  <data name="YtdlpInfoTitle" xml:space="preserve">
+    <value>yt-dlp Info</value>
+</data>
+  <data name="YtdlpInfoGithubLinkText" xml:space="preserve">
+    <value>See GitHub page</value>
+</data>
+
+  <!-- YT-DLP Installation Required dialog -->
+  <data name="InstallYtDlpDialogTitle.Text" xml:space="preserve">
+    <value>YT-DLP Installation Required</value>
+</data>
+  <data name="InstallYtDlpDescriptionPart1.Text" xml:space="preserve">
+    <value>This application requires </value>
+</data>
+  <data name="InstallYtDlpDescriptionPart2.Text" xml:space="preserve">
+    <value>yt-dlp</value>
+</data>
+  <data name="InstallYtDlpDescriptionPart3.Text" xml:space="preserve">
+    <value> to function properly. You can download it by clicking the "Install" button or manually from the GitHub repository below:</value>
+</data>
+  <data name="YtDlpGithubReposNavigateUri.NavigateUri" xml:space="preserve">
+    <value>https://github.com/yt-dlp/yt-dlp</value>
+</data>
+  <data name="YtDlpGithubReposNavigateUriText.Text" xml:space="preserve">
+    <value>yt-dlp GitHub Repository</value>
+</data>
+  <data name="InstallYtDlpDialogCaption.Text" xml:space="preserve">
+    <value>After downloading yt-dlp, it should be added to the PATH.</value>
+</data>
+
+  <data name="InstallFfmpegDialogTitle.Text" xml:space="preserve">
+    <value>FFmpeg Installation Required</value>
+</data>
+  <data name="InstallFfmpegDescriptionPart1.Text" xml:space="preserve">
+    <value>This application requires </value>
+</data>
+  <data name="InstallFfmpegDescriptionPart2.Text" xml:space="preserve">
+    <value>FFmpeg</value>
+</data>
+  <data name="InstallFfmpegDescriptionPart3.Text" xml:space="preserve">
+    <value> to download videos in high quality. You can download it by clicking the "Install" button or manually from the GitHub repository below:</value>
+</data>
+  <data name="FfmpegGithubReposNavigateUri.NavigateUri" xml:space="preserve">
+    <value>https://github.com/yt-dlp/FFmpeg-Builds</value>
+</data>
+  <data name="FfmpegGithubReposNavigateUriText.Text" xml:space="preserve">
+    <value>FFmpeg GitHub Repository</value>
+</data>
+  <data name="InstallFfmpegNotePart1.Text" xml:space="preserve">
+    <value>Since FFmpeg is an essential dependency, </value>
+</data>
+  <data name="InstallFfmpegNotePart2.Text" xml:space="preserve">
+    <value>yt-dlp</value>
+</data>
+  <data name="InstallFfmpegNotePart3.Text" xml:space="preserve">
+    <value> provides custom builds that you can use.</value>
+</data>
+  <data name="InstallFfmpegCaption.Text" xml:space="preserve">
+    <value>After downloading FFmpeg, it should be added to the PATH.</value>
+</data>
+
+  <!-- YT-DLP & Ffmpeg Installation Required dialog -->
+  <data name="InstallFfmpegAndYtdlpDialogTitle.Text" xml:space="preserve">
+    <value>YT-DLP and FFmpeg Required</value>
+</data>
+  <data name="InstallFfmpegAndYtdlpDialogDescriptionPart1.Text" xml:space="preserve">
+    <value>This application requires </value>
+</data>
+  <data name="InstallFfmpegAndYtdlpDialogDescriptionPart2.Text" xml:space="preserve">
+    <value>This application requires </value>
+</data>
+  <data name="InstallFfmpegAndYtdlpDialogDescriptionPart1.Text" xml:space="preserve">
+    <value>This application requires </value>
+</data>
+
+  <!-- Заголовок -->
+  <data name="InstallYtDlpAndFfmpegDialogTitle.Text" xml:space="preserve">
+    <value>YT-DLP and FFmpeg Required</value>
+</data>
+
+  <!-- Описание -->
+  <data name="InstallYtDlpAndFfmpegDescriptionPart1.Text" xml:space="preserve">
+    <value>This application requires </value>
+</data>
+  <data name="InstallYtDlpAndFfmpegDescriptionPart2.Text" xml:space="preserve">
+    <value>yt-dlp</value>
+</data>
+  <data name="InstallYtDlpAndFfmpegDescriptionPart3.Text" xml:space="preserve">
+    <value> and </value>
+</data>
+  <data name="InstallYtDlpAndFfmpegDescriptionPart4.Text" xml:space="preserve">
+    <value>FFmpeg</value>
+</data>
+  <data name="InstallYtDlpAndFfmpegDescriptionPart5.Text" xml:space="preserve">
+    <value> to function properly. Please download and install them from the following links:</value>
+</data>
+
+  <!-- Инструкция -->
+  <data name="InstallYtDlpAndFfmpegInstructionPart1.Text" xml:space="preserve">
+    <value>You can automatically download </value>
+</data>
+  <data name="InstallYtDlpAndFfmpegInstructionPart2.Text" xml:space="preserve">
+    <value>yt-dlp</value>
+</data>
+  <data name="InstallYtDlpAndFfmpegInstructionPart3.Text" xml:space="preserve">
+    <value> and </value>
+</data>
+  <data name="InstallYtDlpAndFfmpegInstructionPart4.Text" xml:space="preserve">
+    <value>FFmpeg</value>
+</data>
+  <data name="InstallYtDlpAndFfmpegInstructionPart5.Text" xml:space="preserve">
+    <value> by clicking the "Install" button, or download them manually from the repositories.</value>
+</data>
+
+  <!-- Подпись -->
+  <data name="InstallYtDlpAndFfmpegCaption.Text" xml:space="preserve">
+    <value>After downloading yt-dlp and ffmpeg, each should be added to the PATH.</value>
+</data>
+</root>

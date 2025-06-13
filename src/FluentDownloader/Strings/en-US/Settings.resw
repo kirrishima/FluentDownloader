@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing"
+  mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework
+  object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="HomePageHeader" xml:space="preserve">
+    <value>Home</value>
+</data>
+  <data name="SettingsButtonTextBlock.Text" xml:space="preserve">
+    <value>Settings</value>
+</data>
+  <data name="YtdlpAndFfmpegSettingsHeader.Text" xml:space="preserve">
+    <value>yt-dlp &amp; FFmpeg Settings</value>
+</data>
+  <data name="InstallationSettings.Text" xml:space="preserve">
+    <value>Output File Template</value>
+</data>
+
+  <data name="LanguageSettingsSectionHeader.Text" xml:space="preserve">
+    <value>Language</value>
+</data>
+  <data name="LanguageSettingsSelectLanguage.Text" xml:space="preserve">
+    <value>Language Settings</value>
+</data>
+
+  <data name="AppearanceSectionHeader.Text" xml:space="preserve">
+    <value>Appearance</value>
+</data>
+  <data name="AppearanceSectionThemeHeader.Text" xml:space="preserve">
+    <value>Theme</value>
+</data>
+  <data name="AppearanceSectionThemeDescription.Text" xml:space="preserve">
+    <value>The app's theme. You can choose between light and dark modes. Some changes may require restarting the app.</value>
+</data>
+  <data name="AppearanceSectionAccentColorHeader.Text" xml:space="preserve">
+    <value>Accent Color</value>
+</data>
+  <data name="AccentColorSystemHeader.Text" xml:space="preserve">
+    <value>Use system color</value>
+</data>
+  <data name="AccentColorSystemDescription.Text" xml:space="preserve">
+    <value>Uses the system color, automatically changing based on the selected color in Windows settings</value>
+</data>
+  <data name="AccentColorPickHeader.Text" xml:space="preserve">
+    <value>Customize theme color</value>
+</data>
+  <data name="AccentColorPickDescription.Text" xml:space="preserve">
+    <value>You can choose a theme color, and all controls will use this color as the primary one</value>
+</data>
+  <data name="SelectAccentColorButtonTextBlock.Text" xml:space="preserve">
+    <value>Select color</value>
+</data>
+
+
+  <data name="AppearanceSectionAccentColorDescription.Text" xml:space="preserve">
+    <value>The main color used in the app's design. By default, it matches the system's accent color.</value>
+</data>
+  <data name="AppearanceSectionWindowBGColorHeader.Text" xml:space="preserve">
+    <value>Window Background Color</value>
+</data>
+  <data name="AppearanceSectionWindowBGDescription.Text" xml:space="preserve">
+    <value>Sets the background color of the window with an acrylic effect. It overlays the default screen and adds a tinted acrylic look.</value>
+</data>
+  <data name="AppearanceSectionResetHeader.Text" xml:space="preserve">
+    <value>Reset Background Style</value>
+</data>
+  <data name="AppearanceSectionResetDescription.Text" xml:space="preserve">
+    <value>Restore all background settings to their default values.</value>
+</data>
+  <data name="AppearanceSectionWindowBGSelectColorButton.Text" xml:space="preserve">
+    <value>Choose Color</value>
+</data>
+
+  <data name="AppearanceBackgroundSectionHeader.Text" xml:space="preserve">
+    <value>Background</value>
+</data>
+  <data name="AppearanceThemeSectionHeader.Text" xml:space="preserve">
+    <value>Theme</value>
+</data>
+  <data name="AppearanceMicaHeader.Text" xml:space="preserve">
+    <value>Mica</value>
+</data>
+  <data name="AppearanceMicaDescription.Text" xml:space="preserve">
+    <value>Mica is an opaque, dynamic material that incorporates theme and desktop wallpaper to paint the background.</value>
+</data>
+  <data name="AppearanceAcrylicHeader.Text" xml:space="preserve">
+    <value>Acrylic</value>
+</data>
+  <data name="AppearanceAcrylicDescription.Text" xml:space="preserve">
+    <value>Acrylic is a type of Brush that creates a translucent texture. Background acrylic reveals the desktop wallpaper and other windows that are behind the currently active app, adding depth between application windows while celebrating the user's personalization preferences.</value>
+</data>
+  <data name="AppearanceSolidHeader.Text" xml:space="preserve">
+    <value>Solid color</value>
+</data>
+  <data name="AppearanceSolidDescription.Text" xml:space="preserve">
+    <value>The background consists of one solid color, without any transparency effect.</value>
+</data>
+
+  <data name="SaveButtonTeachingTipEmpty" xml:space="preserve">
+    <value>The template must not be empty.</value>
+</data>
+  <data name="SaveButtonTeachingTipWrong" xml:space="preserve">
+    <value>The template must end with '.%(ext)s'</value>
+</data>
+
+  <!-- шаблоны ФАЙЛОВ -->
+  <data name="OutputTemplateFormatsExamle.Text" xml:space="preserve">
+  <value><![CDATA[Some available formats:
+
+    %(title)s - Video title
+    %(id)s - Video ID
+    %(uploader)s - Channel name
+    %(upload_date)s - Upload date (YYYYMMDD)
+    %(ext)s - File extension
+    %(playlist)s - Playlist name
+    %(playlist_index)s - Playlist index
+
+There are many available formats, and not all can be shown here. For more details, please visit the link below:]]></value>
+</data>
+  <data name="OutputTemplateExploreMore.Text" xml:space="preserve">
+  <value>Learn more</value>
+</data>
+  <data name="OutputTemplateExploreMoreLink.NavigateUri" xml:space="preserve">
+  <value>https://github.com/yt-dlp/yt-dlp#output-template</value>
+</data>
+  <data name="OutputTemplateHeaderTextBox.Header" xml:space="preserve">
+  <value>Output File Template</value>
+</data>
+
+  <data name="DownloadDependenciesSectionHeader.Text" xml:space="preserve">
+    <value>Dependencies</value>
+</data>
+  <data name="YtdlpAndFFmpegSettingsCardBreadcrump" xml:space="preserve">
+    <value>yt-dlp and ffmpeg</value>
+</data>
+  <data name="CheckYtdlpAndFfmpegUpdatesHeader.Text" xml:space="preserve">
+    <value>Check for component updates</value>
+</data>
+  <data name="CheckYtdlpUpdatesHeader.Text" xml:space="preserve">
+    <value>Check for yt-dlp updates</value>
+</data>
+  <data name="CheckFfmpegUpdatesHeader.Text" xml:space="preserve">
+    <value>Check for ffmpeg updates</value>
+</data>
+
+  <data name="ShowVideoThumbnailAndTitleHeader.Text" xml:space="preserve">
+    <value>Show video thumbnail and title after format parsing</value>
+</data>
+
+  <!-- Selection -->
+  <data name="PickYtdlpExeHeader.Text" xml:space="preserve">
+    <value>Select yt-dlp executable</value>
+</data>
+  <data name="PickYtdlpExeChooseHeader.Text" xml:space="preserve">
+    <value>Manually select yt-dlp executable</value>
+</data>
+  <data name="PickExeChooseDescription.Text" xml:space="preserve">
+  <value>Note that the application determines whether an executable is the required dependency by launching it with specific parameters. If the executable exists and returns a success code, it will be recognized as the required dependency, even if that is not actually the case.</value>
+</data>
+  <data name="PickYtdlpExeLetAppDecideHeader.Text" xml:space="preserve">
+    <value>Let the application determine the path automatically</value>
+</data>
+  <data name="PickYtdlpExeLetAppDecideDecription.Text" xml:space="preserve">
+    <value>yt-dlp must be in the PATH or in the application's local directory. Otherwise, the application won't be able to find the executable and will prompt you to download it.</value>
+</data>
+
+  <data name="PickFfmpegExeHeader.Text" xml:space="preserve">
+    <value>Select ffmpeg executable</value>
+</data>
+  <data name="PickFfmpegExeChooseHeader.Text" xml:space="preserve">
+    <value>Manually select ffmpeg executable</value>
+</data>
+  <data name="PickFfmpegExeLetAppDecideHeader.Text" xml:space="preserve">
+    <value>Let the application determine the path automatically</value>
+</data>
+  <data name="PickFfmpegExeLetAppDecideDecription.Text" xml:space="preserve">
+    <value>ffmpeg must be in the PATH or in the application's local directory. Otherwise, the application won't be able to find the executable and will prompt you to download it.</value>
+</data>
+
+  <!-- окно -->
+  <data name="LaunchSettingsHeader.Text" xml:space="preserve">
+  <value>Launch Settings</value>
+</data>
+  <data name="LaunchSettingsDescription.Text" xml:space="preserve">
+  <value>You can configure certain aspects of the application's launch.</value>
+</data>
+  <data name="LaunchSettingsSectionHeader" xml:space="preserve">
+  <value>Launch</value>
+</data>
+  <data name="FullScreenModeHeader.Text" xml:space="preserve">
+  <value>Full-Screen Mode</value>
+</data>
+  <data name="FullScreenModeDescription.Text" xml:space="preserve">
+  <value>Launch the application in full-screen mode.</value>
+</data>
+  <data name="ScreenSizeHeader.Text" xml:space="preserve">
+  <value>Window Size</value>
+</data>
+  <data name="ScreenSizeDescription.Text" xml:space="preserve">
+  <value>The size of the application window in which the app will launch. To allow the app to decide automatically, set at least one of the dimensions to 0.</value>
+</data>
+
+  <!-- Downloading -->
+  <data name="DownloadingSectionHeader.Text" xml:space="preserve">
+    <value>Download settings</value>
+</data>
+  <data name="LogFinalOptionsSectionHeader.Text" xml:space="preserve">
+    <value>Log final yt-dlp arguments</value>
+</data>
+  <data name="LogFinalOptionsSectionDescription.Text" xml:space="preserve">
+    <value>If enabled, installation logs will include the command-line arguments used to launch yt-dlp.</value>
+</data>
+
+  <data name="YtdlpConcurrentFragmentsHeader.Text" xml:space="preserve">
+  <value>Concurrent Fragments</value>
+</data>
+  <data name="YtdlpConcurrentFragmentsDescription.Text" xml:space="preserve">
+  <value>[--concurrent-fragments] Sets the number of video fragments to download simultaneously. Increasing this value may speed up the download, but an excessively high number can lead to server blocking, network overload, system errors, or even slow down the download. Recommended value: 6</value>
+</data>
+
+  <data name="DownloadRateLimitHeader.Text" xml:space="preserve">
+  <value>Limit Download Speed</value>
+</data>
+  <data name="DownloadRateLimitDescription.Text" xml:space="preserve">
+  <value>Allows you to limit the maximum download speed, which may reduce network load for higher priority tasks.</value>
+</data>
+  <data name="DownloadRateLimitNumberBox.Header" xml:space="preserve">
+  <value>Limit Value</value>
+</data>
+  <data name="DownloadRateLimitComboBox.Header" xml:space="preserve">
+  <value>Measurement Units</value>
+</data>
+
+  <data name="ProxyHeader.Text" xml:space="preserve">
+  <value>Use Proxy</value>
+</data>
+  <data name="ProxyDescription.Text" xml:space="preserve">
+  <value>You can enter the proxy server address that will be used during downloads.</value>
+</data>
+
+  <data name="ProxyTextBoxHeader.Header" xml:space="preserve">
+  <value>Enter proxy:</value>
+</data>
+  <data name="ProxyExplanationText.Text" xml:space="preserve">
+  <value><![CDATA[
+Enter the proxy server address in one of the following formats:
+
+1. Proxy without authentication:
+   http://proxy.example.com:3128
+
+2. Proxy with authentication:
+   http://username:password@proxy.example.com:3128
+
+3. For SOCKS proxies (socks4 or socks5):
+   socks5://username:password@proxy.example.com:1080
+
+Example:
+   http://user:pass@192.168.0.1:8080
+  ]]></value>
+</data>
+  <data name="ProxyFormatGuidHeader.Header" xml:space="preserve">
+    <value>Proxy server formats (click for details)</value>
+</data>
+
+  <data name="DesktopNotificationsPage" xml:space="preserve">
+  <value>Desktop Notifications</value>
+</data>
+  <data name="DesktopNotificationsAreNotSupported.Title" xml:space="preserve">
+  <value>Not Supported</value>
+</data>
+  <data name="DesktopNotificationsAreNotSupported.Message" xml:space="preserve">
+  <value>Desktop notifications are not supported on your device.</value>
+</data>
+  <data name="DesktopNotificationsPageLink.Text" xml:space="preserve">
+  <value>Desktop Notifications</value>
+</data>
+  <data name="EnableDesktopNotificationsHeader.Text" xml:space="preserve">
+  <value>Enable Desktop Notifications</value>
+</data>
+  <data name="EnableDesktopNotificationsDescription.Text" xml:space="preserve">
+  <value>By default, desktop notifications are displayed only when the application is inactive (minimized) and only inform about video download results.</value>
+</data>
+  <data name="EnableDesktopNotificationsSoundHeader.Text" xml:space="preserve">
+  <value>Enable Sound</value>
+</data>
+  <data name="EnableDesktopNotificationsSoundDescription.Text" xml:space="preserve">
+  <value>Plays the default sound when a notification appears. If disabled, notifications will appear silently.</value>
+</data>
+  <data name="DesktopNotificationsShowOnlyIfInnactiveHeader.Text" xml:space="preserve">
+  <value>Display Only When App Is Inactive</value>
+</data>
+  <data name="DesktopNotificationsShowOnlyIfInnactiveDescription.Text" xml:space="preserve">
+  <value>If enabled, desktop notifications will appear only when the application is inactive or minimized.</value>
+</data>
+  <data name="DesktopNotificationsActionHeader.Text" xml:space="preserve">
+  <value>Show Application Window on Notification Click</value>
+</data>
+  <data name="DesktopNotificationsActionDescription.Text" xml:space="preserve">
+  <value>If enabled, when you click the notification and the application is inactive or minimized, it will be brought to the foreground. Otherwise, the notification will simply close.</value>
+</data>
+  <data name="DesktopNotificationsShowThumbnailHeader.Text" xml:space="preserve">
+  <value>Enable Video Thumbnail in Notification</value>
+</data>
+  <data name="DesktopNotificationsThumbnailSizeHeader.Text" xml:space="preserve">
+  <value>Notification Image Size</value>
+</data>
+  <data name="DesktopNotificationsThumbnailSizeDescription.Text" xml:space="preserve">
+  <value><![CDATA[Inline - large image at the bottom of the notification
+Hero - large image at the top of the notification
+appLogoOverride - small square image on the left side of the notification]]></value>
+</data>
+
+</root>
