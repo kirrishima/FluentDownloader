@@ -65,7 +65,7 @@ namespace FluentDownloader.Pages
                 InfoBarSeverity.Error);
         }
 
-        double NotificationStackWidth = -1;
+        /// double NotificationStackWidth = -1;
 
         /// <summary>
         /// Adds a customizable pop-up notification with a title, message, and severity level.
