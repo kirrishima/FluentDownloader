@@ -15,7 +15,7 @@
   <Identity
     Name="81fea056-4fd0-4cc2-9fec-cce63cc7fdec"
     Publisher="CN=Force"
-    Version="1.0.0.0" />
+    Version="1.0.2.0" />
 
   <mp:PhoneIdentity PhoneProductId="81fea056-4fd0-4cc2-9fec-cce63cc7fdec"
     PhonePublisherId="00000000-0000-0000-0000-000000000000" />
