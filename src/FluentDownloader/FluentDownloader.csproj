@@ -52,27 +52,27 @@
 		<ProjectCapability Include="Msix" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.1.240916" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.ColorPicker" Version="8.1.240916" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240916" />
-		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250108002" />
-		<PackageReference Include="YoutubeDLSharp" Version="1.1.1" />
+		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.250402" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.ColorPicker" Version="8.2.250402" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.250402" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
+		<PackageReference Include="YoutubeDLSharp" Version="1.1.2" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Pages\UnhandledExceptionPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Pages\UnhandledExceptionPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Pages\Settings\NotificationsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Pages\Settings\NotificationsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Pages\Settings\DownloadPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Pages\Settings\DownloadPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Dialogs\InstallDialogs\GenericInfoDialog.xaml">
@@ -118,29 +118,29 @@
 		</PRIResource>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Pages\Settings\DependenciesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Pages\Settings\DependenciesPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Pages\Settings\CustomYtdlpParamsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Pages\Settings\CustomYtdlpParamsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\ColorPickerControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\ColorPickerControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Pages\Settings\SaveTemlatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Pages\Settings\SaveTemlatePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\LanguageSelectorControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\LanguageSelectorControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Controls\CustomControl.xaml">
@@ -168,8 +168,8 @@
 		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Pages\Settings\HomePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Pages\Settings\HomePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 </Project>
