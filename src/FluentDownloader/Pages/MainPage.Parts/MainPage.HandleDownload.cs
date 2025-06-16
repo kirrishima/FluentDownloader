@@ -167,7 +167,7 @@ namespace FluentDownloader.Pages
             AudioConversionFormat audioFormat, VideoRecodeFormat recodeFormat, CancellationToken cancellationToken)
         {
             var downloadType = (DownloadType)FormatComboBox.SelectedIndex;
-            return await ytDlpDownloader.DownloadVideo(
+            var res = await ytDlpDownloader.DownloadVideo(
                  null,
                 UrlTextBox.Text,
                 downloadPath: savePath,
@@ -180,6 +180,9 @@ namespace FluentDownloader.Pages
                 cancellationToken: cancellationToken,
                 videoData: _videoData
             );
+
+            UpdateInstallProgress(100);
+            return res;
         }
 
         /// <summary>
@@ -201,7 +204,7 @@ namespace FluentDownloader.Pages
 
             if (selectedFormat != null)
             {
-                return await ytDlpDownloader.DownloadVideo(
+                var res = await ytDlpDownloader.DownloadVideo(
                     selectedFormat,
                     UrlTextBox.Text,
                     savePath,
@@ -211,6 +214,10 @@ namespace FluentDownloader.Pages
                     cancellationToken: cancellationToken,
                     videoData: _videoData
                 );
+
+                UpdateInstallProgress(100);
+
+                return res;
             }
             return false;
         }

@@ -156,7 +156,16 @@ namespace FluentDownloader.Services.Ytdlp
             if (videoInfo.Success && videoInfo.Data != null &&
                 videoInfo.Data.Entries != null && videoInfo.Data.Entries.Any())
             {
-                throw new Exceptions.DownloadVideoException($"Playlist download is not available yet. \"{url}\" is a playlist.");
+                var entry = videoInfo.Data.Entries.First();
+                var data = (await FetchVideoDataAsync(entry.Url)).Value;
+
+                return new VideoData(
+                    [],
+                    data.ThumbnailUri,
+                    "Playlist",
+                    videoInfo.Data.ID,
+                    videoInfo.ErrorOutput)
+                { IsPlaylist = true };
             }
 
             if (videoInfo.Success)
@@ -223,15 +232,23 @@ namespace FluentDownloader.Services.Ytdlp
                             );
                         return false;
                     }
+                }
 
-                    optionSet = CreateDownloadOptions(videoFormatInfo, mergeFormat, audioFormat: audioFormat, recodeFormat: recodeFormat, onlyvideo: onlyvideo, onlyaudio: onlyaudio, bv_ba: bv_ba);
-                }
-                else
-                {
-                    optionSet = CreateDownloadOptions(videoFormatInfo, mergeFormat, audioFormat: audioFormat, recodeFormat: recodeFormat, onlyvideo: onlyvideo, onlyaudio: onlyaudio, bv_ba: bv_ba);
-                }
+                optionSet = CreateDownloadOptions(
+                    videoFormatInfo,
+                    mergeFormat,
+                    audioFormat: audioFormat,
+                    recodeFormat: recodeFormat,
+                    onlyvideo: onlyvideo,
+                    onlyaudio: onlyaudio,
+                    bv_ba: bv_ba);
 
                 optionSet.Output = Path.Combine(App.AppSettings.General.LastPeekedOutputPath, App.AppSettings.Download.FileOutputTemplate);
+                optionSet.Verbose = false;
+                optionSet.Progress = true;
+                optionSet.NoProgress = false;
+
+                optionSet.YesPlaylist = videoData.HasValue && videoData.Value.IsPlaylist;
 
                 var progress = new LogBoxProgress(_dialogService, _downloadDependencies, _progressBar);
 
@@ -242,16 +259,14 @@ namespace FluentDownloader.Services.Ytdlp
                 {
                     var downloadResult = await youtubeDl.RunVideoDownload(
                         videoUrl,
-                           output: progress,
+                        output: progress,
                         overrideOptions: optionSet,
                         ct: cancellationToken
                     );
 
-                    //progress.FlushUI();
-
+                    _progressBar.UpdateInstallProgress(100);
                     if (downloadResult.Success)
                     {
-                        _progressBar.UpdateInstallProgress(100);
                         _dialogService.AddPopUpNotification(
                              LocalizedStrings.GetMessagesString("FileDownloadedSuccessfully"),
                              string.Format(LocalizedStrings.GetMessagesString("FileSavedAs"), downloadResult.Data),

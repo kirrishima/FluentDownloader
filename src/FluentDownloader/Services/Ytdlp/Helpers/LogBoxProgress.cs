@@ -1,5 +1,6 @@
 ﻿using FluentDownloader.Dialogs;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -34,7 +35,7 @@ namespace FluentDownloader.Services.Ytdlp.Helpers
             _updateTimer = new Timer(UpdateUI, null, 0, App.AppSettings.Download.LogBoxUpdateRateMs);
         }
 
-        private bool _argumentsLogged = false; // Флаг для первой строки
+        private bool _argumentsLogged = false;
 
         public void Report(string value)
         {
@@ -53,7 +54,7 @@ namespace FluentDownloader.Services.Ytdlp.Helpers
                     if (App.AppSettings.Download.VerboseYtdlpOptions)
                     {
                         _lastMessage = value;
-                        _argumentsLogged = true; // Устанавливаем флаг, больше не проверяем
+                        _argumentsLogged = true;
                         return;
                     }
                 }
@@ -84,7 +85,7 @@ namespace FluentDownloader.Services.Ytdlp.Helpers
 
                 message = _lastMessage;
                 progress = _lastProgress;
-                _lastMessage = null; // Очищаем после обработки
+                _lastMessage = null;
             }
 
             _context.Post(_ =>

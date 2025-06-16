@@ -120,7 +120,7 @@ namespace FluentDownloader.Pages
         /// <param name="videoData">The fetched video data.</param>
         private void ProcessFetchedVideoData(VideoData videoData)
         {
-            if (videoData.VideoFormats.Count == 0)
+            if (videoData.VideoFormats.Count == 0 && !videoData.IsPlaylist)
             {
                 LogsTextBoxWriteLine(LocalizedStrings.GetMessagesString("FetchingVideoDataErorLogMessage"));
                 HandleVideoDataErrors();

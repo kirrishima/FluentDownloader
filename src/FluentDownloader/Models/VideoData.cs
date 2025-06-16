@@ -20,6 +20,8 @@ namespace FluentDownloader.Models
         public string ID => _id;
         public string[] Errors => _errors;
 
+        public bool IsPlaylist { get; set; }
+
         public VideoData(
             Dictionary<int, List<VideoFormatInfo>> videoFormats,
             string thumbnailUri,
