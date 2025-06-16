@@ -172,7 +172,7 @@ namespace FluentDownloader.Pages
         {
             if (!_videoData.HasValue || !_videoData.Value.Errors.Any()) return;
 
-            var errorDetails = string.Join("\n", _videoData.Value.Errors);
+            var errorDetails = string.Join(Environment.NewLine, _videoData.Value.Errors);
             var description = string.Format(LocalizedStrings.GetMessagesString("FormatRetrievalErrorDescription"), errorDetails);
 
             AddPopUpNotification(

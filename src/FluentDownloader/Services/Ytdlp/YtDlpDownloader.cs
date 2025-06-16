@@ -286,13 +286,13 @@ namespace FluentDownloader.Services.Ytdlp
                         {
                             NotificationService.ShowNotificationWithImage(
                              string.Format(string.Format(LocalizedStrings.GetMessagesString("ErrorWhileDownloading"), videoUrl)),
-                             string.Join('\n', downloadResult.ErrorOutput),
+                             string.Join(Environment.NewLine, downloadResult.ErrorOutput),
                              videoData?.ThumbnailUri);
                         }
 
                         _dialogService.AddPopUpNotification(
                             string.Format(string.Format(LocalizedStrings.GetMessagesString("ErrorWhileDownloading"), videoUrl)),
-                            string.Join('\n', downloadResult.ErrorOutput), InfoBarSeverity.Error
+                            string.Join(Environment.NewLine, downloadResult.ErrorOutput), InfoBarSeverity.Error
                             );
                     }
                     return downloadResult.Success;
@@ -311,7 +311,7 @@ namespace FluentDownloader.Services.Ytdlp
                 {
                     _dialogService.AddPopUpNotification(
                     string.Format(string.Format(LocalizedStrings.GetMessagesString("ErrorWhileDownloading"), videoUrl)),
-                    string.Join('\n', ex.Message), InfoBarSeverity.Error
+                    string.Join(Environment.NewLine, ex.Message), InfoBarSeverity.Error
                     );
                     _progressBar.SetProgressBarError(true);
                 }

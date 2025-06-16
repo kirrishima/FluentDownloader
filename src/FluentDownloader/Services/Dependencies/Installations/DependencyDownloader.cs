@@ -84,7 +84,7 @@ namespace FluentDownloader.Services.Dependencies.Installations
             catch (Exception ex)
             {
                 return (null, new DependencyDownloaderException($"Error while downloading from {url}: " +
-                    $"{ex.Message}.\nStack Trace:\n{ex.StackTrace}"));
+                    $"{ex.Message}.{Environment.NewLine}Stack Trace:{Environment.NewLine}{ex.StackTrace}"));
             }
         }
 
@@ -132,7 +132,7 @@ namespace FluentDownloader.Services.Dependencies.Installations
             catch (Exception ex)
             {
                 return (null, new Exceptions.DependencyDownloaderException($"Error while unpacking \"{zipPath}\" to" +
-                    $" \"{extractPath}\": {ex.Message}.\nStack Trace:\n{ex.StackTrace}"));
+                    $" \"{extractPath}\": {ex.Message}.{Environment.NewLine}Stack Trace:{Environment.NewLine}{ex.StackTrace}"));
             }
         }
     }
