@@ -122,8 +122,10 @@ namespace FluentDownloader.Pages
         {
             if (videoData.VideoFormats.Count == 0 && !videoData.IsPlaylist)
             {
-                LogsTextBoxWriteLine(LocalizedStrings.GetMessagesString("FetchingVideoDataErorLogMessage"));
+                var errorText = LocalizedStrings.GetMessagesString("FetchingVideoDataErorLogMessage");
+                LogsTextBoxWriteLine(errorText);
                 HandleVideoDataErrors();
+                ResetUrlInputState();
                 return;
             }
 
@@ -170,9 +172,9 @@ namespace FluentDownloader.Pages
         /// </summary>
         private void HandleVideoDataErrors()
         {
-            if (!_videoData.HasValue || !_videoData.Value.Errors.Any()) return;
-
-            var errorDetails = string.Join(Environment.NewLine, _videoData.Value.Errors);
+            var errorDetails = _videoData.HasValue && _videoData.Value.Errors.Any()
+                ? string.Join(Environment.NewLine, _videoData.Value.Errors)
+                : "Null";
             var description = string.Format(LocalizedStrings.GetMessagesString("FormatRetrievalErrorDescription"), errorDetails);
 
             AddPopUpNotification(
