@@ -1,26 +1,29 @@
+using CommunityToolkit.WinUI;
+using FluentDownloader;
 using FluentDownloader.Dialogs;
 using FluentDownloader.Helpers;
 using FluentDownloader.Models;
+using FluentDownloader.Services;
+using FluentDownloader.Services.Dependencies.Helpers;
 using FluentDownloader.Services.Dependencies.Installations;
 using FluentDownloader.Services.Ytdlp;
+using FluentDownloader.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
+using Microsoft.Windows.AppNotifications;
+using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Globalization;
-using FluentDownloader;
-using FluentDownloader.Services.Dependencies.Helpers;
 using Windows.Storage;
-using System.Diagnostics;
-using Microsoft.Windows.AppNotifications.Builder;
-using Microsoft.Windows.AppNotifications;
-using FluentDownloader.Services;
-using CommunityToolkit.WinUI;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -102,6 +105,8 @@ namespace FluentDownloader.Pages
         /// </remarks>
         private ToolTip _DownloadButtonToolTip = null!;
 
+        public DownloadQueueViewModel DownloadQueueViewModel { get; private set; } = null!;
+
         public MainPage()
         {
             if (_initialized) return;
@@ -112,11 +117,14 @@ namespace FluentDownloader.Pages
             this.Loaded += MainWindow_Activated;
 
             InitializeServices();
+            InitializeViewModels();
             InitializeAsyncOperations();
             FinalizeInitialization();
             ConfigureSystemBackdrop();
 
             this.SizeChanged += MainPage_SizeChanged;
+
+            DataContext = this;
         }
 
         bool _isSmallView = false;
@@ -209,6 +217,29 @@ namespace FluentDownloader.Pages
         {
             propertyUpdater.LogStep("Processing styles");
             PopUpsTextBlockStyle = StylesManager.GetStyleOrDefault("PopUpsTextBlock", "BodyTextBlockStyle");
+        }
+
+        [MemberNotNull(nameof(DownloadQueueViewModel))]
+        private void InitializeViewModels()
+        {
+            var animator = new DownloadQueueAnimator(
+              fadeInNotifications: (Storyboard)Resources["FadeInNotifications"],
+              fadeOutNotifications: (Storyboard)Resources["FadeOutNotifications"],
+              queuePanel: DownloadQueue,
+              queueTransform: QueueTranslate,
+              notificationPanel: NotificationStack,
+              slideInQueue: (Storyboard)Resources["SlideInQueue"],
+              slideOutQueue: (Storyboard)Resources["SlideOutQueue"]);
+
+
+            // Создаём VM и задаём DataContext
+            DownloadQueueViewModel = new DownloadQueueViewModel(animator);
+            //this.DataContext = _viewModel;
+
+            // Убедимся, что очередь изначально скрыта
+            DownloadQueue.Visibility = Visibility.Collapsed;
+
+
         }
 
         /// <summary>
