@@ -10,6 +10,8 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:FluentDownloader.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:CommunityToolkit.WinUI.Controls"
+    xmlns:vm="using:FluentDownloader.Models"
     mc:Ignorable="d">
     <Page.Resources>
         <converters:LanguageBasedVerticalAlignmentConverter x:Key="LangAlignmentConverter" />
@@ -69,10 +71,7 @@
             </DoubleAnimation>
         </Storyboard>
     </Page.Resources>
-    <ScrollViewer
-        x:Name="RootThemeElement"
-        HorizontalScrollBarVisibility="Disabled"
-        VerticalScrollBarVisibility="Visible">
+    <Grid x:Name="RootThemeElement">
         <Grid Margin="0,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -84,7 +83,7 @@
                 x:Name="RootContentGrid"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                Margin="10,20,10,0"
+                Margin="10,0,10,0"
                 RowSpacing="20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -95,7 +94,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <StackPanel
@@ -391,6 +390,7 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     Grid.ColumnSpan="2"
+                    Margin="0,-15,0,0"
                     HorizontalAlignment="Center"
                     Style="{StaticResource TitleLargeTextBlockStyle}" />
 
@@ -791,7 +791,7 @@
                 x:Name="NotificationStack"
                 Grid.Column="3"
                 MaxWidth="600"
-                Margin="10,35,10,10"
+                Margin="10,0,10,10"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
                 Orientation="Vertical"
@@ -806,28 +806,101 @@
                     </TransitionCollection>
                 </StackPanel.Transitions>
             </StackPanel>
-
-            <StackPanel
-                x:Name="DownloadQueue"
+            <ScrollViewer
+                Grid.Row="2"
                 Grid.Column="3"
+                Grid.ColumnSpan="3"
                 MaxWidth="600"
-                Padding="10,35,10,10"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Top"
-                Orientation="Vertical"
-                Spacing="10"
-                Visibility="Collapsed">
-                <StackPanel.RenderTransform>
-                    <TranslateTransform x:Name="QueueTranslate" X="{Binding ActualWidth, ElementName=DownloadQueue}" />
-                </StackPanel.RenderTransform>
-                <!--<StackPanel.ChildrenTransitions>
+                HorizontalScrollBarVisibility="Disabled"
+                VerticalScrollBarVisibility="Auto">
+
+                <ItemsControl
+                    x:Name="DownloadQueue"
+                    Margin="10,0,10,10"
+                    HorizontalAlignment="Stretch"
+                    ItemsSource="{Binding DownloadQueueViewModel.Items}"
+                    Visibility="Collapsed">
+
+                    <ItemsControl.RenderTransform>
+                        <TranslateTransform x:Name="QueueTranslate" X="{Binding ActualWidth, ElementName=DownloadQueue}" />
+                    </ItemsControl.RenderTransform>
+                    <!--<StackPanel.ChildrenTransitions>
           <EntranceThemeTransition FromVerticalOffset="-50" />
           <RepositionThemeTransition IsStaggeringEnabled="False" />
       </StackPanel.ChildrenTransitions>-->
 
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:QueueItem">
+                            <Grid
+                                Padding="8"
+                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                BorderThickness="1"
+                                CornerRadius="4"
+                                RowSpacing="8">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
 
-                <Image Source="/Assets/thumbnailPlaceholder.png" />
-            </StackPanel>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    FontSize="16"
+                                    MaxLines="3"
+                                    Text="{Binding Title}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="Wrap" />
+
+                                <muxc:WrapPanel
+                                    Grid.Row="1"
+                                    HorizontalSpacing="8"
+                                    Orientation="Horizontal"
+                                    VerticalSpacing="4">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                                        <Run Text="{Binding Title}" />
+                                        <Run Text="•" />
+                                        <Run Text="{Binding Size}" />
+                                    </TextBlock>
+
+                                    <Border
+                                        Padding="8,4"
+                                        VerticalAlignment="Center"
+                                        Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                                        CornerRadius="6">
+                                        <TextBlock
+                                            FontWeight="Bold"
+                                            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+                                            Text="{Binding Status}" />
+                                    </Border>
+                                </muxc:WrapPanel>
+
+
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Orientation="Horizontal"
+                                    Spacing="8">
+                                    <Button>
+                                        <FontIcon Glyph="&#xE70E;" />
+                                    </Button>
+                                    <Button>
+                                        <FontIcon Glyph="&#xE70D;" />
+                                    </Button>
+                                    <Button>
+                                        <FontIcon Foreground="Red" Glyph="&#xE74D;" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+            </ScrollViewer>
+
         </Grid>
-    </ScrollViewer>
+    </Grid>
 </Page>

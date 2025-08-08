@@ -10,14 +10,20 @@
     xmlns:local="using:FluentDownloader.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    x:Name="RootWindow"
     Title="Fluent Downloader"
     mc:Ignorable="d">
 
-    <ScrollViewer x:Name="RootThemeElement" Background="{Binding WindowBackgroundBrush}">
+    <Grid
+        x:Name="RootThemeElement"
+        Margin="0,35,0,0"
+        Background="{Binding WindowBackgroundBrush}">
         <Grid>
-            <Frame x:Name="MainFrame" />
+            <StackPanel>
+                <Frame x:Name="MainFrame" />
+            </StackPanel>
             <controls:ColorPickerControl x:Name="ColorPickerService" />
         </Grid>
-    </ScrollViewer>
+    </Grid>
 
 </Window>

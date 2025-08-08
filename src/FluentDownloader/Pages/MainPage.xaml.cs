@@ -229,17 +229,10 @@ namespace FluentDownloader.Pages
               queueTransform: QueueTranslate,
               notificationPanel: NotificationStack,
               slideInQueue: (Storyboard)Resources["SlideInQueue"],
-              slideOutQueue: (Storyboard)Resources["SlideOutQueue"]);
+              slideOutQueue: (Storyboard)Resources["SlideOutQueue"]
+              );
 
-
-            // Создаём VM и задаём DataContext
             DownloadQueueViewModel = new DownloadQueueViewModel(animator);
-            //this.DataContext = _viewModel;
-
-            // Убедимся, что очередь изначально скрыта
-            DownloadQueue.Visibility = Visibility.Collapsed;
-
-
         }
 
         /// <summary>
