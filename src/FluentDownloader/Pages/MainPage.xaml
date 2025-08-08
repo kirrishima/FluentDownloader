@@ -411,15 +411,16 @@
                     VerticalAlignment="Stretch"
                     VerticalScrollBarVisibility="Auto"
                     VerticalScrollMode="Enabled">
-                    <!--<ScrollViewer.ChildrenTransitions>
-                        <EntranceThemeTransition FromVerticalOffset="50" />
-                        <RepositionThemeTransition IsStaggeringEnabled="False" />
-                    </ScrollViewer.ChildrenTransitions>-->
+
                     <Grid x:Name="RootGrid" Padding="20,0,20,20">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
+                        <Grid.ChildrenTransitions>
+                            <EntranceThemeTransition FromVerticalOffset="50" />
+                            <RepositionThemeTransition IsStaggeringEnabled="False" />
+                        </Grid.ChildrenTransitions>
                         <!--  Header  -->
                         <StackPanel
                             x:Name="ThumbnailImage"
@@ -810,10 +811,10 @@
                 VerticalAlignment="Top"
                 Orientation="Vertical"
                 Spacing="10">
-                <!--<StackPanel.ChildrenTransitions>
+                <StackPanel.ChildrenTransitions>
                     <EntranceThemeTransition FromVerticalOffset="-50" />
                     <RepositionThemeTransition IsStaggeringEnabled="False" />
-                </StackPanel.ChildrenTransitions>-->
+                </StackPanel.ChildrenTransitions>
                 <StackPanel.Transitions>
                     <TransitionCollection>
                         <RepositionThemeTransition />
