@@ -137,6 +137,9 @@ namespace FluentDownloader.Pages
 
                 Grid.SetColumn(NotificationStack, 0);
                 Grid.SetColumnSpan(NotificationStack, 4);
+                Grid.SetColumn(DownloadQueue, 2);
+                Grid.SetColumnSpan(DownloadQueue, 2);
+                DownloadQueue.Margin = new(0, 0, 0, 50);
 
                 Grid.SetColumn(RootContentGrid, 0);
                 Grid.SetColumnSpan(RootContentGrid, 4);
@@ -144,6 +147,7 @@ namespace FluentDownloader.Pages
                 Grid.SetColumn(LeftSidebar, 0);
                 Grid.SetRow(LeftSidebar, 2);
                 Grid.SetColumnSpan(LeftSidebar, 3);
+                LeftSidebar.Margin = new Thickness(0, 0, 0, 8);
 
                 Grid.SetColumn(Header, 0);
                 Grid.SetRow(Header, 0);
@@ -161,6 +165,9 @@ namespace FluentDownloader.Pages
                 _isSmallView = false;
                 Grid.SetColumn(NotificationStack, 3);
                 Grid.SetColumnSpan(NotificationStack, 1);
+                Grid.SetColumn(DownloadQueue, 3);
+                Grid.SetColumnSpan(DownloadQueue, 1);
+                DownloadQueue.Margin = new(0, 0, 0, 0);
 
                 Grid.SetColumn(RootContentGrid, 0);
                 Grid.SetColumnSpan(RootContentGrid, 3);
@@ -168,6 +175,7 @@ namespace FluentDownloader.Pages
                 Grid.SetColumn(LeftSidebar, 0);
                 Grid.SetRow(LeftSidebar, 1);
                 Grid.SetColumnSpan(LeftSidebar, 1);
+                LeftSidebar.Margin = new Thickness(0, 0, 0, 0);
 
                 Grid.SetColumn(Header, 1);
                 Grid.SetRow(Header, 0);

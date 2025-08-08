@@ -19,9 +19,9 @@
         Margin="0,35,0,0"
         Background="{Binding WindowBackgroundBrush}">
         <Grid>
-            <StackPanel>
-                <Frame x:Name="MainFrame" />
-            </StackPanel>
+
+            <Frame x:Name="MainFrame" />
+
             <controls:ColorPickerControl x:Name="ColorPickerService" />
         </Grid>
     </Grid>

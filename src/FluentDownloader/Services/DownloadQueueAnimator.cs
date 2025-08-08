@@ -35,15 +35,20 @@ namespace FluentDownloader.Services
             _slideOutQueue = slideOutQueue;
 
             // Изначальное состояние
-            _notificationPanel.Opacity = 1;
+            // Закомментировано: не трогаем opacity панели уведомлений
+            // _notificationPanel.Opacity = 1;
+
             _queuePanel.Visibility = Visibility.Collapsed;
         }
 
         public async Task ShowQueueAsync()
         {
             // Запустить fade-out без ожидания
-            _fadeOutNotifications.Begin();
-            _notificationPanel.Visibility = Visibility.Collapsed;
+            // Закомментировано: не запускаем анимацию скрытия уведомлений
+            // _fadeOutNotifications.Begin();
+
+            // Закомментировано: не меняем видимость панели уведомлений
+            // _notificationPanel.Visibility = Visibility.Collapsed;
 
             // Отобразить очередь
             _queuePanel.Visibility = Visibility.Visible;
@@ -70,6 +75,9 @@ namespace FluentDownloader.Services
             }
             _slideInQueue.Completed += OnCompleted;
             _slideInQueue.Begin();
+
+            // Примечание: если нужно ждать завершения анимации, можно:
+            // await tcs.Task;
             return;
         }
 
@@ -92,12 +100,17 @@ namespace FluentDownloader.Services
                 _queuePanel.Visibility = Visibility.Collapsed;
 
                 // Показываем уведомления
-                _notificationPanel.Visibility = Visibility.Visible;
-                _fadeInNotifications.Begin();
+                // Закомментировано: не меняем видимость и не запускаем fade-in для уведомлений
+                // _notificationPanel.Visibility = Visibility.Visible;
+                // _fadeInNotifications.Begin();
+
                 tcs.SetResult(null!);
             }
             _slideOutQueue.Completed += OnSlideOutCompleted;
             _slideOutQueue.Begin();
+
+            // Если нужно дождаться завершения анимации:
+            // await tcs.Task;
         }
 
         private Task EnsureWidthAsync()
