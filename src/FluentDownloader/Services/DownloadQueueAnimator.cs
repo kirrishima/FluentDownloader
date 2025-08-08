@@ -63,7 +63,7 @@ namespace FluentDownloader.Services
             da.To = 0;
 
             var tcs = new TaskCompletionSource<object>();
-            void OnCompleted(object s, object e)
+            void OnCompleted(object? s, object e)
             {
                 _slideInQueue.Completed -= OnCompleted;
                 tcs.SetResult(null!);
@@ -86,7 +86,7 @@ namespace FluentDownloader.Services
                 da.To = width;
 
             var tcs = new TaskCompletionSource<object>();
-            void OnSlideOutCompleted(object s, object e)
+            void OnSlideOutCompleted(object? s, object e)
             {
                 _slideOutQueue.Completed -= OnSlideOutCompleted;
                 _queuePanel.Visibility = Visibility.Collapsed;
@@ -107,16 +107,16 @@ namespace FluentDownloader.Services
                 return Task.CompletedTask;
 
             var tcs = new TaskCompletionSource<object>();
-            SizeChangedEventHandler handler = null;
+            SizeChangedEventHandler handler = null!;
             handler = (s, e) =>
             {
-                if (fe.ActualWidth > 0)
+                if (fe?.ActualWidth > 0)
                 {
                     fe.SizeChanged -= handler;
                     tcs.SetResult(null!);
                 }
             };
-            fe.SizeChanged += handler;
+            fe!.SizeChanged += handler;
             return tcs.Task;
         }
     }
