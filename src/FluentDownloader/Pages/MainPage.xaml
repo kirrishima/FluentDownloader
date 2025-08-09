@@ -672,7 +672,7 @@
                             <StackPanel
                                 Grid.Row="3"
                                 Grid.Column="0"
-                                Grid.ColumnSpan="2"
+                                Grid.ColumnSpan="3"
                                 Height="40"
                                 Orientation="Horizontal"
                                 Spacing="20">
@@ -737,12 +737,29 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </Button>
+
+                                <Button x:Uid="AddToQueue" Style="{StaticResource AccentButtonStyle}">
+                                    <StackPanel
+                                        Height="25"
+                                        VerticalAlignment="Stretch"
+                                        Orientation="Horizontal"
+                                        Spacing="10">
+                                        <Path
+                                            Width="18"
+                                            Height="18"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Data="{StaticResource AddToPlaylistIcon}"
+                                            Fill="{ThemeResource TextOnAccentFillColorPrimaryBrush}"
+                                            Stretch="Uniform" />
+                                    </StackPanel>
+                                </Button>
+
                                 <Button
                                     x:Name="ResetDownloadFieldsButton"
                                     x:Uid="ResetDownloadFieldsButton"
                                     VerticalAlignment="Stretch"
-                                    Click="ResetDownloadFieldsButton_Click"
-                                    Style="{StaticResource AccentButtonStyle}">
+                                    Click="ResetDownloadFieldsButton_Click">
                                     <StackPanel
                                         Height="25"
                                         VerticalAlignment="Center"

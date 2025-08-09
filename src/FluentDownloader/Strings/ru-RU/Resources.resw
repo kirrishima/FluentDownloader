@@ -22,10 +22,8 @@
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing"
-  mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework
-  object]</value>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
                 
@@ -61,8 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -115,53 +112,47 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0,
-      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
-      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="VideoUrlLabel.Text" xml:space="preserve">
-  <value>Видео URL:</value>
-</data>
+    <value>Видео URL:</value>
+  </data>
   <data name="UrlTextBox.PlaceholderText" xml:space="preserve">
-  <value>Введите ссылку на видео или плейлист</value>
-</data>
-
+    <value>Введите ссылку на видео или плейлист</value>
+  </data>
   <data name="OpenEditUrlButton.Content" xml:space="preserve">
-  <value>Развернуть</value>
-</data>
+    <value>Развернуть</value>
+  </data>
   <data name="OpenEditUrlButton.ToolTipService.ToolTip" xml:space="preserve">
-  <value>Открыть расширенные настройки URL</value>
-</data>
+    <value>Открыть расширенные настройки URL</value>
+  </data>
   <data name="SaveToLabel.Text" xml:space="preserve">
     <value>Сохранить в:</value>
-</data>
+  </data>
   <data name="SavePathTextBox.PlaceholderText" xml:space="preserve">
     <value>Выберите папку назначения</value>
-</data>
+  </data>
   <data name="SavePathTextBox.ToolTipService.ToolTip" xml:space="preserve">
     <value>Выберите папку, в которую будет сохранено видео.</value>
-</data>
+  </data>
   <data name="SavePathTeachingTip.Title" xml:space="preserve">
     <value>Выбор папки назначения</value>
-</data>
+  </data>
   <data name="SavePathTeachingTip.Subtitle" xml:space="preserve">
     <value>Выберите папку, в которую будет сохранено видео.</value>
-</data>
+  </data>
   <data name="SavePathButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Нажмите, чтобы выбрать папку через проводник.</value>
-</data>
+  </data>
   <data name="SavePathButtonTextBlock.Text" xml:space="preserve">
     <value>Обзор</value>
-</data>
-  <!-- Format TextBlock -->
+  </data>
   <data name="FormatTextBlock.Text" xml:space="preserve">
     <value>Формат:</value>
   </data>
-
-  <!-- FormatComboBox -->
   <data name="FormatComboBox.Header" xml:space="preserve">
     <value>Разрешение</value>
   </data>
@@ -180,8 +171,6 @@
   <data name="FormatComboBoxItem3.Content" xml:space="preserve">
     <value>Лучшее видео+Лучшее аудио</value>
   </data>
-
-  <!-- VideoFormatComboBox -->
   <data name="VideoFormatComboBox.Header" xml:space="preserve">
     <value>Формат видео</value>
   </data>
@@ -191,8 +180,6 @@
   <data name="VideoFormatComboBox.ToolTipService.ToolTip" xml:space="preserve">
     <value>--merge-output-format: Эта опция определяет формат контейнера для итогового файла при объединении видео и аудио. Если объединение не требуется, формат может отличаться от выбранного.</value>
   </data>
-
-  <!-- AudioFormatComboBox -->
   <data name="AudioFormatComboBox.Header" xml:space="preserve">
     <value>Формат аудио</value>
   </data>
@@ -202,8 +189,6 @@
   <data name="AudioFormatComboBox.ToolTipService.ToolTip" xml:space="preserve">
     <value>--audio-format: Эта опция определяет формат, в котором аудио должно быть загружено или преобразовано. Если указанный формат недоступен, yt-dlp попытается преобразовать аудио в желаемый формат.</value>
   </data>
-
-  <!-- RecodeVideFormatComboBox -->
   <data name="RecodeVideFormatComboBox.Header" xml:space="preserve">
     <value>Перекодировать</value>
   </data>
@@ -213,8 +198,6 @@
   <data name="RecodeVideFormatComboBox.ToolTipService.ToolTip" xml:space="preserve">
     <value>Эта опция позволяет перекодировать видео в другой формат после загрузки. Значительно нагружает процессор, может быть *медленной*.</value>
   </data>
-
-  <!-- FormatTeachingTip -->
   <data name="FormatTeachingTip.Title" xml:space="preserve">
     <value>Выберите формат</value>
   </data>
@@ -223,50 +206,53 @@
   </data>
   <data name="EditTextDialog.Title" xml:space="preserve">
     <value>Редактировать URL</value>
-</data>
+  </data>
   <data name="EditTextDialog.CloseButtonText" xml:space="preserve">
     <value>Отмена</value>
-</data>
+  </data>
   <data name="EditTextDialog.PrimaryButtonText" xml:space="preserve">
     <value>Сохранить</value>
-</data>
-
+  </data>
   <data name="DownloadButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Используйте эту кнопку для загрузки видеоформатов и видео в выбранном формате</value>
-</data>
+  </data>
   <data name="DownloadButtonGetFormatsTextBlock.Text" xml:space="preserve">
     <value>Получить форматы</value>
-</data>
+  </data>
   <data name="DownloadButtonDownloadTextBlock.Text" xml:space="preserve">
     <value>Загрузить</value>
-</data>
+  </data>
   <data name="DownloadButtonCancelPanelTextBlock.Text" xml:space="preserve">
     <value>Отмена</value>
-</data>
+  </data>
   <data name="ResetDownloadFieldsButtonText.Text" xml:space="preserve">
     <value>Сбросить всё</value>
-</data>
+  </data>
   <data name="ResetDownloadFieldsButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Сбрасывает состояние полей ввода, кнопок и очищает логи</value>
-</data>
-
+  </data>
   <data name="LogsBlockHeader.Text" xml:space="preserve">
     <value>Логи загрузки:</value>
-</data>
+  </data>
   <data name="SaveButtonTextContent.Content" xml:space="preserve">
     <value>Сохранить</value>
-</data>
+  </data>
   <data name="ResetButtonTextContent.Content" xml:space="preserve">
     <value>Сбросить</value>
-</data>
+  </data>
   <data name="ResetToDefaultButtonTextContent.Content" xml:space="preserve">
     <value>По умолчанию</value>
-</data>
+  </data>
   <data name="ConfirmButtonTextContent.Content" xml:space="preserve">
     <value>Подтвердить</value>
-</data>
-
+  </data>
   <data name="NotImplementedYetInfoBar.Message" xml:space="preserve">
     <value>Данная функция ещё не реализована в этой версии приложения. Возможно, она будет добавлена в одном из следующих обновлений.</value>
-</data>
+  </data>
+  <data name="Header.Text" xml:space="preserve">
+    <value>Fluent Video Downloader</value>
+  </data>
+  <data name="AddToQueue.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Добавить в очередь</value>
+  </data>
 </root>

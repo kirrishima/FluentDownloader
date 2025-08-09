@@ -22,10 +22,8 @@
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing"
-  mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework
-  object]</value>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
                 
@@ -61,8 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	  xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
 		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
 		<xsd:element name="root" msdata:IsDataSet="true">
 			<xsd:complexType>
@@ -115,16 +112,10 @@
 		<value>2.0</value>
 	</resheader>
 	<resheader name="reader">
-		<value>
-			System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0,
-			Culture=neutral, PublicKeyToken=b77a5c561934e089
-		</value>
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
 	<resheader name="writer">
-		<value>
-			System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
-			Culture=neutral, PublicKeyToken=b77a5c561934e089
-		</value>
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
 	<data name="ChangeBackgroundButton.OnContent" xml:space="preserve">
     <value>Acrylic</value>
@@ -139,16 +130,14 @@
     <value>Toggles current app theme</value>
   </data>
 	<data name="SwitchThemeTextBlockDefault" xml:space="preserve">
-  <value>Default theme</value>
-</data>
-
+    <value>Default theme</value>
+  </data>
 	<data name="SwitchThemeTextBlockDark" xml:space="preserve">
-  <value>Dark theme</value>
-</data>
-
+    <value>Dark theme</value>
+  </data>
 	<data name="SwitchThemeTextBlockLight" xml:space="preserve">
-  <value>Light theme</value>
-</data>
+    <value>Light theme</value>
+  </data>
 	<data name="FfmpegInfoButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Shows detailed info about FFmpeg installation</value>
   </data>
@@ -167,40 +156,67 @@
 	<data name="DownloadQueue.Text" xml:space="preserve">
     <value>Download queue</value>
   </data>
+	<data name="DownloadQueueStart.Text" xml:space="preserve">
+    <value>Start</value>
+  </data>
+	<data name="DownloadQueueSkip.Text" xml:space="preserve">
+    <value>Skip current</value>
+  </data>
+	<data name="DownloadQueueCancel.Text" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+	<data name="DownloadQueueClear.Text" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+	<data name="DownloadQueueClearSucceded.Text" xml:space="preserve">
+    <value>Clear finished</value>
+  </data>
+	<data name="DownloadQueueResume.Text" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+	<data name="DownloadQueueRetryFailed.Text" xml:space="preserve">
+    <value>Retry failed</value>
+  </data>
+	<data name="DownloadQueueSkip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Skip downloading the current video and go to the next one</value>
+  </data>
+	<data name="DownloadQueueRetryFailed.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Retry to download failed videos</value>
+  </data>
 	<data name="SelectedLanguageText.Text" xml:space="preserve">
-  <value>Current language</value>
-</data>
+    <value>Current language</value>
+  </data>
 	<data name="ProjectGitHubLink.NavigateUri" xml:space="preserve">
     <value>https://github.com/kirrishima</value>
   </data>
 	<data name="SwitchPageButtonTextBlock.Text" xml:space="preserve">
-  <value>Appearance</value>
-</data>
+    <value>Appearance</value>
+  </data>
 	<data name="UseThemeButton.Content" xml:space="preserve">
-  <value>Save changes</value>
-</data>
+    <value>Save changes</value>
+  </data>
 	<data name="UseThemeButton.ToolTipService.ToolTip" xml:space="preserve">
-  <value>Saves the current theme settings. They will be used globally. This action cannot be undone.</value>
-</data>
+    <value>Saves the current theme settings. They will be used globally. This action cannot be undone.</value>
+  </data>
 	<data name="ResetStylesButton.Content" xml:space="preserve">
-  <value>Restore saved</value>
-</data>
+    <value>Restore saved</value>
+  </data>
 	<data name="ResetStylesButton.ToolTipService.ToolTip" xml:space="preserve">
-  <value>Resets unsaved settings and loads the previously saved theme. This action cannot be undone.</value>
-</data>
+    <value>Resets unsaved settings and loads the previously saved theme. This action cannot be undone.</value>
+  </data>
 	<data name="ResetToDefaultButton.Content" xml:space="preserve">
-  <value>Default</value>
-</data>
+    <value>Default</value>
+  </data>
 	<data name="ResetToDefaultButton.ToolTipService.ToolTip" xml:space="preserve">
-  <value>Restores default values. This will overwrite your current settings. This action cannot be undone.</value>
-</data>
+    <value>Restores default values. This will overwrite your current settings. This action cannot be undone.</value>
+  </data>
 	<data name="GoBackButtonTextBlock.Text" xml:space="preserve">
-  <value>Back</value>
-</data>
+    <value>Back</value>
+  </data>
 	<data name="TintOpacitySlider.Header" xml:space="preserve">
-  <value>Tint opacity</value>
-</data>
+    <value>Tint opacity</value>
+  </data>
 	<data name="OpacitySlider.Header" xml:space="preserve">
-  <value>Background opacity</value>
-</data>
+    <value>Background opacity</value>
+  </data>
 </root>
