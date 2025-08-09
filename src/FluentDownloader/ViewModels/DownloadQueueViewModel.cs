@@ -27,11 +27,11 @@ namespace FluentDownloader.ViewModels
             _isQueueVisible = false;
             //ToggleQueueCommand = new RelayCommand(async () => await ToggleQueueAsync());
 
-            for (int i = 0; i < 0; i++)
-            {
-                Items.Add(new QueueItem { Title = "Лучшее видео + лучшее аудио", Size = "1243,5MB", Status = "В очереди" });
-                Items.Add(new QueueItem { Title = "Еще один файл", Size = "512MB", Status = "В очереди" });
-            }
+            //for (int i = 0; i < 0; i++)
+            //{
+            //    Items.Add(new QueueItem { Title = "Лучшее видео + лучшее аудио", Size = "1243,5MB", Status = "В очереди" });
+            //    Items.Add(new QueueItem { Title = "Еще один файл", Size = "512MB", Status = "В очереди" });
+            //}
 
             Items.CollectionChanged += Items_CollectionChanged;
         }
@@ -129,7 +129,7 @@ namespace FluentDownloader.ViewModels
 
             QueueItem item = new()
             {
-                Status = "В очереди",
+                Status = VideoInQueueStatus.InQueue,
                 Title = mainPage.VideoData.Value.Title,
                 Resolution = $"{selectedFormat?.Resolution} {selectedFormat?.Extension}",
                 Size = selectedFormat?.FileSize?.ToString() ?? string.Empty

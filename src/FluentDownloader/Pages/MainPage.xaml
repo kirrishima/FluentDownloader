@@ -914,7 +914,7 @@
                                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                 BorderThickness="1"
                                 CornerRadius="4"
-                                RowSpacing="8">
+                                RowSpacing="4">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
@@ -936,7 +936,7 @@
                                     Orientation="Horizontal"
                                     VerticalSpacing="4">
 
-                                    <StackPanel>
+                                    <StackPanel VerticalAlignment="Center">
                                         <TextBlock
                                             VerticalAlignment="Center"
                                             FontSize="14"
@@ -961,7 +961,7 @@
                                         <TextBlock
                                             FontWeight="Bold"
                                             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-                                            Text="{Binding Status}" />
+                                            Text="{Binding StatusDisplay}" />
                                     </Border>
                                 </muxc:WrapPanel>
 

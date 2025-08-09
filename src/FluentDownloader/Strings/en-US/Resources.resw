@@ -256,4 +256,16 @@
   <data name="AddToQueue.ToolTipService.ToolTip" xml:space="preserve">
     <value>Add to queue</value>
   </data>
+  <data name="VideoInQueueStatus_Downloading" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
+  <data name="VideoInQueueStatus_Failed" xml:space="preserve">
+    <value>Faild</value>
+  </data>
+  <data name="VideoInQueueStatus_InQueue" xml:space="preserve">
+    <value>In queue</value>
+  </data>
+  <data name="VideoInQueueStatus_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
 </root>

@@ -255,4 +255,16 @@
   <data name="AddToQueue.ToolTipService.ToolTip" xml:space="preserve">
     <value>Добавить в очередь</value>
   </data>
+  <data name="VideoInQueueStatus_Downloading" xml:space="preserve">
+    <value>Скачивается</value>
+  </data>
+  <data name="VideoInQueueStatus_Failed" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="VideoInQueueStatus_InQueue" xml:space="preserve">
+    <value>В очереди</value>
+  </data>
+  <data name="VideoInQueueStatus_Success" xml:space="preserve">
+    <value>Завершено</value>
+  </data>
 </root>
