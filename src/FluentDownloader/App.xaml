@@ -12,6 +12,8 @@
             </ResourceDictionary.MergedDictionaries>
 
             <converters:ThemeToTextConverter x:Key="ThemeToTextConverter" />
+            <converters:IntegerToVisibilityConverter x:Key="IntegerToVisibilityConverter" />
+
             <AcrylicBrush
                 x:Key="DynamicAcrylicBrush"
                 Opacity="0.5"

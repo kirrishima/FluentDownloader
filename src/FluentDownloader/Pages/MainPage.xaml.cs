@@ -107,6 +107,8 @@ namespace FluentDownloader.Pages
 
         public DownloadQueueViewModel DownloadQueueViewModel { get; private set; } = null!;
 
+        public VideoDownloadViewModel VideoDownloadViewModel { get; private set; } = new();
+
         public MainPage()
         {
             if (_initialized) return;
@@ -317,7 +319,7 @@ namespace FluentDownloader.Pages
         {
             FfmpegInfoButton.IsEnabled = true;
             YtDlpInfoButton.IsEnabled = true;
-            DownloadButton.IsEnabled = true;
+            VideoDownloadViewModel.YtdlpServiceIsBusy = true;
         }
 
 

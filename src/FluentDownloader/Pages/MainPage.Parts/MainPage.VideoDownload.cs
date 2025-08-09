@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using FluentDownloader.ViewModels;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
@@ -69,7 +70,7 @@ namespace FluentDownloader.Pages
             DownloadButtonProgressRing.Visibility = state == DownloadButtonState.Processing
                 ? Visibility.Visible
                 : Visibility.Collapsed;
-
+            
             DownloadButtonDownloadTextBlock.Visibility = state == DownloadButtonState.DownloadVideo
                 ? Visibility.Visible
                 : Visibility.Collapsed;
@@ -133,7 +134,7 @@ namespace FluentDownloader.Pages
                 FormatComboBox.Items.Add(item);
             }
 
-            _videoData?.ResetToNull();
+            VideoData?.ResetToNull();
             ThumbnailImage.Visibility = Visibility.Collapsed;
             ThumbnailImage.DataContext = null;
 

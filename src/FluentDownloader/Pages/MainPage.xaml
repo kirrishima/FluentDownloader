@@ -195,26 +195,51 @@
 
                     <!--<controls:LanguageSelectorControl AutoRestartOnLanguageChange="False" />-->
 
-                    <SplitButton MinWidth="150" Command="{Binding DownloadQueueViewModel.ToggleQueueCommand}">
+                    <SplitButton
+                        MinWidth="280"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        Command="{Binding DownloadQueueViewModel.ToggleQueueCommand}">
                         <SplitButton.Content>
-                            <StackPanel Orientation="Horizontal" Spacing="10">
-                                <Path
-                                    Width="16"
-                                    Height="16"
-                                    Margin="0,3,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="M640-160q-50 0-85-35t-35-85q0-50 35-85t85-35q11 0 21 1.5t19 6.5v-328h200v80H760v360q0 50-35 85t-85 35ZM120-320v-80h320v80H120Zm0-160v-80h480v80H120Zm0-160v-80h480v80H120Z"
-                                    Fill="{ThemeResource TextFillColorPrimaryBrush}"
-                                    Stretch="Uniform" />
+                            <!--  Grid: левая колонка занимает всё доступное пространство, правая - auto под InfoBadge  -->
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <!--  растягиваемая  -->
+                                    <ColumnDefinition Width="Auto" />
+                                    <!--  под InfoBadge  -->
+                                </Grid.ColumnDefinitions>
 
-                                <TextBlock
-                                    x:Uid="/LeftSideBar/DownloadQueue"
+                                <!--  Левая часть: иконка + текст  -->
+                                <StackPanel
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Path
+                                        Width="16"
+                                        Height="16"
+                                        Margin="0,3,0,0"
+                                        VerticalAlignment="Center"
+                                        Data="M640-160q-50 0-85-35t-35-85q0-50 35-85t85-35q11 0 21 1.5t19 6.5v-328h200v80H760v360q0 50-35 85t-85 35ZM120-320v-80h320v80H120Zm0-160v-80h480v80H120Zm0-160v-80h480v80H120Z"
+                                        Fill="{ThemeResource TextFillColorPrimaryBrush}"
+                                        Stretch="Uniform" />
 
-                                <InfoBadge Value="10" />
-                            </StackPanel>
+                                    <TextBlock
+                                        x:Uid="/LeftSideBar/DownloadQueue"
+                                        VerticalAlignment="Center"
+                                        Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+                                </StackPanel>
+
+                                <!--  Правая часть: InfoBadge  -->
+                                <InfoBadge
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Visibility="{Binding DownloadQueueViewModel.ItemsCount, Mode=OneWay, Converter={StaticResource IntegerToVisibilityConverter}}"
+                                    Value="{Binding DownloadQueueViewModel.ItemsCount, Mode=OneWay}" />
+                            </Grid>
                         </SplitButton.Content>
                         <SplitButton.Flyout>
                             <Flyout>
@@ -417,10 +442,10 @@
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
-                        <Grid.ChildrenTransitions>
+                        <!--<Grid.ChildrenTransitions>
                             <EntranceThemeTransition FromVerticalOffset="50" />
                             <RepositionThemeTransition IsStaggeringEnabled="False" />
-                        </Grid.ChildrenTransitions>
+                        </Grid.ChildrenTransitions>-->
                         <!--  Header  -->
                         <StackPanel
                             x:Name="ThumbnailImage"
@@ -553,10 +578,10 @@
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 Grid.ColumnSpan="2">
-                                <RelativePanel.ChildrenTransitions>
+                                <!--<RelativePanel.ChildrenTransitions>
                                     <EntranceThemeTransition FromVerticalOffset="50" />
                                     <RepositionThemeTransition IsStaggeringEnabled="False" />
-                                </RelativePanel.ChildrenTransitions>
+                                </RelativePanel.ChildrenTransitions>-->
                                 <!--  FormatComboBox  -->
                                 <ComboBox
                                     x:Name="FormatComboBox"
@@ -675,85 +700,94 @@
                                 Grid.ColumnSpan="3"
                                 Height="40"
                                 Orientation="Horizontal"
-                                Spacing="20">
-                                <Button
-                                    x:Name="DownloadButton"
-                                    x:Uid="DownloadButton"
-                                    Width="180"
-                                    VerticalAlignment="Stretch"
-                                    Click="DownloadButton_Click"
-                                    IsEnabled="False"
-                                    Style="{StaticResource AccentButtonStyle}">
-                                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                        <ProgressRing
-                                            x:Name="DownloadButtonProgressRing"
-                                            Width="25"
-                                            Height="25"
-                                            Foreground="AliceBlue"
-                                            IsActive="True"
-                                            Visibility="Collapsed" />
-                                        <Viewbox
-                                            Height="20"
-                                            VerticalAlignment="Center"
-                                            Stretch="Uniform">
-                                            <TextBlock
-                                                x:Name="DownloadButtonGetFormatsTextBlock"
-                                                x:Uid="DownloadButtonGetFormatsTextBlock"
-                                                VerticalAlignment="Center"
-                                                FontSize="16"
-                                                FontWeight="SemiBold" />
-                                        </Viewbox>
-                                        <Viewbox
-                                            Height="20"
-                                            VerticalAlignment="Center"
-                                            Stretch="Uniform">
-                                            <TextBlock
-                                                x:Name="DownloadButtonDownloadTextBlock"
-                                                x:Uid="DownloadButtonDownloadTextBlock"
-                                                FontWeight="SemiBold"
+                                Spacing="24">
+                                <StackPanel
+                                    Height="40"
+                                    Orientation="Horizontal"
+                                    Spacing="16">
+                                    <Button
+                                        x:Name="DownloadButton"
+                                        x:Uid="DownloadButton"
+                                        Width="180"
+                                        VerticalAlignment="Stretch"
+                                        Click="DownloadButton_Click"
+                                        IsEnabled="{Binding VideoDownloadViewModel.YtdlpServiceIsBusy}"
+                                        Style="{StaticResource AccentButtonStyle}">
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <ProgressRing
+                                                x:Name="DownloadButtonProgressRing"
+                                                Width="25"
+                                                Height="25"
+                                                Foreground="AliceBlue"
+                                                IsActive="True"
                                                 Visibility="Collapsed" />
-                                        </Viewbox>
-                                        <StackPanel
-                                            x:Name="DownloadButtonCancelPanel"
-                                            x:Uid="DownloadButtonCancelPanel"
-                                            Height="25"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="5"
-                                            Visibility="Collapsed">
-                                            <FontIcon
-                                                VerticalAlignment="Stretch"
-                                                FontWeight="SemiBold"
-                                                Glyph="&#xF78A;" />
                                             <Viewbox
                                                 Height="20"
                                                 VerticalAlignment="Center"
                                                 Stretch="Uniform">
                                                 <TextBlock
-                                                    x:Uid="DownloadButtonCancelPanelTextBlock"
-                                                    VerticalAlignment="Stretch"
+                                                    x:Name="DownloadButtonGetFormatsTextBlock"
+                                                    x:Uid="DownloadButtonGetFormatsTextBlock"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="16"
                                                     FontWeight="SemiBold" />
                                             </Viewbox>
+                                            <Viewbox
+                                                Height="20"
+                                                VerticalAlignment="Center"
+                                                Stretch="Uniform">
+                                                <TextBlock
+                                                    x:Name="DownloadButtonDownloadTextBlock"
+                                                    x:Uid="DownloadButtonDownloadTextBlock"
+                                                    FontWeight="SemiBold"
+                                                    Visibility="Collapsed" />
+                                            </Viewbox>
+                                            <StackPanel
+                                                x:Name="DownloadButtonCancelPanel"
+                                                x:Uid="DownloadButtonCancelPanel"
+                                                Height="25"
+                                                VerticalAlignment="Center"
+                                                Orientation="Horizontal"
+                                                Spacing="5"
+                                                Visibility="Collapsed">
+                                                <FontIcon
+                                                    VerticalAlignment="Stretch"
+                                                    FontWeight="SemiBold"
+                                                    Glyph="&#xF78A;" />
+                                                <Viewbox
+                                                    Height="20"
+                                                    VerticalAlignment="Center"
+                                                    Stretch="Uniform">
+                                                    <TextBlock
+                                                        x:Uid="DownloadButtonCancelPanelTextBlock"
+                                                        VerticalAlignment="Stretch"
+                                                        FontWeight="SemiBold" />
+                                                </Viewbox>
+                                            </StackPanel>
                                         </StackPanel>
-                                    </StackPanel>
-                                </Button>
+                                    </Button>
 
-                                <Button x:Uid="AddToQueue" Style="{StaticResource AccentButtonStyle}">
-                                    <StackPanel
-                                        Height="25"
-                                        VerticalAlignment="Stretch"
-                                        Orientation="Horizontal"
-                                        Spacing="10">
-                                        <Path
-                                            Width="18"
-                                            Height="18"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Data="{StaticResource AddToPlaylistIcon}"
-                                            Fill="{ThemeResource TextOnAccentFillColorPrimaryBrush}"
-                                            Stretch="Uniform" />
-                                    </StackPanel>
-                                </Button>
+                                    <Button
+                                        x:Uid="AddToQueue"
+                                        Command="{Binding DownloadQueueViewModel.AddVideoToQueueCommand}"
+                                        IsEnabled="{Binding VideoDownloadViewModel.YtdlpServiceIsBusy}"
+                                        Style="{StaticResource AccentButtonStyle}">
+                                        <StackPanel
+                                            Height="25"
+                                            VerticalAlignment="Stretch"
+                                            Orientation="Horizontal"
+                                            Spacing="10">
+                                            <Path
+                                                Width="18"
+                                                Height="18"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Data="{StaticResource AddToPlaylistIcon}"
+                                                Fill="{ThemeResource TextOnAccentFillColorPrimaryBrush}"
+                                                Stretch="Uniform" />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
 
                                 <Button
                                     x:Name="ResetDownloadFieldsButton"
@@ -828,10 +862,10 @@
                 VerticalAlignment="Top"
                 Orientation="Vertical"
                 Spacing="10">
-                <StackPanel.ChildrenTransitions>
+                <!--<StackPanel.ChildrenTransitions>
                     <EntranceThemeTransition FromVerticalOffset="-50" />
                     <RepositionThemeTransition IsStaggeringEnabled="False" />
-                </StackPanel.ChildrenTransitions>
+                </StackPanel.ChildrenTransitions>-->
                 <StackPanel.Transitions>
                     <TransitionCollection>
                         <RepositionThemeTransition />
@@ -904,7 +938,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="14"
                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                        <Run Text="{Binding Title}" />
+                                        <Run Text="{Binding Resolution}" />
                                         <Run Text="•" />
                                         <Run Text="{Binding Size}" />
                                     </TextBlock>

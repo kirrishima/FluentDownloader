@@ -11,5 +11,6 @@ namespace FluentDownloader.Models
         public string Title { get; set; } = null!;
         public string Size { get; set; } = null!;
         public string Status { get; set; } = null!;
+        public string Resolution { get; set; } = null!;
     }
 }

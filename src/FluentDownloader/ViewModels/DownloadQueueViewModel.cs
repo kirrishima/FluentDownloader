@@ -1,39 +1,54 @@
-﻿using FluentDownloader.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using FluentDownloader.Models;
+using FluentDownloader.Pages;
 using FluentDownloader.Services;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Management.Policies;
+using YoutubeDLSharp.Options;
 
 namespace FluentDownloader.ViewModels
 {
-    public class DownloadQueueViewModel : ViewModelBase
+    public sealed partial class DownloadQueueViewModel : ObservableObject
     {
         private readonly DownloadQueueAnimator _animator;
         private bool _isQueueVisible;
         public ObservableCollection<QueueItem> Items { get; } = [];
+
+        public int ItemsCount => Items.Count;
 
         public DownloadQueueViewModel(DownloadQueueAnimator animator)
         {
             _animator = animator;
             // Изначально очередь скрыта
             _isQueueVisible = false;
-            ToggleQueueCommand = new RelayCommand(async () => await ToggleQueueAsync());
+            //ToggleQueueCommand = new RelayCommand(async () => await ToggleQueueAsync());
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 0; i++)
             {
                 Items.Add(new QueueItem { Title = "Лучшее видео + лучшее аудио", Size = "1243,5MB", Status = "В очереди" });
                 Items.Add(new QueueItem { Title = "Еще один файл", Size = "512MB", Status = "В очереди" });
             }
+
+            Items.CollectionChanged += (_, _) => OnPropertyChanged(nameof(ItemsCount));
+        }
+
+        private void Items_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
 
         /// <summary>
         /// Команда для переключения видимости очереди.
         /// </summary>
-        public ICommand ToggleQueueCommand { get; }
+        //public ICommand ToggleQueueCommand { get; }
 
         /// <summary>
         /// Выполняет анимацию: показывает или скрывает очередь.
         /// </summary>
+        [RelayCommand]
         private async Task ToggleQueueAsync()
         {
             if (_isQueueVisible)
@@ -57,6 +72,31 @@ namespace FluentDownloader.ViewModels
         {
             get => _isQueueVisible;
             private set => SetProperty(ref _isQueueVisible, value);
+        }
+
+        private ICommand? _addVideoToQueueCommand;
+        public ICommand AddVideoToQueueCommand => _addVideoToQueueCommand ??= new RelayCommand(async () => await AddVideoToQueueAsync());
+        private async Task AddVideoToQueueAsync()
+        {
+            var mainPage = MainPage.Instance;
+
+            if (mainPage is null || !mainPage.VideoData.HasValue || !mainPage.ValidateSelection() || !mainPage.ValidateDirectoryAccess(out var savePath))
+                return;
+
+            //var (mergeFormat, audioFormat, recodeFormat) = mainPage.GetSelectedFormats();
+            var selectedFormat = mainPage.GetSelectedFormat();
+
+            QueueItem item = new()
+            {
+                Status = "В очереди",
+                Title = mainPage.VideoData.Value.Title,
+                Resolution = $"{selectedFormat?.Resolution}{selectedFormat?.Extension}",
+                Size = selectedFormat?.FileSize?.ToString() ?? string.Empty
+            };
+
+            Items.Add(item);
+
+            await Task.CompletedTask;
         }
     }
 }

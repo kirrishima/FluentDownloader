@@ -179,7 +179,7 @@ namespace FluentDownloader.Services.Ytdlp
                             g => g.OrderByDescending(f => f.Bitrate ?? 0)
                                   .ThenByDescending(f => f.FrameRate ?? 0)
                                   .Select(f => new VideoFormatInfo(f.Resolution, f.Extension, f.FrameRate, f.Height, f.FormatId,
-                                                                        !string.IsNullOrEmpty(f.AudioCodec) && f.AudioCodec != "none"))
+                                                                        !string.IsNullOrEmpty(f.AudioCodec) && f.AudioCodec != "none", f.FileSize ?? f.ApproximateFileSize))
                                   .DistinctBy(i => i.Extension)
                                   .ToList()
                         );

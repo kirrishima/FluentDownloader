@@ -1,4 +1,5 @@
 ﻿using FluentDownloader.Helpers.FileSystem;
+using FluentDownloader.Models;
 using FluentDownloader.Services.Ytdlp.Helpers;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -56,7 +57,7 @@ namespace FluentDownloader.Pages
         /// If no format is selected, it shows a teaching tip and resets the UI state.
         /// </summary>
         /// <returns>True if a format is selected; otherwise, false.</returns>
-        private bool ValidateSelection()
+        public bool ValidateSelection()
         {
             if (FormatComboBox.SelectedIndex >= 0) return true;
 
@@ -77,7 +78,7 @@ namespace FluentDownloader.Pages
         /// </summary>
         /// <param name="savePath">The path to the directory where files will be saved.</param>
         /// <returns>True if the directory is accessible; otherwise, false.</returns>
-        private bool ValidateDirectoryAccess(out string savePath)
+        public bool ValidateDirectoryAccess(out string savePath)
         {
             savePath = SavePathTextBox.Text;
             var directoryStatus = DirectoryAccessChecker.CheckDirectoryAccess(savePath);
@@ -97,7 +98,7 @@ namespace FluentDownloader.Pages
         /// Retrieves the selected formats for video, audio, and recoding from the respective combo boxes.
         /// </summary>
         /// <returns>A tuple containing the selected merge format, audio format, and recode format.</returns>
-        private (DownloadMergeFormat mergeFormat, AudioConversionFormat audioFormat, VideoRecodeFormat recodeFormat) GetSelectedFormats()
+        public (DownloadMergeFormat mergeFormat, AudioConversionFormat audioFormat, VideoRecodeFormat recodeFormat) GetSelectedFormats()
         {
             return (
                 GetSelectedFormat<DownloadMergeFormat>(VideoFormatComboBox, DownloadMergeFormat.Unspecified),
@@ -178,11 +179,22 @@ namespace FluentDownloader.Pages
                 bv_ba: downloadType == DownloadType.Merged,
                 recodeFormat: recodeFormat,
                 cancellationToken: cancellationToken,
-                videoData: _videoData
+                videoData: VideoData
             );
 
             UpdateInstallProgress(100);
             return res;
+        }
+
+        public VideoFormatInfo? GetSelectedFormat()
+        {
+            if (FormatComboBox.SelectedItem is not ComboBoxItem { Tag: int index }) return null;
+
+            var selectedFormat = VideoData?.VideoFormats
+                .SelectMany(r => r.Value)
+                .ElementAtOrDefault(index);
+
+            return selectedFormat;
         }
 
         /// <summary>
@@ -196,30 +208,27 @@ namespace FluentDownloader.Pages
         private async Task<bool> HandleCustomFormatDownload(string savePath, DownloadMergeFormat mergeFormat,
             AudioConversionFormat audioFormat, VideoRecodeFormat recodeFormat, CancellationToken cancellationToken)
         {
-            if (FormatComboBox.SelectedItem is not ComboBoxItem { Tag: int index }) return false;
+            var selectedFormat = GetSelectedFormat();
 
-            var selectedFormat = _videoData?.VideoFormats
-                .SelectMany(r => r.Value)
-                .ElementAtOrDefault(index);
-
-            if (selectedFormat != null)
+            if (selectedFormat == null)
             {
-                var res = await ytDlpDownloader.DownloadVideo(
-                    selectedFormat,
-                    UrlTextBox.Text,
-                    savePath,
-                    mergeFormat,
-                    audioFormat,
-                    recodeFormat: recodeFormat,
-                    cancellationToken: cancellationToken,
-                    videoData: _videoData
-                );
-
-                UpdateInstallProgress(100);
-
-                return res;
+                return false;
             }
-            return false;
+
+            var res = await ytDlpDownloader.DownloadVideo(
+                selectedFormat,
+                UrlTextBox.Text,
+                savePath,
+                mergeFormat,
+                audioFormat,
+                recodeFormat: recodeFormat,
+                cancellationToken: cancellationToken,
+                videoData: VideoData
+            );
+
+            UpdateInstallProgress(100);
+
+            return res;
         }
 
         /// <summary>
