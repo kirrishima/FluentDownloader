@@ -12,6 +12,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:CommunityToolkit.WinUI.Controls"
     xmlns:vm="using:FluentDownloader.Models"
+    x:Name="RootPage"
     mc:Ignorable="d">
     <Page.Resources>
         <converters:LanguageBasedVerticalAlignmentConverter x:Key="LangAlignmentConverter" />
@@ -934,14 +935,23 @@
                                     HorizontalSpacing="8"
                                     Orientation="Horizontal"
                                     VerticalSpacing="4">
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                        <Run Text="{Binding Resolution}" />
-                                        <Run Text="•" />
-                                        <Run Text="{Binding Size}" />
-                                    </TextBlock>
+
+                                    <StackPanel>
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                                            <Run Text="{Binding Resolution}" />
+                                        </TextBlock>
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Visibility="{Binding Size, Converter={StaticResource ObjectToVisibility}}">
+                                            <Run Text=" •" />
+                                            <Run Text="{Binding Size}" />
+                                        </TextBlock>
+                                    </StackPanel>
 
                                     <Border
                                         Padding="8,4"
@@ -960,13 +970,16 @@
                                     Grid.Row="2"
                                     Orientation="Horizontal"
                                     Spacing="8">
-                                    <Button>
+                                    <!--  Move Up  -->
+                                    <Button Command="{Binding DownloadQueueViewModel.MoveUpCommand, ElementName=RootPage}" CommandParameter="{Binding}">
                                         <FontIcon Glyph="&#xE70E;" />
                                     </Button>
-                                    <Button>
+
+                                    <Button Command="{Binding DownloadQueueViewModel.MoveDownCommand, ElementName=RootPage}" CommandParameter="{Binding}">
                                         <FontIcon Glyph="&#xE70D;" />
                                     </Button>
-                                    <Button>
+
+                                    <Button Command="{Binding DownloadQueueViewModel.RemoveItemCommand, ElementName=RootPage}" CommandParameter="{Binding}">
                                         <FontIcon Foreground="Red" Glyph="&#xE74D;" />
                                     </Button>
                                 </StackPanel>

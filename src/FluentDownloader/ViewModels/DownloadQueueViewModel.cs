@@ -4,6 +4,7 @@ using FluentDownloader.Models;
 using FluentDownloader.Pages;
 using FluentDownloader.Services;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Management.Policies;
@@ -32,12 +33,53 @@ namespace FluentDownloader.ViewModels
                 Items.Add(new QueueItem { Title = "Еще один файл", Size = "512MB", Status = "В очереди" });
             }
 
-            Items.CollectionChanged += (_, _) => OnPropertyChanged(nameof(ItemsCount));
+            Items.CollectionChanged += Items_CollectionChanged;
         }
 
-        private void Items_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            // Обновляем биндинг на количество
+            OnPropertyChanged(nameof(ItemsCount));
+
+            // Сообщаем генерации команд пересчитать CanExecute
+            // сгенерированные свойства: MoveUpCommand, MoveDownCommand, RemoveItemCommand, AddVideoToQueueCommand и т.д.
+            // Все они реализуют IRelayCommand / IAsyncRelayCommand и имеют NotifyCanExecuteChanged()
+            MoveUpCommand.NotifyCanExecuteChanged();
+            MoveDownCommand.NotifyCanExecuteChanged();
+            RemoveItemCommand.NotifyCanExecuteChanged();
+            AddVideoToQueueCommand.NotifyCanExecuteChanged();
+            ToggleQueueCommand.NotifyCanExecuteChanged();
+        }
+
+        [RelayCommand(CanExecute = nameof(CanMoveUp))]
+        private void MoveUp(QueueItem? item)
+        {
+            if (item is null) return;
+            int idx = Items.IndexOf(item);
+            if (idx > 0) Items.Move(idx, idx - 1);
+        }
+
+        private bool CanMoveUp(QueueItem? item)
+            => item is not null && Items.IndexOf(item) > 0;
+
+        // MoveDown
+        [RelayCommand(CanExecute = nameof(CanMoveDown))]
+        private void MoveDown(QueueItem? item)
+        {
+            if (item is null) return;
+            int idx = Items.IndexOf(item);
+            if (idx >= 0 && idx < Items.Count - 1) Items.Move(idx, idx + 1);
+        }
+
+        private bool CanMoveDown(QueueItem? item)
+            => item is not null && Items.IndexOf(item) >= 0 && Items.IndexOf(item) < Items.Count - 1;
+
+        // Remove
+        [RelayCommand]
+        private void RemoveItem(QueueItem? item)
+        {
+            if (item is null) return;
+            Items.Remove(item);
         }
 
         /// <summary>
@@ -74,8 +116,7 @@ namespace FluentDownloader.ViewModels
             private set => SetProperty(ref _isQueueVisible, value);
         }
 
-        private ICommand? _addVideoToQueueCommand;
-        public ICommand AddVideoToQueueCommand => _addVideoToQueueCommand ??= new RelayCommand(async () => await AddVideoToQueueAsync());
+        [RelayCommand]
         private async Task AddVideoToQueueAsync()
         {
             var mainPage = MainPage.Instance;
@@ -90,7 +131,7 @@ namespace FluentDownloader.ViewModels
             {
                 Status = "В очереди",
                 Title = mainPage.VideoData.Value.Title,
-                Resolution = $"{selectedFormat?.Resolution}{selectedFormat?.Extension}",
+                Resolution = $"{selectedFormat?.Resolution} {selectedFormat?.Extension}",
                 Size = selectedFormat?.FileSize?.ToString() ?? string.Empty
             };
 

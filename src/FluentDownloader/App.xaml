@@ -13,6 +13,7 @@
 
             <converters:ThemeToTextConverter x:Key="ThemeToTextConverter" />
             <converters:IntegerToVisibilityConverter x:Key="IntegerToVisibilityConverter" />
+            <converters:ObjectToVisibilityConverter x:Key="ObjectToVisibility" />
 
             <AcrylicBrush
                 x:Key="DynamicAcrylicBrush"

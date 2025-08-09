@@ -1,4 +1,5 @@
-﻿using FluentDownloader.Helpers.FileSystem;
+﻿using FluentDownloader.Helpers;
+using FluentDownloader.Helpers.FileSystem;
 using FluentDownloader.Models;
 using FluentDownloader.Services.Ytdlp.Helpers;
 using Microsoft.UI.Xaml.Controls;
@@ -188,7 +189,30 @@ namespace FluentDownloader.Pages
 
         public VideoFormatInfo? GetSelectedFormat()
         {
-            if (FormatComboBox.SelectedItem is not ComboBoxItem { Tag: int index }) return null;
+            if (FormatComboBox.SelectedItem is not ComboBoxItem { Tag: int index })
+            {
+                var downloadType = (DownloadType)FormatComboBox.SelectedIndex;
+
+                var (mergeFormat, audioFormat, recodeFormat) = GetSelectedFormats();
+                string? res = null;
+
+                switch (downloadType)
+                {
+                    case DownloadType.BestVideo:
+                        res = LocalizedStrings.GetResourceString("FormatComboBoxItem1/Content");
+                        break;
+                    case DownloadType.BestAudio:
+                        res = LocalizedStrings.GetResourceString("FormatComboBoxItem2/Content");
+                        break;
+                    case DownloadType.Merged:
+                        res = LocalizedStrings.GetResourceString("FormatComboBoxItem3/Content");
+                        break;
+                    default:
+                        break;
+                }
+
+                return new VideoFormatInfo(resolution: res!, extension: mergeFormat.ToString(), null, null, null!, true, null);
+            }
 
             var selectedFormat = VideoData?.VideoFormats
                 .SelectMany(r => r.Value)
