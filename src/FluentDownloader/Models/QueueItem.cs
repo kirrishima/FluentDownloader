@@ -6,13 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YoutubeDLSharp.Options;
+using static FluentDownloader.Pages.MainPage;
 
 namespace FluentDownloader.Models
 {
     public partial class QueueItem : ObservableObject
     {
+        public DownloadMergeFormat MergeFormat { get; set; }
+        public VideoRecodeFormat RecodeFormat { get; set; }
+        public AudioConversionFormat AudioFormat { get; set; }
+        public VideoFormatInfo? VideoFormatInfo { get; set; }
+        public DownloadType? DownloadType { get; set; }
+        public bool IsDefaultFormatSelected { get; set; }
         public string Title { get; set; } = null!;
-        public string Size { get; set; } = null!;
+        public string Size => VideoFormatInfo?.FileSize?.ToString() ?? string.Empty;
         private VideoInQueueStatus _status;
         public VideoInQueueStatus Status
         {
@@ -68,7 +76,9 @@ namespace FluentDownloader.Models
             }
         }
 
-        public string Resolution { get; set; } = null!;
+        public string Resolution => $"{VideoFormatInfo?.Resolution} {VideoFormatInfo?.Extension}";
+
+        public VideoData VideoData { get; set; }
     }
 
     public static class SystemSignalColors

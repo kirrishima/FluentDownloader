@@ -161,6 +161,7 @@ namespace FluentDownloader.Services.Ytdlp
 
                 return new VideoData(
                     [],
+                    url,
                     data.ThumbnailUri,
                     "Playlist",
                     videoInfo.Data.ID,
@@ -186,7 +187,7 @@ namespace FluentDownloader.Services.Ytdlp
 
                 if (formats != null && videoInfo.Data is not null)
                 {
-                    return new VideoData(formats, videoInfo.Data.Thumbnail, videoInfo.Data.Title, videoInfo.Data.ID, videoInfo.ErrorOutput);
+                    return new VideoData(formats, videoInfo.Data.Thumbnail, url, videoInfo.Data.Title, videoInfo.Data.ID, videoInfo.ErrorOutput);
                 }
             }
             return new VideoData(videoInfo.ErrorOutput);

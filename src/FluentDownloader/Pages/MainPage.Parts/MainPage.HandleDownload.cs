@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using YoutubeDLSharp.Options;
+using static FluentDownloader.Pages.MainPage;
 
 namespace FluentDownloader.Pages
 {
@@ -36,7 +37,7 @@ namespace FluentDownloader.Pages
                 SetProgressBarPaused(false);
                 UpdateInstallProgress(0);
 
-                await ProcessDownloadRequest(savePath, mergeFormat, audioFormat, recodeFormat, DownloadCts.Token);
+                await ProcessDownloadRequest(UrlTextBox.Text, savePath, mergeFormat, audioFormat, recodeFormat, DownloadCts.Token);
 
                 HandleSuccessfulDownload();
             }
@@ -132,17 +133,18 @@ namespace FluentDownloader.Pages
         /// <param name="audioFormat">The selected audio format.</param>
         /// <param name="recodeFormat">The selected video recode format.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        private async Task ProcessDownloadRequest(string savePath, DownloadMergeFormat mergeFormat,
+        public async Task ProcessDownloadRequest(string url, string savePath, DownloadMergeFormat mergeFormat,
             AudioConversionFormat audioFormat, VideoRecodeFormat recodeFormat, CancellationToken cancellationToken)
         {
             bool result = false;
             if (IsDefaultFormatSelected())
             {
-                result = await HandleDefaultFormatDownload(savePath, mergeFormat, audioFormat, recodeFormat, cancellationToken);
+                result = await HandleDefaultFormatDownload(url, savePath, GetSelectedDefaultFormat()!.Value, mergeFormat, audioFormat, recodeFormat, cancellationToken);
             }
             else
             {
-                result = await HandleCustomFormatDownload(savePath, mergeFormat, audioFormat, recodeFormat, cancellationToken);
+                var selectedFormat = GetSelectedFormat();
+                result = await HandleCustomFormatDownload(url, savePath, selectedFormat, mergeFormat, audioFormat, recodeFormat, cancellationToken);
             }
             if (!result)
             {
@@ -155,7 +157,7 @@ namespace FluentDownloader.Pages
         /// Checks if the default format (Best Video, Best Audio, or Merged) is selected.
         /// </summary>
         /// <returns>True if a default format is selected; otherwise, false.</returns>  
-        private bool IsDefaultFormatSelected() => FormatComboBox.SelectedIndex < PreservedItemsCount;
+        public bool IsDefaultFormatSelected() => FormatComboBox.SelectedIndex < PreservedItemsCount;
 
         /// <summary>
         /// Handles the download process for default formats (Best Video, Best Audio, or Merged).
@@ -165,13 +167,12 @@ namespace FluentDownloader.Pages
         /// <param name="audioFormat">The selected audio format.</param>
         /// <param name="recodeFormat">The selected video recode format.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        private async Task<bool> HandleDefaultFormatDownload(string savePath, DownloadMergeFormat mergeFormat,
+        public async Task<bool> HandleDefaultFormatDownload(string url, string savePath, DownloadType downloadType, DownloadMergeFormat mergeFormat,
             AudioConversionFormat audioFormat, VideoRecodeFormat recodeFormat, CancellationToken cancellationToken)
         {
-            var downloadType = (DownloadType)FormatComboBox.SelectedIndex;
             var res = await ytDlpDownloader.DownloadVideo(
                  null,
-                UrlTextBox.Text,
+                url,
                 downloadPath: savePath,
                 mergeFormat: mergeFormat,
                 audioFormat: audioFormat,
@@ -187,11 +188,20 @@ namespace FluentDownloader.Pages
             return res;
         }
 
+        public DownloadType? GetSelectedDefaultFormat()
+        {
+            if (IsDefaultFormatSelected())
+            {
+                return (DownloadType)FormatComboBox.SelectedIndex;
+            }
+            return null;
+        }
+
         public VideoFormatInfo? GetSelectedFormat()
         {
             if (FormatComboBox.SelectedItem is not ComboBoxItem { Tag: int index })
             {
-                var downloadType = (DownloadType)FormatComboBox.SelectedIndex;
+                var downloadType = GetSelectedDefaultFormat()!;
 
                 var (mergeFormat, audioFormat, recodeFormat) = GetSelectedFormats();
                 string? res = null;
@@ -229,11 +239,9 @@ namespace FluentDownloader.Pages
         /// <param name="audioFormat">The selected audio format.</param>
         /// <param name="recodeFormat">The selected video recode format.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        private async Task<bool> HandleCustomFormatDownload(string savePath, DownloadMergeFormat mergeFormat,
+        public async Task<bool> HandleCustomFormatDownload(string url, string savePath, VideoFormatInfo? selectedFormat, DownloadMergeFormat mergeFormat,
             AudioConversionFormat audioFormat, VideoRecodeFormat recodeFormat, CancellationToken cancellationToken)
         {
-            var selectedFormat = GetSelectedFormat();
-
             if (selectedFormat == null)
             {
                 return false;
@@ -241,7 +249,7 @@ namespace FluentDownloader.Pages
 
             var res = await ytDlpDownloader.DownloadVideo(
                 selectedFormat,
-                UrlTextBox.Text,
+                url,
                 savePath,
                 mergeFormat,
                 audioFormat,
@@ -258,7 +266,7 @@ namespace FluentDownloader.Pages
         /// <summary>
         /// Handles the UI updates and logging after a successful download.
         /// </summary>
-        private void HandleSuccessfulDownload()
+        public void HandleSuccessfulDownload()
         {
             LogsTextBoxWriteLine();
             SetDownloadButtonState(DownloadButtonState.DownloadVideo);
@@ -297,7 +305,7 @@ namespace FluentDownloader.Pages
         /// Displays an error notification and resets the UI state.
         /// </summary>
         /// <param name="ex">The exception that occurred during the download process.</param>
-        private void HandleDownloadError(Exception ex)
+        public void HandleDownloadError(Exception ex)
         {
             SetDownloadButtonState(DownloadButtonState.DownloadVideo);
             AddPopUpErrorNotification(ex);
@@ -309,7 +317,7 @@ namespace FluentDownloader.Pages
         /// <summary>
         /// Represents user selected donload type in <see cref="FormatComboBox"/>
         /// </summary>
-        private enum DownloadType
+        public enum DownloadType
         {
             BestVideo = 0,
             BestAudio = 1,

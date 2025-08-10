@@ -19,12 +19,13 @@ namespace FluentDownloader.Models
         public string Title => _title;
         public string ID => _id;
         public string[] Errors => _errors;
-
+        public string Url { get; private set; }
         public bool IsPlaylist { get; set; }
 
         public VideoData(
             Dictionary<int, List<VideoFormatInfo>> videoFormats,
             string thumbnailUri,
+            string url,
             string title,
             string id,
             string[] errors)
@@ -34,6 +35,7 @@ namespace FluentDownloader.Models
             _title = title ?? string.Empty;
             _id = id ?? string.Empty;
             _errors = errors ?? Array.Empty<string>();
+            Url = url ?? string.Empty;
         }
 
         /// <summary>
@@ -44,6 +46,7 @@ namespace FluentDownloader.Models
         {
             _videoFormats = new Dictionary<int, List<VideoFormatInfo>>();
             _thumbnailUri = string.Empty;
+            Url = string.Empty;
             _title = string.Empty;
             _id = string.Empty;
             _errors = errors ?? Array.Empty<string>();
@@ -58,6 +61,7 @@ namespace FluentDownloader.Models
             _thumbnailUri = string.Empty;
             _title = string.Empty;
             _id = string.Empty;
+            Url = string.Empty;
             _errors = Array.Empty<string>();
         }
     }

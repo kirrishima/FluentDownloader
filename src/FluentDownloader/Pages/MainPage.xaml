@@ -200,7 +200,8 @@
                         MinWidth="280"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
-                        Command="{Binding DownloadQueueViewModel.ToggleQueueCommand}">
+                        Command="{Binding ToggleQueueCommand}"
+                        DataContext="{Binding ElementName=RootPage, Path=DownloadQueueViewModel}">
                         <SplitButton.Content>
                             <!--  Grid: левая колонка занимает всё доступное пространство, правая - auto под InfoBadge  -->
                             <Grid HorizontalAlignment="Stretch">
@@ -238,8 +239,8 @@
                                     Grid.Column="1"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
-                                    Visibility="{Binding DownloadQueueViewModel.ItemsCount, Mode=OneWay, Converter={StaticResource IntegerToVisibilityConverter}}"
-                                    Value="{Binding DownloadQueueViewModel.ItemsCount, Mode=OneWay}" />
+                                    Visibility="{Binding ItemsCount, Mode=OneWay, Converter={StaticResource IntegerToVisibilityConverter}}"
+                                    Value="{Binding ItemsCount, Mode=OneWay}" />
                             </Grid>
                         </SplitButton.Content>
                         <SplitButton.Flyout>
@@ -247,7 +248,7 @@
                                 <Flyout.FlyoutPresenterStyle>
                                     <Style TargetType="FlyoutPresenter">
                                         <!--  фон  -->
-                                        <Setter Property="Background" Value="{ThemeResource SolidBackgroundFillColorQuarternaryBrush}" />
+
                                         <!--  граница  -->
                                         <Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
                                         <Setter Property="BorderThickness" Value="1" />
@@ -271,7 +272,7 @@
                                         </StackPanel.Resources>
 
                                         <!--  управление очередью  -->
-                                        <Button>
+                                        <Button Command="{Binding StartDownloadCommand}">
                                             <StackPanel Orientation="Horizontal" Spacing="10">
                                                 <Path
                                                     Width="16"
@@ -287,7 +288,7 @@
                                             </StackPanel>
                                         </Button>
 
-                                        <Button>
+                                        <Button Command="{Binding ResumeCommand}">
                                             <StackPanel Orientation="Horizontal" Spacing="10">
                                                 <Path
                                                     Width="16"
@@ -306,7 +307,7 @@
                                         <MenuFlyoutSeparator Margin="0,4" />
 
                                         <!--  пропуск и отмена  -->
-                                        <Button>
+                                        <Button Command="{Binding SkipCommand}">
                                             <StackPanel Orientation="Horizontal" Spacing="10">
                                                 <Path
                                                     Width="16"
@@ -322,7 +323,7 @@
                                             </StackPanel>
                                         </Button>
 
-                                        <Button>
+                                        <Button Command="{Binding CancelCommand}">
                                             <StackPanel Orientation="Horizontal" Spacing="10">
                                                 <Path
                                                     Width="16"
@@ -341,7 +342,7 @@
                                         <MenuFlyoutSeparator Margin="0,4" />
 
                                         <!--  очистка очереди  -->
-                                        <Button>
+                                        <Button Command="{Binding ClearCommand}">
                                             <StackPanel Orientation="Horizontal" Spacing="10">
                                                 <Path
                                                     Width="16"
@@ -357,7 +358,7 @@
                                             </StackPanel>
                                         </Button>
 
-                                        <Button>
+                                        <Button Command="{Binding ClearSuccededCommand}">
                                             <StackPanel Orientation="Horizontal" Spacing="10">
                                                 <Path
                                                     Width="16"
@@ -376,7 +377,7 @@
                                         <MenuFlyoutSeparator Margin="0,4" />
 
                                         <!--  повторная попытка ошибок  -->
-                                        <Button>
+                                        <Button Command="{Binding RetryFailedCommand}">
                                             <StackPanel Orientation="Horizontal" Spacing="10">
                                                 <Path
                                                     Width="16"
@@ -395,7 +396,6 @@
                                     </StackPanel>
                                 </Flyout.Content>
                             </Flyout>
-
                         </SplitButton.Flyout>
                     </SplitButton>
 
@@ -712,7 +712,7 @@
                                         Width="180"
                                         VerticalAlignment="Stretch"
                                         Click="DownloadButton_Click"
-                                        IsEnabled="{Binding VideoDownloadViewModel.YtdlpServiceIsBusy}"
+                                        IsEnabled="{Binding VideoDownloadViewModel.YtdlpServiceIsAvailable}"
                                         Style="{StaticResource AccentButtonStyle}">
                                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                             <ProgressRing
@@ -771,7 +771,7 @@
                                     <Button
                                         x:Uid="AddToQueue"
                                         Command="{Binding DownloadQueueViewModel.AddVideoToQueueCommand}"
-                                        IsEnabled="{Binding VideoDownloadViewModel.YtdlpServiceIsBusy}"
+                                        IsEnabled="{Binding VideoDownloadViewModel.YtdlpServiceIsAvailable}"
                                         Style="{StaticResource AccentButtonStyle}">
                                         <StackPanel
                                             Height="25"
@@ -880,7 +880,8 @@
                 Grid.Column="3"
                 Grid.ColumnSpan="1"
                 MaxWidth="600"
-                Padding="10,0,10,0"
+                Margin="0,0,1,0"
+                Padding="10,0,9,0"
                 Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
                 CornerRadius="8"
                 HorizontalScrollBarVisibility="Disabled"
@@ -889,106 +890,124 @@
                     <TranslateTransform x:Name="QueueTranslate" X="{Binding ActualWidth, ElementName=DownloadQueue}" />
                 </ScrollViewer.RenderTransform>
 
-                <ItemsControl HorizontalAlignment="Stretch" ItemsSource="{Binding DownloadQueueViewModel.Items}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
+                <Grid>
+                    <StackPanel>
+                        <Button
+                            Margin="6,6,0,0"
+                            Padding="5"
+                            Command="{Binding DownloadQueueViewModel.StartDownloadCommand}">
+                            <!--  можно поместить иконку/текст  -->
+                            <FontIcon FontSize="18" Glyph="&#xE711;" />
+                            <!--  пример  -->
+                        </Button>
 
-                            <ItemsStackPanel>
+                        <Grid>
+                            <ItemsControl HorizontalAlignment="Stretch" ItemsSource="{Binding DownloadQueueViewModel.Items}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsStackPanel>
+                                            <ItemsStackPanel.ChildrenTransitions>
+                                                <TransitionCollection>
+                                                    <EntranceThemeTransition FromVerticalOffset="-50" />
+                                                    <RepositionThemeTransition IsStaggeringEnabled="False" />
+                                                </TransitionCollection>
+                                            </ItemsStackPanel.ChildrenTransitions>
+                                        </ItemsStackPanel>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
 
-                                <ItemsStackPanel.ChildrenTransitions>
-                                    <TransitionCollection>
-                                        <EntranceThemeTransition FromVerticalOffset="-50" />
-                                        <RepositionThemeTransition IsStaggeringEnabled="False" />
-                                    </TransitionCollection>
-                                </ItemsStackPanel.ChildrenTransitions>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:QueueItem">
+                                        <Grid
+                                            Margin="0,10,0,0"
+                                            Padding="8"
+                                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="4"
+                                            RowSpacing="4">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
 
-                            </ItemsStackPanel>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                FontSize="16"
+                                                MaxLines="3"
+                                                Text="{Binding Title}"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="Wrap" />
 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="vm:QueueItem">
-                            <Grid
-                                Margin="0,10,0,0"
-                                Padding="8"
-                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                BorderThickness="1"
-                                CornerRadius="4"
-                                RowSpacing="4">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
+                                            <muxc:WrapPanel
+                                                Grid.Row="1"
+                                                HorizontalSpacing="8"
+                                                Orientation="Horizontal"
+                                                VerticalSpacing="4">
 
-                                <TextBlock
-                                    Grid.Row="0"
-                                    FontSize="16"
-                                    MaxLines="3"
-                                    Text="{Binding Title}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="Wrap" />
+                                                <StackPanel VerticalAlignment="Center">
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                                                        <Run Text="{Binding Resolution}" />
+                                                    </TextBlock>
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                        Visibility="{Binding Size, Converter={StaticResource ObjectToVisibility}}">
+                                                        <Run Text=" •" />
+                                                        <Run Text="{Binding Size}" />
+                                                    </TextBlock>
+                                                </StackPanel>
 
-                                <muxc:WrapPanel
-                                    Grid.Row="1"
-                                    HorizontalSpacing="8"
-                                    Orientation="Horizontal"
-                                    VerticalSpacing="4">
-
-                                    <StackPanel VerticalAlignment="Center">
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                            <Run Text="{Binding Resolution}" />
-                                        </TextBlock>
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Visibility="{Binding Size, Converter={StaticResource ObjectToVisibility}}">
-                                            <Run Text=" •" />
-                                            <Run Text="{Binding Size}" />
-                                        </TextBlock>
-                                    </StackPanel>
-
-                                    <Border
-                                        Padding="8,4"
-                                        VerticalAlignment="Center"
-                                        Background="{Binding BadgeBackground}"
-                                        CornerRadius="6">
-                                        <TextBlock
-                                            FontWeight="Bold"
-                                            Foreground="{Binding BadgeForeground}"
-                                            Text="{Binding StatusDisplay}" />
-                                    </Border>
-                                </muxc:WrapPanel>
+                                                <Border
+                                                    Padding="8,4"
+                                                    VerticalAlignment="Center"
+                                                    Background="{Binding BadgeBackground}"
+                                                    CornerRadius="6">
+                                                    <TextBlock
+                                                        FontWeight="Bold"
+                                                        Foreground="{Binding BadgeForeground}"
+                                                        Text="{Binding StatusDisplay}" />
+                                                </Border>
+                                            </muxc:WrapPanel>
 
 
-                                <StackPanel
-                                    Grid.Row="2"
-                                    Orientation="Horizontal"
-                                    Spacing="8">
-                                    <!--  Move Up  -->
-                                    <Button Command="{Binding DownloadQueueViewModel.MoveUpCommand, ElementName=RootPage}" CommandParameter="{Binding}">
-                                        <FontIcon Glyph="&#xE70E;" />
-                                    </Button>
+                                            <StackPanel
+                                                Grid.Row="2"
+                                                Orientation="Horizontal"
+                                                Spacing="8">
+                                                <!--  Move Up  -->
+                                                <Button Command="{Binding DownloadQueueViewModel.MoveUpCommand, ElementName=RootPage}" CommandParameter="{Binding}">
+                                                    <FontIcon Glyph="&#xE70E;" />
+                                                </Button>
 
-                                    <Button Command="{Binding DownloadQueueViewModel.MoveDownCommand, ElementName=RootPage}" CommandParameter="{Binding}">
-                                        <FontIcon Glyph="&#xE70D;" />
-                                    </Button>
+                                                <Button Command="{Binding DownloadQueueViewModel.MoveDownCommand, ElementName=RootPage}" CommandParameter="{Binding}">
+                                                    <FontIcon Glyph="&#xE70D;" />
+                                                </Button>
 
-                                    <Button Command="{Binding DownloadQueueViewModel.RemoveItemCommand, ElementName=RootPage}" CommandParameter="{Binding}">
-                                        <FontIcon Foreground="Red" Glyph="&#xE74D;" />
-                                    </Button>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
+                                                <Button Command="{Binding DownloadQueueViewModel.RemoveItemCommand, ElementName=RootPage}" CommandParameter="{Binding}">
+                                                    <FontIcon Foreground="Red" Glyph="&#xE74D;" />
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </StackPanel>
 
-                </ItemsControl>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Text="Очередь пуста"
+                        Visibility="{Binding DownloadQueueViewModel.ItemsCount, Mode=OneWay, Converter={StaticResource IntegerToVisibilityConverter}, ConverterParameter='Invert'}" />
+                </Grid>
             </ScrollViewer>
 
         </Grid>

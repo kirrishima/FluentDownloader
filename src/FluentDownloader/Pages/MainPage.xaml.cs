@@ -69,7 +69,7 @@ namespace FluentDownloader.Pages
         /// Token source for managing cancellation of ongoing download operations.
         /// Enables cooperative cancellation of active downloads and background tasks.
         /// </summary>
-        private CancellationTokenSource DownloadCts { get; set; } = null!;
+        public CancellationTokenSource DownloadCts { get; set; } = null!;
 
         /// <summary>
         /// Gets the progress bar control used to visualize download progress.
@@ -319,7 +319,7 @@ namespace FluentDownloader.Pages
         {
             FfmpegInfoButton.IsEnabled = true;
             YtDlpInfoButton.IsEnabled = true;
-            VideoDownloadViewModel.YtdlpServiceIsBusy = true;
+            VideoDownloadViewModel.YtdlpServiceIsAvailable = true;
         }
 
 

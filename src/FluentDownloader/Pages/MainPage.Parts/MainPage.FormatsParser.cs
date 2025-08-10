@@ -90,7 +90,7 @@ namespace FluentDownloader.Pages
             try
             {
                 SetProcessingState();
-                VideoDownloadViewModel.YtdlpServiceIsBusy = false;
+                VideoDownloadViewModel.YtdlpServiceIsAvailable = false;
                 LogsTextBoxWriteLine(string.Format(LocalizedStrings.GetMessagesString("FetchingVideoDataLogMessage"), url));
 
                 var videoData = await ytDlpDownloader.FetchVideoDataAsync(url);
@@ -105,7 +105,7 @@ namespace FluentDownloader.Pages
             }
             finally
             {
-                VideoDownloadViewModel.YtdlpServiceIsBusy = true;
+                VideoDownloadViewModel.YtdlpServiceIsAvailable = true;
             }
         }
 

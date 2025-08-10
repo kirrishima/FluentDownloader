@@ -1,12 +1,17 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using ABI.System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentDownloader.Models;
 using FluentDownloader.Pages;
 using FluentDownloader.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.Chat;
 using Windows.Management.Policies;
 using YoutubeDLSharp.Options;
 
@@ -17,38 +22,34 @@ namespace FluentDownloader.ViewModels
         private readonly DownloadQueueAnimator _animator;
         private bool _isQueueVisible;
         public ObservableCollection<QueueItem> Items { get; } = [];
+        private readonly MainPage MainPage = MainPage.Instance!;
 
         public int ItemsCount => Items.Count;
 
         public DownloadQueueViewModel(DownloadQueueAnimator animator)
         {
             _animator = animator;
-            // Изначально очередь скрыта
             _isQueueVisible = false;
-            //ToggleQueueCommand = new RelayCommand(async () => await ToggleQueueAsync());
-
-            //for (int i = 0; i < 0; i++)
-            //{
-            //    Items.Add(new QueueItem { Title = "Лучшее видео + лучшее аудио", Size = "1243,5MB", Status = "В очереди" });
-            //    Items.Add(new QueueItem { Title = "Еще один файл", Size = "512MB", Status = "В очереди" });
-            //}
-
             Items.CollectionChanged += Items_CollectionChanged;
+
+            //Items_CollectionChanged(Items, null!);
         }
 
         private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            // Обновляем биндинг на количество
             OnPropertyChanged(nameof(ItemsCount));
 
-            // Сообщаем генерации команд пересчитать CanExecute
-            // сгенерированные свойства: MoveUpCommand, MoveDownCommand, RemoveItemCommand, AddVideoToQueueCommand и т.д.
-            // Все они реализуют IRelayCommand / IAsyncRelayCommand и имеют NotifyCanExecuteChanged()
             MoveUpCommand.NotifyCanExecuteChanged();
+            ClearCommand.NotifyCanExecuteChanged();
+            ClearSuccededCommand.NotifyCanExecuteChanged();
             MoveDownCommand.NotifyCanExecuteChanged();
             RemoveItemCommand.NotifyCanExecuteChanged();
             AddVideoToQueueCommand.NotifyCanExecuteChanged();
             ToggleQueueCommand.NotifyCanExecuteChanged();
+            ResumeCommand.NotifyCanExecuteChanged();
+            SkipCommand.NotifyCanExecuteChanged();
+            CancelCommand.NotifyCanExecuteChanged();
+            RetryFailedCommand.NotifyCanExecuteChanged();
         }
 
         [RelayCommand(CanExecute = nameof(CanMoveUp))]
@@ -62,7 +63,6 @@ namespace FluentDownloader.ViewModels
         private bool CanMoveUp(QueueItem? item)
             => item is not null && Items.IndexOf(item) > 0;
 
-        // MoveDown
         [RelayCommand(CanExecute = nameof(CanMoveDown))]
         private void MoveDown(QueueItem? item)
         {
@@ -74,7 +74,6 @@ namespace FluentDownloader.ViewModels
         private bool CanMoveDown(QueueItem? item)
             => item is not null && Items.IndexOf(item) >= 0 && Items.IndexOf(item) < Items.Count - 1;
 
-        // Remove
         [RelayCommand]
         private void RemoveItem(QueueItem? item)
         {
@@ -82,14 +81,60 @@ namespace FluentDownloader.ViewModels
             Items.Remove(item);
         }
 
-        /// <summary>
-        /// Команда для переключения видимости очереди.
-        /// </summary>
-        //public ICommand ToggleQueueCommand { get; }
+        private bool CanClear() => Items.Count > 0;
 
-        /// <summary>
-        /// Выполняет анимацию: показывает или скрывает очередь.
-        /// </summary>
+        [RelayCommand(CanExecute = nameof(CanClear))]
+        private void Clear()
+        {
+            Items.Clear();
+        }
+
+        private bool CanClearSucceded() => Items.Any(i => i.Status == VideoInQueueStatus.Success);
+
+        [RelayCommand(CanExecute = nameof(CanClearSucceded))]
+        private void ClearSucceded()
+        {
+            foreach (var item in Items.Where(i => i.Status == VideoInQueueStatus.Success).ToList())
+            {
+                Items.Remove(item);
+            }
+        }
+
+        [RelayCommand(CanExecute = nameof(CanResume))]
+        private void Resume()
+        {
+            // TODO: Реализация возобновления
+        }
+
+        private bool CanResume() => false;
+
+        // Skip
+        [RelayCommand(CanExecute = nameof(CanSkip))]
+        private void Skip()
+        {
+            // TODO: Реализация пропуска
+        }
+
+        private bool CanSkip() => false;
+
+        // Cancel
+        [RelayCommand(CanExecute = nameof(CanCancel))]
+        private void Cancel()
+        {
+            // TODO: Реализация отмены
+        }
+
+        private bool CanCancel() => false;
+
+        // RetryFailed
+        [RelayCommand(CanExecute = nameof(CanRetryFailed))]
+        private void RetryFailed()
+        {
+            // TODO: Реализация повтора неудачных загрузок
+        }
+
+        private bool CanRetryFailed() => false;
+
         [RelayCommand]
         private async Task ToggleQueueAsync()
         {
@@ -103,13 +148,9 @@ namespace FluentDownloader.ViewModels
             }
 
             _isQueueVisible = !_isQueueVisible;
-            // Если надо уведомить UI об изменении состояния
             OnPropertyChanged(nameof(IsQueueVisible));
         }
 
-        /// <summary>
-        /// Признак видимости очереди (можно привязать для UI-логики например).
-        /// </summary>
         public bool IsQueueVisible
         {
             get => _isQueueVisible;
@@ -119,25 +160,94 @@ namespace FluentDownloader.ViewModels
         [RelayCommand]
         private async Task AddVideoToQueueAsync()
         {
-            var mainPage = MainPage.Instance;
-
-            if (mainPage is null || !mainPage.VideoData.HasValue || !mainPage.ValidateSelection() || !mainPage.ValidateDirectoryAccess(out var savePath))
+            if (MainPage is null || !MainPage.VideoData.HasValue || !MainPage.ValidateSelection() || !MainPage.ValidateDirectoryAccess(out var savePath))
                 return;
 
-            //var (mergeFormat, audioFormat, recodeFormat) = mainPage.GetSelectedFormats();
-            var selectedFormat = mainPage.GetSelectedFormat();
+            var selectedFormat = MainPage.GetSelectedFormat();
+            var (mergeFormat, audioFormat, recodeFormat) = MainPage.GetSelectedFormats();
+            var defaultFormat = MainPage.GetSelectedDefaultFormat();
 
             QueueItem item = new()
             {
                 Status = VideoInQueueStatus.InQueue,
-                Title = mainPage.VideoData.Value.Title,
-                Resolution = $"{selectedFormat?.Resolution} {selectedFormat?.Extension}",
-                Size = selectedFormat?.FileSize?.ToString() ?? string.Empty
+                Title = MainPage.VideoData.Value.Title,
+                IsDefaultFormatSelected = MainPage.IsDefaultFormatSelected(),
+                AudioFormat = audioFormat,
+                RecodeFormat = recodeFormat,
+                MergeFormat = mergeFormat,
+                DownloadType = defaultFormat,
+                VideoData = MainPage.VideoData.Value,
+                VideoFormatInfo = selectedFormat
             };
 
             Items.Add(item);
 
             await Task.CompletedTask;
+        }
+
+        [RelayCommand]
+        private async Task StartDownloadAsync()
+        {
+            while (true)
+            {
+                MainPage.DownloadCts = new CancellationTokenSource();
+                QueueItem? queueItem = Items.FirstOrDefault(i => i.Status == VideoInQueueStatus.InQueue);
+
+                if (queueItem is null || !MainPage.VideoDownloadViewModel.YtdlpServiceIsAvailable)
+                {
+                    return;
+                }
+
+                try
+                {
+                    MainPage.SetDownloadButtonState(MainPage.DownloadButtonState.Processing);
+
+                    if (!MainPage.ValidateDirectoryAccess(out var savePath))
+                        return;
+
+                    MainPage.SetDownloadButtonState(MainPage.DownloadButtonState.Cancel);
+
+                    var mergeFormat = queueItem.MergeFormat;
+                    var audioFormat = queueItem.AudioFormat;
+                    var recodeFormat = queueItem.RecodeFormat;
+
+                    MainPage.SetProgressBarError(false);
+                    MainPage.SetProgressBarPaused(false);
+                    MainPage.UpdateInstallProgress(0);
+
+                    queueItem.Status = VideoInQueueStatus.Downloading;
+
+                    bool result;
+                    if (queueItem.IsDefaultFormatSelected)
+                    {
+                        result = await MainPage.HandleDefaultFormatDownload(queueItem.VideoData.Url, savePath, queueItem.DownloadType!.Value, mergeFormat, audioFormat, recodeFormat, MainPage.DownloadCts.Token);
+                    }
+                    else
+                    {
+                        result = await MainPage.HandleCustomFormatDownload(queueItem.VideoData.Url, savePath, queueItem.VideoFormatInfo, mergeFormat, audioFormat, recodeFormat, MainPage.DownloadCts.Token);
+                    }
+
+                    if (result) MainPage.HandleSuccessfulDownload();
+                    queueItem.Status = result ? VideoInQueueStatus.Success : VideoInQueueStatus.Failed;
+                }
+                catch (System.Exception ex)
+                {
+                    MainPage.HandleDownloadError(ex);
+                    queueItem.Status = VideoInQueueStatus.Failed;
+                }
+                finally
+                {
+                    try
+                    {
+                        MainPage.DownloadCts.Cancel();
+                        MainPage.DownloadCts?.Dispose();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }
         }
     }
 }

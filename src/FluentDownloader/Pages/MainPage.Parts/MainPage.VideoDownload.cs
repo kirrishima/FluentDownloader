@@ -63,14 +63,14 @@ namespace FluentDownloader.Pages
         /// <remarks>
         /// Manages visibility of progress ring, text labels and cancel UI
         /// </remarks>
-        private void SetDownloadButtonState(DownloadButtonState state)
+        public void SetDownloadButtonState(DownloadButtonState state)
         {
             ResetDownloadFieldsButton.IsEnabled = state != DownloadButtonState.Processing;
 
             DownloadButtonProgressRing.Visibility = state == DownloadButtonState.Processing
                 ? Visibility.Visible
                 : Visibility.Collapsed;
-            
+
             DownloadButtonDownloadTextBlock.Visibility = state == DownloadButtonState.DownloadVideo
                 ? Visibility.Visible
                 : Visibility.Collapsed;
@@ -97,7 +97,7 @@ namespace FluentDownloader.Pages
         /// <summary>
         /// Represents possible states of the download button UI
         /// </summary>
-        private enum DownloadButtonState
+        public enum DownloadButtonState
         {
             /// <summary>Format parsing state</summary>
             ParseFormats,
