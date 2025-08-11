@@ -925,11 +925,13 @@
                     Grid.Row="1"
                     MaxWidth="600"
                     Margin="0,0,1,0"
-                    Padding="10,0,9,0"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+                    Padding="10,0,0,0"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8,8,0,0">
                     <!--  ListView занимает весь Grid  -->
                     <ListView
                         x:Name="DownloadQueueList"
+                        Padding="0,0,12,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         ui:ScrollViewerExtensions.VerticalScrollBarMargin="14,0,0,0"
