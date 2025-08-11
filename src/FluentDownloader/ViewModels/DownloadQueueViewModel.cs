@@ -32,10 +32,10 @@ namespace FluentDownloader.ViewModels
             _isQueueVisible = false;
             Items.CollectionChanged += Items_CollectionChanged;
 
-            for (int i = 0; i < 10; i++)
-            {
-                Items.Add(new() { Title = "fdsfds", Status = VideoInQueueStatus.InQueue });
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    Items.Add(new() { Title = "fdsfds", Status = VideoInQueueStatus.InQueue });
+            //}
         }
 
         private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -53,6 +53,7 @@ namespace FluentDownloader.ViewModels
             SkipCommand.NotifyCanExecuteChanged();
             CancelCommand.NotifyCanExecuteChanged();
             RetryFailedCommand.NotifyCanExecuteChanged();
+            StartDownloadCommand.NotifyCanExecuteChanged();
         }
 
         [RelayCommand(CanExecute = nameof(CanMoveUp))]
@@ -188,7 +189,7 @@ namespace FluentDownloader.ViewModels
             await Task.CompletedTask;
         }
 
-        private bool  CanStartDownload()
+        private bool CanStartDownload()
         {
             return Items.Any(i => i.Status == VideoInQueueStatus.InQueue);
         }
