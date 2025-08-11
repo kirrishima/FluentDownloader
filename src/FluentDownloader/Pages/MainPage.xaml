@@ -10,6 +10,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:FluentDownloader.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:muxc="using:CommunityToolkit.WinUI.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:vm="using:FluentDownloader.Models"
@@ -134,7 +135,7 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     HorizontalAlignment="Center"
-                    Spacing="10">
+                    Spacing="16">
 
                     <HyperlinkButton
                         x:Name="FfmpegInfoButton"
@@ -904,7 +905,10 @@
             <Grid
                 x:Name="DownloadQueue"
                 Grid.Row="0"
-                Grid.Column="3">
+                Grid.Column="3"
+                Margin="0,0,1,8"
+                Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+                CornerRadius="4,8,8,8">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <!--  header (фиксированная кнопка)  -->
@@ -921,7 +925,7 @@
                 <!--  Фиксированная кнопка: НЕ внутри ScrollViewer  -->
                 <Button
                     Grid.Row="0"
-                    Margin="0,0,0,6"
+                    Margin="10,6,0,0"
                     Padding="8"
                     Command="{Binding DownloadQueueViewModel.ToggleQueueCommand}">
                     <FontIcon FontSize="18" Glyph="&#xE711;" />
@@ -934,7 +938,7 @@
                     MaxWidth="600"
                     Margin="0,0,1,0"
                     Padding="10,0,0,0"
-                    Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}"
+                    Background="Transparent"
                     CornerRadius="8,8,0,0">
                     <!--  ListView занимает весь Grid  -->
                     <ListView
@@ -1058,10 +1062,7 @@
                 </Grid>
 
                 <!--  Непрокручиваемая нижняя панель с разделителем сверху  -->
-                <StackPanel
-                    Grid.Row="2"
-                    Margin="0,0,1,8"
-                    Orientation="Vertical">
+                <StackPanel Grid.Row="2" Orientation="Vertical">
                     <!--  Разделитель сверху  -->
                     <!--<MenuFlyoutSeparator Margin="0" />-->
                     <MenuFlyoutSeparator Margin="0" Padding="0" />
@@ -1079,12 +1080,12 @@
                             </Grid.ColumnDefinitions>
 
                             <Button
+                                x:Uid="/LeftSideBar/DownloadQueueContent"
                                 Grid.Column="0"
                                 Padding="8,4"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 Command="{Binding DownloadQueueViewModel.StartDownloadCommand}"
-                                Content="Start"
                                 Style="{ThemeResource AccentButtonStyle}" />
 
                             <Button
