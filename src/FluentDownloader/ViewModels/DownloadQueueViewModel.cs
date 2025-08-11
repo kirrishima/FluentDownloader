@@ -188,7 +188,12 @@ namespace FluentDownloader.ViewModels
             await Task.CompletedTask;
         }
 
-        [RelayCommand]
+        private bool  CanStartDownload()
+        {
+            return Items.Any(i => i.Status == VideoInQueueStatus.InQueue);
+        }
+
+        [RelayCommand(CanExecute = nameof(CanStartDownload))]
         private async Task StartDownloadAsync()
         {
             while (true)

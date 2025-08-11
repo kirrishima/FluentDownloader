@@ -11,6 +11,7 @@
     xmlns:local="using:FluentDownloader.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:CommunityToolkit.WinUI.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:vm="using:FluentDownloader.Models"
     x:Name="RootPage"
     mc:Ignorable="d">
@@ -83,8 +84,9 @@
 
         <!--  Объединённый набор контейнерных переходов  -->
         <TransitionCollection x:Key="ItemContainerTransitions">
-            <AddDeleteThemeTransition />
             <RepositionThemeTransition IsStaggeringEnabled="False" />
+            <AddDeleteThemeTransition />
+            <EntranceThemeTransition FromVerticalOffset="20" />
         </TransitionCollection>
     </Page.Resources>
     <Grid x:Name="RootThemeElement">
@@ -918,126 +920,134 @@
                 </Button>
 
                 <!--  ScrollViewer занимает всё оставшееся место и прокручивается  -->
-                <ScrollViewer
+                <!--  ListView занимает всё оставшееся место и прокручивается сам  -->
+                <Grid
                     Grid.Row="1"
                     MaxWidth="600"
                     Margin="0,0,1,0"
                     Padding="10,0,9,0"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    CornerRadius="8,8,0,0"
-                    HorizontalScrollBarVisibility="Disabled"
-                    VerticalScrollBarVisibility="Auto"
-                    VerticalScrollMode="Auto">
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+                    <!--  ListView занимает весь Grid  -->
+                    <ListView
+                        x:Name="DownloadQueueList"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        ui:ScrollViewerExtensions.VerticalScrollBarMargin="14,0,0,0"
+                        AllowDrop="True"
+                        CanDragItems="True"
+                        CanReorderItems="True"
+                        IsItemClickEnabled="False"
+                        ItemContainerTransitions="{StaticResource ItemContainerTransitions}"
+                        ItemsSource="{Binding DownloadQueueViewModel.Items}"
+                        SelectionMode="None">
 
-                    <Grid>
-                        <Grid>
-                            <ItemsControl HorizontalAlignment="Stretch" ItemsSource="{Binding DownloadQueueViewModel.Items}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <ItemsStackPanel>
-                                            <ItemsStackPanel.ChildrenTransitions>
-                                                <TransitionCollection>
-                                                    <EntranceThemeTransition FromVerticalOffset="-50" />
-                                                    <RepositionThemeTransition IsStaggeringEnabled="False" />
-                                                </TransitionCollection>
-                                            </ItemsStackPanel.ChildrenTransitions>
-                                        </ItemsStackPanel>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsStackPanel ItemsUpdatingScrollMode="KeepLastItemInView" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
 
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="vm:QueueItem">
-                                        <Grid
-                                            Margin="0,10,0,0"
-                                            Padding="8"
-                                            Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
-                                            BorderBrush="{ThemeResource ControlStrokeColorSecondaryBrush}"
-                                            BorderThickness="1"
-                                            CornerRadius="4"
-                                            RowSpacing="4">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="IsTabStop" Value="False" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
 
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="vm:QueueItem">
+                                <!--  Вставлен ваш шаблон без изменений  -->
+                                <Grid
+                                    Margin="0,10,0,0"
+                                    Padding="8"
+                                    Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
+                                    BorderBrush="{ThemeResource ControlStrokeColorSecondaryBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="4"
+                                    RowSpacing="4">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        FontSize="16"
+                                        MaxLines="3"
+                                        Text="{Binding Title}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="Wrap" />
+
+                                    <muxc:WrapPanel
+                                        Grid.Row="1"
+                                        HorizontalSpacing="8"
+                                        Orientation="Horizontal"
+                                        VerticalSpacing="4">
+
+                                        <StackPanel VerticalAlignment="Center">
                                             <TextBlock
-                                                Grid.Row="0"
-                                                FontSize="16"
-                                                MaxLines="3"
-                                                Text="{Binding Title}"
-                                                TextTrimming="CharacterEllipsis"
-                                                TextWrapping="Wrap" />
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                                                <Run Text="{Binding Resolution}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                Visibility="{Binding Size, Converter={StaticResource ObjectToVisibility}}">
+                                                <Run Text=" •" />
+                                                <Run Text="{Binding Size}" />
+                                            </TextBlock>
+                                        </StackPanel>
 
-                                            <muxc:WrapPanel
-                                                Grid.Row="1"
-                                                HorizontalSpacing="8"
-                                                Orientation="Horizontal"
-                                                VerticalSpacing="4">
+                                        <Border
+                                            Padding="8,4"
+                                            VerticalAlignment="Center"
+                                            Background="{Binding BadgeBackground}"
+                                            CornerRadius="6">
+                                            <TextBlock
+                                                FontWeight="Bold"
+                                                Foreground="{Binding BadgeForeground}"
+                                                Text="{Binding StatusDisplay}" />
+                                        </Border>
+                                    </muxc:WrapPanel>
 
-                                                <StackPanel VerticalAlignment="Center">
-                                                    <TextBlock
-                                                        VerticalAlignment="Center"
-                                                        FontSize="14"
-                                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                                        <Run Text="{Binding Resolution}" />
-                                                    </TextBlock>
-                                                    <TextBlock
-                                                        VerticalAlignment="Center"
-                                                        FontSize="14"
-                                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                        Visibility="{Binding Size, Converter={StaticResource ObjectToVisibility}}">
-                                                        <Run Text=" •" />
-                                                        <Run Text="{Binding Size}" />
-                                                    </TextBlock>
-                                                </StackPanel>
+                                    <StackPanel
+                                        Grid.Row="2"
+                                        Margin="0,4,0,0"
+                                        Orientation="Horizontal"
+                                        Spacing="8">
+                                        <Button Command="{Binding DownloadQueueViewModel.MoveUpCommand, ElementName=RootPage}" CommandParameter="{Binding}">
+                                            <FontIcon Glyph="&#xE70E;" />
+                                        </Button>
 
-                                                <Border
-                                                    Padding="8,4"
-                                                    VerticalAlignment="Center"
-                                                    Background="{Binding BadgeBackground}"
-                                                    CornerRadius="6">
-                                                    <TextBlock
-                                                        FontWeight="Bold"
-                                                        Foreground="{Binding BadgeForeground}"
-                                                        Text="{Binding StatusDisplay}" />
-                                                </Border>
-                                            </muxc:WrapPanel>
+                                        <Button Command="{Binding DownloadQueueViewModel.MoveDownCommand, ElementName=RootPage}" CommandParameter="{Binding}">
+                                            <FontIcon Glyph="&#xE70D;" />
+                                        </Button>
 
+                                        <Button Command="{Binding DownloadQueueViewModel.RemoveItemCommand, ElementName=RootPage}" CommandParameter="{Binding}">
+                                            <FontIcon Foreground="Red" Glyph="&#xE74D;" />
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
 
-                                            <StackPanel
-                                                Grid.Row="2"
-                                                Margin="0,4,0,0"
-                                                Orientation="Horizontal"
-                                                Spacing="8">
-                                                <!--  Move Up  -->
-                                                <Button Command="{Binding DownloadQueueViewModel.MoveUpCommand, ElementName=RootPage}" CommandParameter="{Binding}">
-                                                    <FontIcon Glyph="&#xE70E;" />
-                                                </Button>
-
-                                                <Button Command="{Binding DownloadQueueViewModel.MoveDownCommand, ElementName=RootPage}" CommandParameter="{Binding}">
-                                                    <FontIcon Glyph="&#xE70D;" />
-                                                </Button>
-
-                                                <Button Command="{Binding DownloadQueueViewModel.RemoveItemCommand, ElementName=RootPage}" CommandParameter="{Binding}">
-                                                    <FontIcon Foreground="Red" Glyph="&#xE74D;" />
-                                                </Button>
-                                            </StackPanel>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </Grid>
-
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="16"
-                            Text="Очередь пуста"
-                            Visibility="{Binding DownloadQueueViewModel.ItemsCount, Mode=OneWay, Converter={StaticResource IntegerToVisibilityConverter}, ConverterParameter='Invert'}" />
-                    </Grid>
-                </ScrollViewer>
+                    <!--  Наложенный TextBlock "Очередь пуста" — показывается только когда нет элементов  -->
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Text="Очередь пуста"
+                        Visibility="{Binding DownloadQueueViewModel.ItemsCount, Mode=OneWay, Converter={StaticResource IntegerToVisibilityConverter}, ConverterParameter='Invert'}" />
+                </Grid>
 
                 <!--  Непрокручиваемая нижняя панель с разделителем сверху  -->
                 <StackPanel
