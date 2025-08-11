@@ -32,7 +32,10 @@ namespace FluentDownloader.ViewModels
             _isQueueVisible = false;
             Items.CollectionChanged += Items_CollectionChanged;
 
-            //Items_CollectionChanged(Items, null!);
+            for (int i = 0; i < 10; i++)
+            {
+                Items.Add(new() { Title = "fdsfds", Status = VideoInQueueStatus.InQueue });
+            }
         }
 
         private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)

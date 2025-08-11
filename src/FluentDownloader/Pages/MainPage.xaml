@@ -71,6 +71,21 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
+
+        <TransitionCollection x:Key="AddDeleteTransitions">
+            <AddDeleteThemeTransition />
+        </TransitionCollection>
+
+        <!--  Анимация перемещения (плавное сдвигание)  -->
+        <TransitionCollection x:Key="RepositionTransitions">
+            <RepositionThemeTransition IsStaggeringEnabled="False" />
+        </TransitionCollection>
+
+        <!--  Объединённый набор контейнерных переходов  -->
+        <TransitionCollection x:Key="ItemContainerTransitions">
+            <AddDeleteThemeTransition />
+            <RepositionThemeTransition IsStaggeringEnabled="False" />
+        </TransitionCollection>
     </Page.Resources>
     <Grid x:Name="RootThemeElement">
         <Grid.RowDefinitions>
@@ -874,33 +889,47 @@
                 </StackPanel.Transitions>
             </StackPanel>
 
-            <ScrollViewer
+
+
+            <Grid
                 x:Name="DownloadQueue"
                 Grid.Row="0"
-                Grid.Column="3"
-                Grid.ColumnSpan="1"
-                MaxWidth="600"
-                Margin="0,0,1,0"
-                Padding="10,0,9,0"
-                Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-                CornerRadius="8"
-                HorizontalScrollBarVisibility="Disabled"
-                VerticalScrollBarVisibility="Auto">
-                <ScrollViewer.RenderTransform>
+                Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <!--  header (фиксированная кнопка)  -->
+                    <RowDefinition Height="*" />
+                    <!--  контент: прокручиваемая область  -->
+                    <RowDefinition Height="Auto" />
+                    <!--  footer (фиксированная нижняя панель)  -->
+                </Grid.RowDefinitions>
+
+                <Grid.RenderTransform>
                     <TranslateTransform x:Name="QueueTranslate" X="{Binding ActualWidth, ElementName=DownloadQueue}" />
-                </ScrollViewer.RenderTransform>
+                </Grid.RenderTransform>
 
-                <Grid>
-                    <StackPanel>
-                        <Button
-                            Margin="6,6,0,0"
-                            Padding="5"
-                            Command="{Binding DownloadQueueViewModel.ToggleQueueCommand}">
-                            <!--  можно поместить иконку/текст  -->
-                            <FontIcon FontSize="18" Glyph="&#xE711;" />
-                            <!--  пример  -->
-                        </Button>
+                <!--  Фиксированная кнопка: НЕ внутри ScrollViewer  -->
+                <Button
+                    Grid.Row="0"
+                    Margin="0,0,0,6"
+                    Padding="8"
+                    Command="{Binding DownloadQueueViewModel.ToggleQueueCommand}">
+                    <FontIcon FontSize="18" Glyph="&#xE711;" />
+                </Button>
 
+                <!--  ScrollViewer занимает всё оставшееся место и прокручивается  -->
+                <ScrollViewer
+                    Grid.Row="1"
+                    MaxWidth="600"
+                    Margin="0,0,1,0"
+                    Padding="10,0,9,0"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8,8,0,0"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto"
+                    VerticalScrollMode="Auto">
+
+                    <Grid>
                         <Grid>
                             <ItemsControl HorizontalAlignment="Stretch" ItemsSource="{Binding DownloadQueueViewModel.Items}">
                                 <ItemsControl.ItemsPanel>
@@ -921,8 +950,8 @@
                                         <Grid
                                             Margin="0,10,0,0"
                                             Padding="8"
-                                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                            Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
+                                            BorderBrush="{ThemeResource ControlStrokeColorSecondaryBrush}"
                                             BorderThickness="1"
                                             CornerRadius="4"
                                             RowSpacing="4">
@@ -979,6 +1008,7 @@
 
                                             <StackPanel
                                                 Grid.Row="2"
+                                                Margin="0,4,0,0"
                                                 Orientation="Horizontal"
                                                 Spacing="8">
                                                 <!--  Move Up  -->
@@ -999,16 +1029,60 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </Grid>
-                    </StackPanel>
 
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="16"
-                        Text="Очередь пуста"
-                        Visibility="{Binding DownloadQueueViewModel.ItemsCount, Mode=OneWay, Converter={StaticResource IntegerToVisibilityConverter}, ConverterParameter='Invert'}" />
-                </Grid>
-            </ScrollViewer>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Text="Очередь пуста"
+                            Visibility="{Binding DownloadQueueViewModel.ItemsCount, Mode=OneWay, Converter={StaticResource IntegerToVisibilityConverter}, ConverterParameter='Invert'}" />
+                    </Grid>
+                </ScrollViewer>
+
+                <!--  Непрокручиваемая нижняя панель с разделителем сверху  -->
+                <StackPanel
+                    Grid.Row="2"
+                    Margin="0,0,1,8"
+                    Orientation="Vertical">
+                    <!--  Разделитель сверху  -->
+                    <!--<MenuFlyoutSeparator Margin="0" />-->
+                    <MenuFlyoutSeparator Margin="0" Padding="0" />
+
+                    <!--  Нижняя панель: фиксирована, не входит в ScrollViewer  -->
+                    <Border
+                        Padding="8"
+                        HorizontalAlignment="Stretch"
+                        Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
+                        CornerRadius="0,0,8,8">
+                        <Grid HorizontalAlignment="Stretch" ColumnSpacing="16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button
+                                Grid.Column="0"
+                                Padding="8,4"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Command="{Binding DownloadQueueViewModel.StartDownloadCommand}"
+                                Content="Start"
+                                Style="{ThemeResource AccentButtonStyle}" />
+
+                            <Button
+                                Grid.Column="1"
+                                Padding="8,4"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Command="{Binding DownloadQueueViewModel.ClearCommand}"
+                                Content="Очистить" />
+                        </Grid>
+
+                    </Border>
+                </StackPanel>
+
+            </Grid>
+
 
         </Grid>
     </Grid>
