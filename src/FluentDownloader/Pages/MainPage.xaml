@@ -895,7 +895,7 @@
                         <Button
                             Margin="6,6,0,0"
                             Padding="5"
-                            Command="{Binding DownloadQueueViewModel.StartDownloadCommand}">
+                            Command="{Binding DownloadQueueViewModel.ToggleQueueCommand}">
                             <!--  можно поместить иконку/текст  -->
                             <FontIcon FontSize="18" Glyph="&#xE711;" />
                             <!--  пример  -->
