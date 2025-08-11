@@ -88,6 +88,11 @@
             <AddDeleteThemeTransition />
             <EntranceThemeTransition FromVerticalOffset="20" />
         </TransitionCollection>
+
+        <TransitionCollection x:Key="CardEntranceTransitions">
+            <EntranceThemeTransition FromVerticalOffset="50" />
+            <RepositionThemeTransition IsStaggeringEnabled="False" />
+        </TransitionCollection>
     </Page.Resources>
     <Grid x:Name="RootThemeElement">
         <Grid.RowDefinitions>
@@ -455,7 +460,10 @@
                     VerticalScrollBarVisibility="Auto"
                     VerticalScrollMode="Enabled">
 
-                    <Grid x:Name="RootGrid" Padding="20,0,20,20">
+                    <Grid
+                        x:Name="RootGrid"
+                        Padding="20,0,20,20"
+                        ChildrenTransitions="{StaticResource CardEntranceTransitions}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
@@ -595,7 +603,8 @@
                                 x:Name="FormatGrid"
                                 Grid.Row="1"
                                 Grid.Column="1"
-                                Grid.ColumnSpan="2">
+                                Grid.ColumnSpan="2"
+                                ChildrenTransitions="{StaticResource CardEntranceTransitions}">
                                 <!--<RelativePanel.ChildrenTransitions>
                                     <EntranceThemeTransition FromVerticalOffset="50" />
                                     <RepositionThemeTransition IsStaggeringEnabled="False" />
@@ -878,6 +887,7 @@
                 Margin="10,0,10,10"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
+                ChildrenTransitions="{StaticResource CardEntranceTransitions}"
                 Orientation="Vertical"
                 Spacing="10">
                 <!--<StackPanel.ChildrenTransitions>
@@ -890,8 +900,6 @@
                     </TransitionCollection>
                 </StackPanel.Transitions>
             </StackPanel>
-
-
 
             <Grid
                 x:Name="DownloadQueue"
@@ -926,7 +934,7 @@
                     MaxWidth="600"
                     Margin="0,0,1,0"
                     Padding="10,0,0,0"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}"
                     CornerRadius="8,8,0,0">
                     <!--  ListView занимает весь Grid  -->
                     <ListView
@@ -963,7 +971,7 @@
                                 <!--  Вставлен ваш шаблон без изменений  -->
                                 <Grid
                                     Padding="8"
-                                    Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
+                                    Background="{ThemeResource ControlFillColorDefaultBrush}"
                                     BorderBrush="{ThemeResource ControlStrokeColorSecondaryBrush}"
                                     BorderThickness="1"
                                     CornerRadius="4"
