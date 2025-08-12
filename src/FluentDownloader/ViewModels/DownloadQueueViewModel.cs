@@ -181,8 +181,17 @@ namespace FluentDownloader.ViewModels
                 MergeFormat = mergeFormat,
                 DownloadType = defaultFormat,
                 VideoData = MainPage.VideoData.Value,
-                VideoFormatInfo = selectedFormat
+                VideoFormatInfo = selectedFormat,
             };
+
+            if (item.VideoData.IsPlaylist)
+            {
+                item.PlaylistDownloadSettings = new()
+                {
+                    EndVideoIndex = MainPage.PlaylistRangeViewModel.FinalEndIndex,
+                    StartVideoIndex = MainPage.PlaylistRangeViewModel.FinalStartIndex
+                };
+            }
 
             Items.Add(item);
 
@@ -232,11 +241,19 @@ namespace FluentDownloader.ViewModels
                     bool result;
                     if (queueItem.IsDefaultFormatSelected)
                     {
-                        result = await MainPage.HandleDefaultFormatDownload(queueItem.VideoData.Url, savePath, queueItem.DownloadType!.Value, mergeFormat, audioFormat, recodeFormat, MainPage.DownloadCts.Token);
+                        result = await MainPage.HandleDefaultFormatDownload(queueItem.VideoData.Url, savePath, queueItem.DownloadType!.Value, mergeFormat, audioFormat, recodeFormat, playlistSettings: queueItem.PlaylistDownloadSettings, MainPage.DownloadCts.Token);
                     }
                     else
                     {
-                        result = await MainPage.HandleCustomFormatDownload(queueItem.VideoData.Url, savePath, queueItem.VideoFormatInfo, mergeFormat, audioFormat, recodeFormat, MainPage.DownloadCts.Token);
+                        result = await MainPage.HandleCustomFormatDownload(
+                            url: queueItem.VideoData.Url,
+                            savePath: savePath,
+                            selectedFormat: queueItem.VideoFormatInfo,
+                            mergeFormat: mergeFormat,
+                            audioFormat: audioFormat,
+                            recodeFormat: recodeFormat,
+                            playlistSettings: queueItem.PlaylistDownloadSettings,
+                            cancellationToken: MainPage.DownloadCts.Token);
                     }
 
                     if (result) MainPage.HandleSuccessfulDownload();

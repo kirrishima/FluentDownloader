@@ -627,6 +627,7 @@
                                 Grid.Column="1"
                                 Height="45"
                                 Padding="10,10,40,10"
+                                InputScope="Url"
                                 ScrollViewer.HorizontalScrollBarVisibility="Auto" />
                             <TeachingTip x:Name="UrlTextBoxTeachingTip" Target="{x:Bind UrlTextBox}">
                                 <TeachingTip.IconSource>
@@ -761,8 +762,12 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
                                 <Grid.RenderTransform>
                                     <TranslateTransform x:Name="PlaylistTranslate" Y="8" />
                                 </Grid.RenderTransform>
@@ -787,29 +792,12 @@
                                         </DoubleAnimation>
                                     </Storyboard>
 
-                                    <Storyboard x:Key="HidePlaylistStoryboard">
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="PlaylistRangePanel"
-                                            Storyboard.TargetProperty="Opacity"
-                                            From="1"
-                                            To="0"
-                                            Duration="0:0:0.18" />
-                                        <DoubleAnimation
-                                            EnableDependentAnimation="True"
-                                            Storyboard.TargetName="PlaylistTranslate"
-                                            Storyboard.TargetProperty="Y"
-                                            From="0"
-                                            To="8"
-                                            Duration="0:0:0.18">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseIn" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                    </Storyboard>
+                                    <Storyboard x:Key="HidePlaylistStoryboard" />
                                 </Grid.Resources>
 
                                 <!--  Первый индекс  -->
                                 <StackPanel
+                                    Grid.Row="0"
                                     Grid.Column="0"
                                     HorizontalAlignment="Stretch"
                                     Orientation="Vertical">
@@ -829,7 +817,10 @@
                                 </StackPanel>
 
                                 <!--  Конечный индекс  -->
-                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Orientation="Vertical">
 
                                     <TextBox
                                         FontSize="14"
@@ -846,7 +837,27 @@
                                 </StackPanel>
 
                                 <!--  Количество  -->
-                                <StackPanel Grid.Column="2" Orientation="Vertical">
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Orientation="Vertical">
+
+                                    <TextBox
+                                        FontSize="14"
+                                        Header="Номера видео"
+                                        Text="{Binding PlaylistItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        ToolTipService.ToolTip="Перечислите видео для скачивания через запятую без пробелов" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="Red"
+                                        Text="{Binding PlaylistItemsError}"
+                                        Visibility="{Binding PlaylistItemsError, Converter={StaticResource ObjectToVisibility}}" />
+                                </StackPanel>
+
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Grid.Column="3"
+                                    Orientation="Vertical">
 
                                     <TextBox
                                         FontSize="14"
@@ -863,8 +874,9 @@
 
                                 <!--  Кнопка применить (опционально)  -->
                                 <SplitButton
-                                    Grid.Column="3"
-                                    Margin="0,27,0,0"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,8,0,0"
                                     VerticalAlignment="Top"
                                     Command="{Binding ApplyRangeCommand}"
                                     Content="Применить"

@@ -217,6 +217,7 @@ namespace FluentDownloader.Services.Ytdlp
             AudioConversionFormat audioFormat,
             VideoRecodeFormat recodeFormat,
             CancellationToken cancellationToken,
+            PlaylistDownloadSettings? playlistSettings,
             bool onlyaudio = false,
             bool onlyvideo = false,
             bool bv_ba = false, VideoData? videoData = null)
@@ -253,6 +254,11 @@ namespace FluentDownloader.Services.Ytdlp
 
                 optionSet.YesPlaylist = videoData.HasValue && videoData.Value.IsPlaylist;
 
+                if (optionSet.YesPlaylist && playlistSettings.HasValue && playlistSettings.Value.StartVideoIndex is not null)
+                {
+                    optionSet.PlaylistItems = $"{playlistSettings.Value.StartVideoIndex}:{playlistSettings.Value.EndVideoIndex}";
+                }
+
                 var progress = new LogBoxProgress(_dialogService, _downloadDependencies, _progressBar);
 
                 youtubeDl.OutputFolder = downloadPath;
@@ -278,8 +284,9 @@ namespace FluentDownloader.Services.Ytdlp
 
                         if (App.AppSettings.Notifications.EnableDesktopNotifications)
                         {
+                            var savedAs = videoData?.IsPlaylist == true ? downloadPath : downloadResult.Data;
                             NotificationService.ShowNotificationWithImage(LocalizedStrings.GetMessagesString("FileDownloadedSuccessfully"),
-                               string.Format(LocalizedStrings.GetMessagesString("FileSavedAs"), downloadResult.Data),
+                               string.Format(LocalizedStrings.GetMessagesString("FileSavedAs"), savedAs),
                                videoData?.ThumbnailUri);
                         }
                     }
