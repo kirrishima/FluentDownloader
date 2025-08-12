@@ -23,7 +23,7 @@ namespace FluentDownloader.ViewModels
         private bool _isQueueVisible;
         public ObservableCollection<QueueItem> Items { get; } = [];
         private readonly MainPage MainPage = MainPage.Instance!;
-
+        private bool _isDownloadingQueue = false;
         public int ItemsCount => Items.Count;
 
         public DownloadQueueViewModel(DownloadQueueAnimator animator)
@@ -112,7 +112,7 @@ namespace FluentDownloader.ViewModels
 
         private bool CanResume() => false;
 
-        // Skip
+
         [RelayCommand(CanExecute = nameof(CanSkip))]
         private void Skip()
         {
@@ -121,7 +121,7 @@ namespace FluentDownloader.ViewModels
 
         private bool CanSkip() => false;
 
-        // Cancel
+
         [RelayCommand(CanExecute = nameof(CanCancel))]
         private void Cancel()
         {
@@ -130,7 +130,7 @@ namespace FluentDownloader.ViewModels
 
         private bool CanCancel() => false;
 
-        // RetryFailed
+
         [RelayCommand(CanExecute = nameof(CanRetryFailed))]
         private void RetryFailed()
         {
@@ -191,12 +191,14 @@ namespace FluentDownloader.ViewModels
 
         private bool CanStartDownload()
         {
-            return Items.Any(i => i.Status == VideoInQueueStatus.InQueue);
+            return !_isDownloadingQueue && Items.Any(i => i.Status == VideoInQueueStatus.InQueue);
         }
 
         [RelayCommand(CanExecute = nameof(CanStartDownload))]
         private async Task StartDownloadAsync()
         {
+            _isDownloadingQueue = true;
+
             while (true)
             {
                 MainPage.DownloadCts = new CancellationTokenSource();
@@ -204,6 +206,7 @@ namespace FluentDownloader.ViewModels
 
                 if (queueItem is null || !MainPage.VideoDownloadViewModel.YtdlpServiceIsAvailable)
                 {
+                    _isDownloadingQueue = false;
                     return;
                 }
 
