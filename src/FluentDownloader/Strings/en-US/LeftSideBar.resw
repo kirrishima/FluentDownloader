@@ -151,7 +151,7 @@
     <value>Yt-dlp info</value>
   </data>
   <data name="ProjectGitHubLinkText.Text" xml:space="preserve">
-    <value>My GitHub</value>
+    <value>Source code</value>
   </data>
   <data name="DownloadQueue.Text" xml:space="preserve">
     <value>Download queue</value>
@@ -187,7 +187,7 @@
     <value>Current language</value>
   </data>
   <data name="ProjectGitHubLink.NavigateUri" xml:space="preserve">
-    <value>https://github.com/kirrishima</value>
+    <value>https://github.com/kirrishima/FluentDownloader</value>
   </data>
   <data name="SwitchPageButtonTextBlock.Text" xml:space="preserve">
     <value>Appearance</value>
@@ -219,7 +219,7 @@
   <data name="OpacitySlider.Header" xml:space="preserve">
     <value>Background opacity</value>
   </data>
-  <data name="DownloadQueueStartContent.Content" xml:space="preserve">
-    <value>Start</value>
+  <data name="DownloadQueueIsEmpty.Text" xml:space="preserve">
+    <value>Queue is empty</value>
   </data>
 </root>

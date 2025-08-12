@@ -1054,10 +1054,10 @@
 
                     <!--  Наложенный TextBlock "Очередь пуста" — показывается только когда нет элементов  -->
                     <TextBlock
+                        x:Uid="/LeftSidebar/DownloadQueueIsEmpty"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         FontSize="16"
-                        Text="Очередь пуста"
                         Visibility="{Binding DownloadQueueViewModel.ItemsCount, Mode=OneWay, Converter={StaticResource IntegerToVisibilityConverter}, ConverterParameter='Invert'}" />
                 </Grid>
 
@@ -1080,29 +1080,28 @@
                             </Grid.ColumnDefinitions>
 
                             <Button
-                                x:Uid="/LeftSideBar/DownloadQueueContent"
                                 Grid.Column="0"
                                 Padding="8,4"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 Command="{Binding DownloadQueueViewModel.StartDownloadCommand}"
-                                Style="{ThemeResource AccentButtonStyle}" />
+                                Style="{ThemeResource AccentButtonStyle}">
+                                <TextBlock x:Uid="/LeftSidebar/DownloadQueueStart" />
+                            </Button>
 
                             <Button
                                 Grid.Column="1"
                                 Padding="8,4"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
-                                Command="{Binding DownloadQueueViewModel.ClearCommand}"
-                                Content="Очистить" />
+                                Command="{Binding DownloadQueueViewModel.ClearCommand}">
+                                <TextBlock x:Uid="/LeftSidebar/DownloadQueueClear" />
+                            </Button>
                         </Grid>
-
                     </Border>
                 </StackPanel>
 
             </Grid>
-
-
         </Grid>
     </Grid>
 </Page>
