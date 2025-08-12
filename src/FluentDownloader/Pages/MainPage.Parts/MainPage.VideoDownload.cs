@@ -137,6 +137,8 @@ namespace FluentDownloader.Pages
             VideoData?.ResetToNull();
             ThumbnailImage.Visibility = Visibility.Collapsed;
             DownloadPreviewViewModel.ResetData();
+            VideoDownloadViewModel.IsCurrentUrlIsPlaylist = false;
+            VideoDownloadViewModel.VideoData.ResetToNull();
 
             SavePathTextBox.IsEnabled = false;
 

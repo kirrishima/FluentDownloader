@@ -144,11 +144,11 @@ namespace FluentDownloader.Services.Ytdlp
         /// </summary>
         /// <param name="url">Video URL.</param>
         /// <returns>A <see cref="VideoData"/> object containing video information.</returns>
-        public async Task<VideoData?> FetchVideoDataAsync(string url)
+        public async Task<VideoData> FetchVideoDataAsync(string url)
         {
             if (!EnsureYoutubeDL())
             {
-                return null;
+                throw new InvalidOperationException("Ytdlp was not found or nor responding");
             }
 
             var videoInfo = await youtubeDl.RunVideoDataFetch(url);
@@ -157,7 +157,7 @@ namespace FluentDownloader.Services.Ytdlp
                 videoInfo.Data.Entries != null && videoInfo.Data.Entries.Any())
             {
                 var entry = videoInfo.Data.Entries.First();
-                var data = (await FetchVideoDataAsync(entry.Url)).Value;
+                var data = (await FetchVideoDataAsync(entry.Url));
 
                 var titleTemplate = LocalizedStrings.GetResourceString("DownloadPlaylistTitleTemplate");
 
@@ -168,7 +168,7 @@ namespace FluentDownloader.Services.Ytdlp
                     string.Format(titleTemplate, videoInfo.Data.Entries.Length),
                     videoInfo.Data.ID,
                     videoInfo.ErrorOutput)
-                { IsPlaylist = true };
+                { IsPlaylist = true, PlaylistEntries = videoInfo.Data.Entries };
             }
 
             if (videoInfo.Success)

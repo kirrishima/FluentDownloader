@@ -597,7 +597,7 @@
                             x:Name="MainLayout"
                             Grid.Row="1"
                             VerticalAlignment="Top"
-                            RowSpacing="20">
+                            ColumnSpacing="8">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -617,9 +617,7 @@
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 MaxWidth="600"
-                                Margin="0,0,10,0"
                                 VerticalAlignment="Center" />
-
                             <TextBox
                                 x:Name="UrlTextBox"
                                 x:Uid="UrlTextBox"
@@ -638,13 +636,11 @@
                                 x:Uid="OpenEditUrlButton"
                                 Grid.Row="0"
                                 Grid.Column="2"
-                                Margin="10,0,0,0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 Click="OpenEditUrlDialog_Click"
                                 FontSize="16"
                                 Style="{StaticResource ButtonRevealStyle}" />
-
                             <ContentDialog
                                 x:Name="EditTextDialog"
                                 x:Uid="EditTextDialog"
@@ -666,15 +662,15 @@
                                 x:Uid="FormatTextBlock"
                                 Grid.Row="1"
                                 Grid.Column="0"
-                                Margin="0,0,10,0"
+                                Margin="0,16,0,0"
                                 VerticalAlignment="Center" />
-
                             <!--  Format Grid  -->
                             <RelativePanel
                                 x:Name="FormatGrid"
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 Grid.ColumnSpan="2"
+                                Margin="0,16,0,0"
                                 ChildrenTransitions="{StaticResource CardEntranceTransitions}">
                                 <!--<RelativePanel.ChildrenTransitions>
                                     <EntranceThemeTransition FromVerticalOffset="50" />
@@ -734,27 +730,88 @@
                                     RelativePanel.RightOf="AudioFormatComboBox" />
                             </RelativePanel>
 
+                            <Grid
+                                x:Name="PlaylistBanner"
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                Margin="0,16,0,0"
+                                Opacity="0"
+                                Visibility="Collapsed">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10*" />
+                                    <ColumnDefinition Width="10*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RenderTransform>
+                                    <TranslateTransform x:Name="PlaylistTranslate" Y="8" />
+                                </Grid.RenderTransform>
+                                <Grid.Resources>
+                                    <Storyboard x:Key="ShowPlaylistStoryboard">
+                                        <DoubleAnimation
+                                           Storyboard.TargetName="PlaylistBanner"
+                                           Storyboard.TargetProperty="Opacity"
+                                           From="0"
+                                           To="1"
+                                           Duration="0:0:0.28" />
+                                        <DoubleAnimation
+                                           EnableDependentAnimation="True"
+                                           Storyboard.TargetName="PlaylistTranslate"
+                                           Storyboard.TargetProperty="Y"
+                                           From="8"
+                                           To="0"
+                                           Duration="0:0:0.28">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+
+                                    <Storyboard x:Key="HidePlaylistStoryboard">
+                                        <DoubleAnimation
+                                           Storyboard.TargetName="PlaylistBanner"
+                                           Storyboard.TargetProperty="Opacity"
+                                           From="1"
+                                           To="0"
+                                           Duration="0:0:0.18" />
+                                        <DoubleAnimation
+                                           EnableDependentAnimation="True"
+                                           Storyboard.TargetName="PlaylistTranslate"
+                                           Storyboard.TargetProperty="Y"
+                                           From="0"
+                                           To="8"
+                                           Duration="0:0:0.18">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </Grid.Resources>
+
+                            </Grid>
+
+
                             <!--  Save to label  -->
                             <TextBlock
                                 x:Uid="SaveToLabel"
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 Grid.Column="0"
-                                Margin="0,0,10,0"
+                                Margin="0,16,0,0"
                                 VerticalAlignment="Center" />
-
                             <TextBox
                                 x:Name="SavePathTextBox"
                                 x:Uid="SavePathTextBox"
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 Grid.Column="1"
                                 Height="45"
+                                Margin="0,16,0,0"
                                 Padding="10,10,40,10"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 AllowFocusWhenDisabled="False"
                                 IsEnabled="False"
                                 ScrollViewer.HorizontalScrollBarVisibility="Auto" />
-
                             <TeachingTip
                                 x:Name="SavePathTeachingTip"
                                 x:Uid="SavePathTeachingTip"
@@ -763,13 +820,12 @@
                                     <SymbolIconSource Symbol="Folder" />
                                 </TeachingTip.IconSource>
                             </TeachingTip>
-
                             <Button
                                 x:Name="SavePathButton"
                                 x:Uid="SavePathButton"
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 Grid.Column="2"
-                                Margin="10,0,0,0"
+                                Margin="0,16,0,0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 AllowFocusWhenDisabled="False"
@@ -793,10 +849,11 @@
 
                             <!--  Download Button  -->
                             <StackPanel
-                                Grid.Row="3"
+                                Grid.Row="4"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
                                 Height="40"
+                                Margin="0,24,0,0"
                                 Orientation="Horizontal"
                                 Spacing="24">
                                 <StackPanel
@@ -913,8 +970,9 @@
 
                             <Expander
                                 x:Name="LogsBlockExpander"
-                                Grid.Row="4"
+                                Grid.Row="5"
                                 Grid.ColumnSpan="3"
+                                Margin="0,24,0,0"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
                                 ExpandDirection="Down"

@@ -21,6 +21,7 @@ namespace FluentDownloader.Models
         public string[] Errors => _errors;
         public string Url { get; private set; }
         public bool IsPlaylist { get; set; }
+        public YoutubeDLSharp.Metadata.VideoData[] PlaylistEntries { get; set; } = [];
 
         public VideoData(
             Dictionary<int, List<VideoFormatInfo>> videoFormats,
@@ -62,6 +63,8 @@ namespace FluentDownloader.Models
             _title = string.Empty;
             _id = string.Empty;
             Url = string.Empty;
+            IsPlaylist = false;
+            PlaylistEntries = [];
             _errors = Array.Empty<string>();
         }
     }

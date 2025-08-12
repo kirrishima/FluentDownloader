@@ -96,6 +96,7 @@ namespace FluentDownloader.Pages
 
                 var videoData = await ytDlpDownloader.FetchVideoDataAsync(url);
                 VideoData = videoData;
+                VideoDownloadViewModel.VideoData = VideoData.Value;
 
                 return (true, videoData);
             }
@@ -171,6 +172,7 @@ namespace FluentDownloader.Pages
         {
             SetDownloadButtonState(DownloadButtonState.DownloadVideo);
             DownloadPreviewViewModel.SetData(VideoData?.ThumbnailUri, VideoData?.Title);
+            VideoDownloadViewModel.IsCurrentUrlIsPlaylist = VideoData?.IsPlaylist ?? false;
         }
 
         /// <summary>

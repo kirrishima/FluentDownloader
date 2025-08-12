@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;
+using MyApp.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -108,7 +109,7 @@ namespace FluentDownloader.Pages
         public DownloadQueueViewModel DownloadQueueViewModel { get; private set; } = null!;
         public VideoDownloadViewModel VideoDownloadViewModel { get; private set; } = new();
         public DownloadPreviewViewModel DownloadPreviewViewModel { get; private set; } = new();
-
+        private VisibilityAnimator? _playlistAnimator;
 
         public MainPage()
         {
@@ -261,6 +262,31 @@ namespace FluentDownloader.Pages
 
             _ytdlpInstallerService = new(this, this, this, ytDlpDownloader, confirmationHandler);
             _ffmpegInstallerService = new(this, this, this, ytDlpDownloader, confirmationHandler);
+
+            // ѕолучаем сториборды из ресурсов PlaylistBanner
+            var show = (Storyboard)PlaylistBanner.Resources["ShowPlaylistStoryboard"];
+            var hide = (Storyboard)PlaylistBanner.Resources["HidePlaylistStoryboard"];
+
+            // ѕодготовительна€ логика перед показом: установить начальные значени€
+            Action prepare = () =>
+            {
+                // гарантируем стартовые значени€ перед проигрыванием show
+                PlaylistBanner.Opacity = 0;
+                PlaylistTranslate.Y = 8;
+            };
+
+            // —оздаЄм аниматор: следит за свойством IsCurrentUrlIsPlaylist
+            _playlistAnimator = new VisibilityAnimator(
+                target: PlaylistBanner,
+                source: VideoDownloadViewModel,
+                propertyName: nameof(VideoDownloadViewModel.IsCurrentUrlIsPlaylist),
+                valueGetter: () => VideoDownloadViewModel.IsCurrentUrlIsPlaylist,
+                showStoryboard: show,
+                hideStoryboard: hide,
+                prepareShowAction: prepare,
+                dispatcher: DispatcherQueue
+            );
+            Unloaded += (_, _) => _playlistAnimator?.Dispose();
         }
 
         /// <summary>
