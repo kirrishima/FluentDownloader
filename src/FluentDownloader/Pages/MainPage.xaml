@@ -11,9 +11,10 @@
     xmlns:local="using:FluentDownloader.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
+    xmlns:models="using:FluentDownloader.Models"
     xmlns:muxc="using:CommunityToolkit.WinUI.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    xmlns:vm="using:FluentDownloader.Models"
+    xmlns:vm="using:FluentDownloader.ViewModels"
     x:Name="RootPage"
     mc:Ignorable="d">
     <Page.Resources>
@@ -477,26 +478,90 @@
                         <StackPanel
                             x:Name="ThumbnailImage"
                             Grid.Row="0"
+                            d:DataContext="{d:DesignInstance Type=vm:DownloadPreviewViewModel,
+                                                             IsDesignTimeCreatable=True}"
+                            DataContext="{Binding DownloadPreviewViewModel}"
                             Spacing="10"
                             Visibility="Collapsed">
+
                             <StackPanel.RenderTransform>
-                                <TranslateTransform x:Name="ThumbnailTransform" Y="-200" />
+                                <TransformGroup>
+                                    <ScaleTransform x:Name="ThumbnailScale" ScaleX="1" ScaleY="1" />
+                                    <TranslateTransform x:Name="ThumbnailTransform" Y="-8" />
+                                </TransformGroup>
                             </StackPanel.RenderTransform>
                             <StackPanel.Resources>
+                                <!--  Easing  -->
+                                <CubicEase x:Key="EaseOutCubic" EasingMode="EaseOut" />
+
+                                <!--  Нетривиальная, но сдержанная анимация  -->
                                 <Storyboard x:Name="ThumbnailAnimation">
+                                    <!--  лёгкое подъём->встаёт на место, короткая и плавная  -->
                                     <DoubleAnimation
                                         EnableDependentAnimation="True"
                                         Storyboard.TargetName="ThumbnailTransform"
                                         Storyboard.TargetProperty="Y"
-                                        From="-200"
+                                        From="-8"
                                         To="0"
-                                        Duration="0:0:0.25" />
+                                        Duration="0:0:0.28">
+                                        <DoubleAnimation.EasingFunction>
+                                            <StaticResource ResourceKey="EaseOutCubic" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+
+                                    <!--  мягкое "проявление" картинки  -->
                                     <DoubleAnimation
                                         Storyboard.TargetName="ThumbnailImage"
                                         Storyboard.TargetProperty="Opacity"
                                         From="0"
                                         To="1"
-                                        Duration="0:0:0.1" />
+                                        Duration="0:0:0.32" />
+
+                                    <!--  лёгкий scale для ощущения "выплывания"  -->
+                                    <DoubleAnimation
+                                        EnableDependentAnimation="True"
+                                        Storyboard.TargetName="ThumbnailScale"
+                                        Storyboard.TargetProperty="ScaleX"
+                                        From="0.985"
+                                        To="1"
+                                        Duration="0:0:0.28">
+                                        <DoubleAnimation.EasingFunction>
+                                            <StaticResource ResourceKey="EaseOutCubic" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                    <DoubleAnimation
+                                        EnableDependentAnimation="True"
+                                        Storyboard.TargetName="ThumbnailScale"
+                                        Storyboard.TargetProperty="ScaleY"
+                                        From="0.985"
+                                        To="1"
+                                        Duration="0:0:0.28">
+                                        <DoubleAnimation.EasingFunction>
+                                            <StaticResource ResourceKey="EaseOutCubic" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+
+                                    <!--  заголовок появляется чуть позже, с небольшой вертикальной подпиткой  -->
+                                    <DoubleAnimation
+                                        BeginTime="0:0:0.12"
+                                        Storyboard.TargetName="ThumbnailTitle"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="0"
+                                        To="1"
+                                        Duration="0:0:0.22" />
+
+                                    <DoubleAnimation
+                                        BeginTime="0:0:0.12"
+                                        EnableDependentAnimation="True"
+                                        Storyboard.TargetName="ThumbnailTitleTransform"
+                                        Storyboard.TargetProperty="Y"
+                                        From="6"
+                                        To="0"
+                                        Duration="0:0:0.22">
+                                        <DoubleAnimation.EasingFunction>
+                                            <StaticResource ResourceKey="EaseOutCubic" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
                                 </Storyboard>
                             </StackPanel.Resources>
                             <Border
@@ -510,16 +575,21 @@
                                     Stretch="Uniform" />
                             </Border>
                             <TextBlock
+                                x:Name="ThumbnailTitle"
                                 Padding="0,0,0,20"
                                 HorizontalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
                                 Text="{Binding Title}"
-                                TextTrimming="CharacterEllipsis" />
-                            <StackPanel.Transitions>
+                                TextTrimming="CharacterEllipsis">
+                                <TextBlock.RenderTransform>
+                                    <TranslateTransform x:Name="ThumbnailTitleTransform" Y="6" />
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                            <!--<StackPanel.Transitions>
                                 <TransitionCollection>
                                     <EntranceThemeTransition />
                                 </TransitionCollection>
-                            </StackPanel.Transitions>
+                            </StackPanel.Transitions>-->
                         </StackPanel>
 
                         <!--  Main Layout  -->
@@ -971,7 +1041,7 @@
                         </ListView.ItemContainerStyle>
 
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="vm:QueueItem">
+                            <DataTemplate x:DataType="models:QueueItem">
                                 <!--  Вставлен ваш шаблон без изменений  -->
                                 <Grid
                                     Padding="8"

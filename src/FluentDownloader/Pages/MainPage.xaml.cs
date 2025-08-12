@@ -106,8 +106,9 @@ namespace FluentDownloader.Pages
         private ToolTip _DownloadButtonToolTip = null!;
 
         public DownloadQueueViewModel DownloadQueueViewModel { get; private set; } = null!;
-
         public VideoDownloadViewModel VideoDownloadViewModel { get; private set; } = new();
+        public DownloadPreviewViewModel DownloadPreviewViewModel { get; private set; } = new();
+
 
         public MainPage()
         {

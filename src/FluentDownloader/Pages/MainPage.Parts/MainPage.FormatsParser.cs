@@ -1,5 +1,6 @@
 ﻿using FluentDownloader.Helpers;
 using FluentDownloader.Models;
+using FluentDownloader.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Linq;
@@ -169,7 +170,7 @@ namespace FluentDownloader.Pages
         private void SetSuccessState()
         {
             SetDownloadButtonState(DownloadButtonState.DownloadVideo);
-            ThumbnailImage.DataContext = VideoData;
+            DownloadPreviewViewModel.SetData(VideoData?.ThumbnailUri, VideoData?.Title);
         }
 
         /// <summary>

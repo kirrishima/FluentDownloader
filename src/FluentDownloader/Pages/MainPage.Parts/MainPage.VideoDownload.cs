@@ -136,7 +136,7 @@ namespace FluentDownloader.Pages
 
             VideoData?.ResetToNull();
             ThumbnailImage.Visibility = Visibility.Collapsed;
-            ThumbnailImage.DataContext = null;
+            DownloadPreviewViewModel.ResetData();
 
             SavePathTextBox.IsEnabled = false;
 

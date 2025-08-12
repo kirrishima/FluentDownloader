@@ -161,8 +161,8 @@ namespace FluentDownloader.Services.Ytdlp
 
                 return new VideoData(
                     [],
-                    url,
                     data.ThumbnailUri,
+                    url,
                     "Playlist",
                     videoInfo.Data.ID,
                     videoInfo.ErrorOutput)
