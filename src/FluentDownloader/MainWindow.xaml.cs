@@ -11,8 +11,10 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Windows.ApplicationModel;
 using Windows.Graphics;
 using Windows.Graphics.Display;
+using WinRT.Interop;
 
 namespace FluentDownloader
 {
@@ -59,6 +61,8 @@ namespace FluentDownloader
 
             Frame = MainFrame;
 
+            SetIcon();
+
             MainFrame.Navigate(typeof(MainPage));
             //MainFrame.Navigate(typeof(SettingsPage));
         }
@@ -84,6 +88,19 @@ namespace FluentDownloader
                     presenter.Maximize();
                 }
             }
+        }
+
+        private void SetIcon()
+        {
+            IntPtr hWnd = WindowNative.GetWindowHandle(this);
+            var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+            var appWindow = AppWindow.GetFromWindowId(windowId);
+
+            // ѕуть к .ico Ч в упакованном приложении можно брать из InstalledLocation,
+            // в распакованном Ч из AppContext.BaseDirectory или абсолютного пути.
+            string iconPath = System.IO.Path.Combine("Assets", "AppIcon.ico");
+
+            appWindow.SetIcon(iconPath);
         }
 
         private void BackdropViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
