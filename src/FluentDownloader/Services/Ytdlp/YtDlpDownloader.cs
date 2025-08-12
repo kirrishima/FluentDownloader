@@ -159,11 +159,13 @@ namespace FluentDownloader.Services.Ytdlp
                 var entry = videoInfo.Data.Entries.First();
                 var data = (await FetchVideoDataAsync(entry.Url)).Value;
 
+                var titleTemplate = LocalizedStrings.GetResourceString("DownloadPlaylistTitleTemplate");
+
                 return new VideoData(
                     [],
                     data.ThumbnailUri,
                     url,
-                    "Playlist",
+                    string.Format(titleTemplate, videoInfo.Data.Entries.Length),
                     videoInfo.Data.ID,
                     videoInfo.ErrorOutput)
                 { IsPlaylist = true };

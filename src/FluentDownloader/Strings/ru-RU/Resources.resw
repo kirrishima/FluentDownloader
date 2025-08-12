@@ -267,4 +267,7 @@
   <data name="VideoInQueueStatus_Success" xml:space="preserve">
     <value>Завершено</value>
   </data>
+  <data name="DownloadPlaylistTitleTemplate" xml:space="preserve">
+    <value>Плейлист с {0} видео</value>
+  </data>
 </root>
