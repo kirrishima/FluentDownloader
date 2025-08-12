@@ -189,7 +189,8 @@ namespace FluentDownloader.ViewModels
                 item.PlaylistDownloadSettings = new()
                 {
                     EndVideoIndex = MainPage.PlaylistRangeViewModel.FinalEndIndex,
-                    StartVideoIndex = MainPage.PlaylistRangeViewModel.FinalStartIndex
+                    StartVideoIndex = MainPage.PlaylistRangeViewModel.FinalStartIndex,
+                    PlaylistItems = MainPage.PlaylistRangeViewModel.FinalPlaylistItems
                 };
             }
 

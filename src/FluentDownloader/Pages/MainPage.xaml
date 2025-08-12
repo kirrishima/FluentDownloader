@@ -97,6 +97,10 @@
             <EntranceThemeTransition FromVerticalOffset="50" />
             <RepositionThemeTransition IsStaggeringEnabled="False" />
         </TransitionCollection>
+        <TransitionCollection x:Key="NotificationsEntranceTransitions">
+            <EntranceThemeTransition FromVerticalOffset="-50" />
+            <RepositionThemeTransition IsStaggeringEnabled="False" />
+        </TransitionCollection>
     </Page.Resources>
     <Grid x:Name="RootThemeElement">
         <Grid.RowDefinitions>
@@ -836,27 +840,9 @@
                                         Visibility="{Binding EndError, Converter={StaticResource ObjectToVisibility}}" />
                                 </StackPanel>
 
-                                <!--  Количество  -->
                                 <StackPanel
                                     Grid.Row="0"
                                     Grid.Column="2"
-                                    Orientation="Vertical">
-
-                                    <TextBox
-                                        FontSize="14"
-                                        Header="Номера видео"
-                                        Text="{Binding PlaylistItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        ToolTipService.ToolTip="Перечислите видео для скачивания через запятую без пробелов" />
-                                    <TextBlock
-                                        FontSize="12"
-                                        Foreground="Red"
-                                        Text="{Binding PlaylistItemsError}"
-                                        Visibility="{Binding PlaylistItemsError, Converter={StaticResource ObjectToVisibility}}" />
-                                </StackPanel>
-
-                                <StackPanel
-                                    Grid.Row="0"
-                                    Grid.Column="3"
                                     Orientation="Vertical">
 
                                     <TextBox
@@ -870,6 +856,25 @@
                                         Foreground="Red"
                                         Text="{Binding CountError}"
                                         Visibility="{Binding CountError, Converter={StaticResource ObjectToVisibility}}" />
+                                </StackPanel>
+
+                                <!--  Количество  -->
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Grid.Column="3"
+                                    Orientation="Vertical">
+
+                                    <TextBox
+                                        FontSize="14"
+                                        Header="Номера видео"
+                                        InputScope="Default"
+                                        Text="{Binding PlaylistItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        ToolTipService.ToolTip="Перечислите видео для скачивания через запятую без пробелов" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="Red"
+                                        Text="{Binding PlaylistItemsError}"
+                                        Visibility="{Binding PlaylistItemsError, Converter={StaticResource ObjectToVisibility}}" />
                                 </StackPanel>
 
                                 <!--  Кнопка применить (опционально)  -->
@@ -1132,7 +1137,7 @@
                 Margin="10,0,10,10"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
-                ChildrenTransitions="{StaticResource CardEntranceTransitions}"
+                ChildrenTransitions="{StaticResource NotificationsEntranceTransitions}"
                 Orientation="Vertical"
                 Spacing="10">
                 <!--<StackPanel.ChildrenTransitions>

@@ -256,7 +256,11 @@ namespace FluentDownloader.Services.Ytdlp
 
                 if (optionSet.YesPlaylist && playlistSettings.HasValue && playlistSettings.Value.StartVideoIndex is not null)
                 {
-                    optionSet.PlaylistItems = $"{playlistSettings.Value.StartVideoIndex}:{playlistSettings.Value.EndVideoIndex}";
+                    var template = playlistSettings.Value.PlaylistItems?.Count > 0 ? "{0}:{1},{2}" : "{0}:{1}";
+                    optionSet.PlaylistItems = string.Format(template,
+                        playlistSettings.Value.StartVideoIndex,
+                        playlistSettings.Value.EndVideoIndex,
+                        string.Join(',', playlistSettings.Value.PlaylistItems ?? []));
                 }
 
                 var progress = new LogBoxProgress(_dialogService, _downloadDependencies, _progressBar);

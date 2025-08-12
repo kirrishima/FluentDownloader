@@ -140,7 +140,8 @@ namespace FluentDownloader.Pages
             var playlistSettings = new PlaylistDownloadSettings()
             {
                 EndVideoIndex = PlaylistRangeViewModel.FinalEndIndex,
-                StartVideoIndex = PlaylistRangeViewModel.FinalStartIndex
+                StartVideoIndex = PlaylistRangeViewModel.FinalStartIndex,
+                PlaylistItems = PlaylistRangeViewModel.FinalPlaylistItems
             };
 
             if (IsDefaultFormatSelected())
