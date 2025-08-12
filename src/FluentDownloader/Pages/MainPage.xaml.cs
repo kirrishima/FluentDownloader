@@ -109,6 +109,7 @@ namespace FluentDownloader.Pages
         public DownloadQueueViewModel DownloadQueueViewModel { get; private set; } = null!;
         public VideoDownloadViewModel VideoDownloadViewModel { get; private set; } = new();
         public DownloadPreviewViewModel DownloadPreviewViewModel { get; private set; } = new();
+        public PlaylistRangeViewModel PlaylistRangeViewModel { get; private set; } = null!;
         private VisibilityAnimator? _playlistAnimator;
 
         public MainPage()
@@ -245,6 +246,7 @@ namespace FluentDownloader.Pages
               );
 
             DownloadQueueViewModel = new DownloadQueueViewModel(animator);
+            PlaylistRangeViewModel = new(VideoDownloadViewModel);
         }
 
         /// <summary>
@@ -263,21 +265,21 @@ namespace FluentDownloader.Pages
             _ytdlpInstallerService = new(this, this, this, ytDlpDownloader, confirmationHandler);
             _ffmpegInstallerService = new(this, this, this, ytDlpDownloader, confirmationHandler);
 
-            // ѕолучаем сториборды из ресурсов PlaylistBanner
-            var show = (Storyboard)PlaylistBanner.Resources["ShowPlaylistStoryboard"];
-            var hide = (Storyboard)PlaylistBanner.Resources["HidePlaylistStoryboard"];
+            // ѕолучаем сториборды из ресурсов PlaylistRangePanel
+            var show = (Storyboard)PlaylistRangePanel.Resources["ShowPlaylistStoryboard"];
+            var hide = (Storyboard)PlaylistRangePanel.Resources["HidePlaylistStoryboard"];
 
             // ѕодготовительна€ логика перед показом: установить начальные значени€
             Action prepare = () =>
             {
                 // гарантируем стартовые значени€ перед проигрыванием show
-                PlaylistBanner.Opacity = 0;
+                PlaylistRangePanel.Opacity = 0;
                 PlaylistTranslate.Y = 8;
             };
 
             // —оздаЄм аниматор: следит за свойством IsCurrentUrlIsPlaylist
             _playlistAnimator = new VisibilityAnimator(
-                target: PlaylistBanner,
+                target: PlaylistRangePanel,
                 source: VideoDownloadViewModel,
                 propertyName: nameof(VideoDownloadViewModel.IsCurrentUrlIsPlaylist),
                 valueGetter: () => VideoDownloadViewModel.IsCurrentUrlIsPlaylist,
@@ -287,6 +289,8 @@ namespace FluentDownloader.Pages
                 dispatcher: DispatcherQueue
             );
             Unloaded += (_, _) => _playlistAnimator?.Dispose();
+
+
         }
 
         /// <summary>

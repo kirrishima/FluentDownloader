@@ -8,7 +8,7 @@
     xmlns:converters="using:FluentDownloader.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:local="using:FluentDownloader.ViewModels"
+    xmlns:local="using:FluentDownloader.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:models="using:FluentDownloader.Models"
@@ -16,6 +16,8 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:vm="using:FluentDownloader.ViewModels"
     x:Name="RootPage"
+    d:DataContext="{d:DesignInstance Type=local:MainPage,
+                                     IsDesignTimeCreatable=True}"
     mc:Ignorable="d">
     <Page.Resources>
         <converters:LanguageBasedVerticalAlignmentConverter x:Key="LangAlignmentConverter" />
@@ -729,20 +731,37 @@
                                     RelativePanel.AlignTopWith="AudioFormatComboBox"
                                     RelativePanel.RightOf="AudioFormatComboBox" />
                             </RelativePanel>
+                            <!--  Подключи пространство имён vm=using:YourApp.ViewModels если нужно  -->
 
-                            <Grid
-                                x:Name="PlaylistBanner"
+
+                            <StackPanel
+                                x:Name="PlaylistRangeHeader"
                                 Grid.Row="2"
                                 Grid.Column="0"
-                                Grid.ColumnSpan="3"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical"
+                                Visibility="{Binding VideoDownloadViewModel.IsCurrentUrlIsPlaylist}">
+                                <TextBlock Text="Диапазон" />
+
+                            </StackPanel>
+
+                            <Grid
+                                x:Name="PlaylistRangePanel"
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Grid.ColumnSpan="2"
                                 Margin="0,16,0,0"
+                                d:DataContext="{d:DesignInstance Type=vm:PlaylistRangeViewModel,
+                                                                 IsDesignTimeCreatable=True}"
+                                ColumnSpacing="8"
+                                DataContext="{Binding PlaylistRangeViewModel}"
                                 Opacity="0"
                                 Visibility="Collapsed">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="10*" />
-                                    <ColumnDefinition Width="10*" />
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RenderTransform>
                                     <TranslateTransform x:Name="PlaylistTranslate" Y="8" />
@@ -750,18 +769,18 @@
                                 <Grid.Resources>
                                     <Storyboard x:Key="ShowPlaylistStoryboard">
                                         <DoubleAnimation
-                                           Storyboard.TargetName="PlaylistBanner"
-                                           Storyboard.TargetProperty="Opacity"
-                                           From="0"
-                                           To="1"
-                                           Duration="0:0:0.28" />
+                                            Storyboard.TargetName="PlaylistRangePanel"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0"
+                                            To="1"
+                                            Duration="0:0:0.28" />
                                         <DoubleAnimation
-                                           EnableDependentAnimation="True"
-                                           Storyboard.TargetName="PlaylistTranslate"
-                                           Storyboard.TargetProperty="Y"
-                                           From="8"
-                                           To="0"
-                                           Duration="0:0:0.28">
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="PlaylistTranslate"
+                                            Storyboard.TargetProperty="Y"
+                                            From="8"
+                                            To="0"
+                                            Duration="0:0:0.28">
                                             <DoubleAnimation.EasingFunction>
                                                 <CubicEase EasingMode="EaseOut" />
                                             </DoubleAnimation.EasingFunction>
@@ -770,24 +789,109 @@
 
                                     <Storyboard x:Key="HidePlaylistStoryboard">
                                         <DoubleAnimation
-                                           Storyboard.TargetName="PlaylistBanner"
-                                           Storyboard.TargetProperty="Opacity"
-                                           From="1"
-                                           To="0"
-                                           Duration="0:0:0.18" />
+                                            Storyboard.TargetName="PlaylistRangePanel"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1"
+                                            To="0"
+                                            Duration="0:0:0.18" />
                                         <DoubleAnimation
-                                           EnableDependentAnimation="True"
-                                           Storyboard.TargetName="PlaylistTranslate"
-                                           Storyboard.TargetProperty="Y"
-                                           From="0"
-                                           To="8"
-                                           Duration="0:0:0.18">
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="PlaylistTranslate"
+                                            Storyboard.TargetProperty="Y"
+                                            From="0"
+                                            To="8"
+                                            Duration="0:0:0.18">
                                             <DoubleAnimation.EasingFunction>
                                                 <CubicEase EasingMode="EaseIn" />
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>
                                 </Grid.Resources>
+
+                                <!--  Первый индекс  -->
+                                <StackPanel
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Stretch"
+                                    Orientation="Vertical">
+
+                                    <TextBox
+                                        HorizontalAlignment="Stretch"
+                                        FontSize="14"
+                                        Header="Стартовый индекс"
+                                        InputScope="Number"
+                                        PlaceholderText="0, 1, 2, etc"
+                                        Text="{Binding StartText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="Red"
+                                        Text="{Binding StartError}"
+                                        Visibility="{Binding StartError, Converter={StaticResource ObjectToVisibility}}" />
+                                </StackPanel>
+
+                                <!--  Конечный индекс  -->
+                                <StackPanel Grid.Column="1" Orientation="Vertical">
+
+                                    <TextBox
+                                        FontSize="14"
+                                        Header="Конечный индекс"
+                                        InputScope="Number"
+                                        Text="{Binding EndText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        ToolTipService.ToolTip="Оставьте пустым, чтобы скачать все" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="Red"
+                                        Text="{Binding EndError}"
+                                        TextWrapping="Wrap"
+                                        Visibility="{Binding EndError, Converter={StaticResource ObjectToVisibility}}" />
+                                </StackPanel>
+
+                                <!--  Количество  -->
+                                <StackPanel Grid.Column="2" Orientation="Vertical">
+
+                                    <TextBox
+                                        FontSize="14"
+                                        Header="Число видео"
+                                        InputScope="Number"
+                                        Text="{Binding CountText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        ToolTipService.ToolTip="Сколько скачать. Оставьте пустым, чтобы скачать все" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="Red"
+                                        Text="{Binding CountError}"
+                                        Visibility="{Binding CountError, Converter={StaticResource ObjectToVisibility}}" />
+                                </StackPanel>
+
+                                <!--  Кнопка применить (опционально)  -->
+                                <SplitButton
+                                    Grid.Column="3"
+                                    Margin="0,27,0,0"
+                                    VerticalAlignment="Top"
+                                    Command="{Binding ApplyRangeCommand}"
+                                    Content="Применить"
+                                    FontSize="16">
+                                    <SplitButton.Flyout>
+                                        <Flyout>
+                                            <Flyout.FlyoutPresenterStyle>
+                                                <Style TargetType="FlyoutPresenter">
+                                                    <!--  фон  -->
+
+                                                    <!--  граница  -->
+                                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                                    <Setter Property="BorderThickness" Value="0" />
+                                                    <!--  скругление углов  -->
+                                                    <Setter Property="CornerRadius" Value="4" />
+                                                    <Setter Property="Padding" Value="0" />
+                                                </Style>
+                                            </Flyout.FlyoutPresenterStyle>
+
+                                            <Flyout.Content>
+                                                <Button>
+                                                    <TextBlock>Сбросить</TextBlock>
+                                                </Button>
+                                            </Flyout.Content>
+                                        </Flyout>
+                                    </SplitButton.Flyout>
+                                </SplitButton>
 
                             </Grid>
 
