@@ -1,4 +1,5 @@
-﻿using FluentDownloader.Dialogs;
+﻿using CommunityToolkit.Mvvm.Input;
+using FluentDownloader.Dialogs;
 using FluentDownloader.Helpers.FileSystem;
 using FluentDownloader.Models;
 using FluentDownloader.ViewModels;

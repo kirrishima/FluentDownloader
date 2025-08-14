@@ -22,10 +22,8 @@
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing"
-  mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework
-  object]</value>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
                 
@@ -61,8 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -115,12 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0,
-      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
-      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ChangeBackgroundButton.OnContent" xml:space="preserve">
     <value>Акрил</value>
@@ -155,14 +150,44 @@
   <data name="YtDlpInfoButtonText.Text" xml:space="preserve">
     <value>Информация о yt-dlp</value>
   </data>
-  <data name="ProjectGitHubLink.Content" xml:space="preserve">
-    <value>Мой GitHub</value>
+  <data name="ProjectGitHubLinkText.Text" xml:space="preserve">
+    <value>Исходный код</value>
+  </data>
+  <data name="DownloadQueue.Text" xml:space="preserve">
+    <value>Очередь скачивания</value>
+  </data>
+  <data name="DownloadQueueStart.Text" xml:space="preserve">
+    <value>Запуск</value>
+  </data>
+  <data name="DownloadQueueSkip.Text" xml:space="preserve">
+    <value>Пропустить текущий</value>
+  </data>
+  <data name="DownloadQueueCancel.Text" xml:space="preserve">
+    <value>Остановить</value>
+  </data>
+  <data name="DownloadQueueClear.Text" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="DownloadQueueClearSucceded.Text" xml:space="preserve">
+    <value>Очистить завершенные</value>
+  </data>
+  <data name="DownloadQueueResume.Text" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="DownloadQueueRetryFailed.Text" xml:space="preserve">
+    <value>Повторить попытку</value>
+  </data>
+  <data name="DownloadQueueSkip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Пропустить загрузку текущего видео и перейти к следующему</value>
+  </data>
+  <data name="DownloadQueueRetryFailed.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Повторить попытку для видео с ошибками</value>
   </data>
   <data name="SelectedLanguageText.Text" xml:space="preserve">
     <value>Текущий язык</value>
   </data>
   <data name="ProjectGitHubLink.NavigateUri" xml:space="preserve">
-    <value>https://github.com/kirrishima</value>
+    <value>https://github.com/kirrishima/FluentDownloader</value>
   </data>
   <data name="SwitchPageButtonTextBlock.Text" xml:space="preserve">
     <value>Внешний вид</value>
@@ -193,5 +218,8 @@
   </data>
   <data name="OpacitySlider.Header" xml:space="preserve">
     <value>Прозрачность фона</value>
+  </data>
+  <data name="DownloadQueueIsEmpty.Text" xml:space="preserve">
+    <value>Очередь пуста</value>
   </data>
 </root>

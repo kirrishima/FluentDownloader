@@ -1,26 +1,29 @@
+using CommunityToolkit.WinUI;
+using FluentDownloader;
 using FluentDownloader.Dialogs;
 using FluentDownloader.Helpers;
 using FluentDownloader.Models;
+using FluentDownloader.Services;
+using FluentDownloader.Services.Dependencies.Helpers;
 using FluentDownloader.Services.Dependencies.Installations;
 using FluentDownloader.Services.Ytdlp;
+using FluentDownloader.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
+using Microsoft.Windows.AppNotifications;
+using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Globalization;
-using FluentDownloader;
-using FluentDownloader.Services.Dependencies.Helpers;
 using Windows.Storage;
-using System.Diagnostics;
-using Microsoft.Windows.AppNotifications.Builder;
-using Microsoft.Windows.AppNotifications;
-using FluentDownloader.Services;
-using CommunityToolkit.WinUI;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -66,7 +69,7 @@ namespace FluentDownloader.Pages
         /// Token source for managing cancellation of ongoing download operations.
         /// Enables cooperative cancellation of active downloads and background tasks.
         /// </summary>
-        private CancellationTokenSource DownloadCts { get; set; } = null!;
+        public CancellationTokenSource DownloadCts { get; set; } = null!;
 
         /// <summary>
         /// Gets the progress bar control used to visualize download progress.
@@ -102,6 +105,10 @@ namespace FluentDownloader.Pages
         /// </remarks>
         private ToolTip _DownloadButtonToolTip = null!;
 
+        public DownloadQueueViewModel DownloadQueueViewModel { get; private set; } = null!;
+
+        public VideoDownloadViewModel VideoDownloadViewModel { get; private set; } = new();
+
         public MainPage()
         {
             if (_initialized) return;
@@ -112,11 +119,14 @@ namespace FluentDownloader.Pages
             this.Loaded += MainWindow_Activated;
 
             InitializeServices();
+            InitializeViewModels();
             InitializeAsyncOperations();
             FinalizeInitialization();
             ConfigureSystemBackdrop();
 
             this.SizeChanged += MainPage_SizeChanged;
+
+            DataContext = this;
         }
 
         bool _isSmallView = false;
@@ -129,6 +139,9 @@ namespace FluentDownloader.Pages
 
                 Grid.SetColumn(NotificationStack, 0);
                 Grid.SetColumnSpan(NotificationStack, 4);
+                Grid.SetColumn(DownloadQueue, 2);
+                Grid.SetColumnSpan(DownloadQueue, 2);
+                DownloadQueue.Margin = new(0, 0, 0, 50);
 
                 Grid.SetColumn(RootContentGrid, 0);
                 Grid.SetColumnSpan(RootContentGrid, 4);
@@ -136,6 +149,7 @@ namespace FluentDownloader.Pages
                 Grid.SetColumn(LeftSidebar, 0);
                 Grid.SetRow(LeftSidebar, 2);
                 Grid.SetColumnSpan(LeftSidebar, 3);
+                LeftSidebar.Margin = new Thickness(0, 0, 0, 8);
 
                 Grid.SetColumn(Header, 0);
                 Grid.SetRow(Header, 0);
@@ -153,6 +167,9 @@ namespace FluentDownloader.Pages
                 _isSmallView = false;
                 Grid.SetColumn(NotificationStack, 3);
                 Grid.SetColumnSpan(NotificationStack, 1);
+                Grid.SetColumn(DownloadQueue, 3);
+                Grid.SetColumnSpan(DownloadQueue, 1);
+                DownloadQueue.Margin = new(0, 0, 0, 0);
 
                 Grid.SetColumn(RootContentGrid, 0);
                 Grid.SetColumnSpan(RootContentGrid, 3);
@@ -160,6 +177,7 @@ namespace FluentDownloader.Pages
                 Grid.SetColumn(LeftSidebar, 0);
                 Grid.SetRow(LeftSidebar, 1);
                 Grid.SetColumnSpan(LeftSidebar, 1);
+                LeftSidebar.Margin = new Thickness(0, 0, 0, 0);
 
                 Grid.SetColumn(Header, 1);
                 Grid.SetRow(Header, 0);
@@ -209,6 +227,22 @@ namespace FluentDownloader.Pages
         {
             propertyUpdater.LogStep("Processing styles");
             PopUpsTextBlockStyle = StylesManager.GetStyleOrDefault("PopUpsTextBlock", "BodyTextBlockStyle");
+        }
+
+        [MemberNotNull(nameof(DownloadQueueViewModel))]
+        private void InitializeViewModels()
+        {
+            var animator = new DownloadQueueAnimator(
+              fadeInNotifications: (Storyboard)Resources["FadeInNotifications"],
+              fadeOutNotifications: (Storyboard)Resources["FadeOutNotifications"],
+              queuePanel: DownloadQueue,
+              queueTransform: QueueTranslate,
+              notificationPanel: NotificationStack,
+              slideInQueue: (Storyboard)Resources["SlideInQueue"],
+              slideOutQueue: (Storyboard)Resources["SlideOutQueue"]
+              );
+
+            DownloadQueueViewModel = new DownloadQueueViewModel(animator);
         }
 
         /// <summary>
@@ -285,7 +319,7 @@ namespace FluentDownloader.Pages
         {
             FfmpegInfoButton.IsEnabled = true;
             YtDlpInfoButton.IsEnabled = true;
-            DownloadButton.IsEnabled = true;
+            VideoDownloadViewModel.YtdlpServiceIsAvailable = true;
         }
 
 

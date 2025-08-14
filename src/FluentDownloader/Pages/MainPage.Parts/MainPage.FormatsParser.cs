@@ -9,7 +9,7 @@ namespace FluentDownloader.Pages
 {
     partial class MainPage
     {
-        private VideoData? _videoData;
+        public VideoData? VideoData { get; private set; }
 
         /// <summary>
         /// Handles the click event of the ParseVideoFormatsButton.
@@ -83,17 +83,18 @@ namespace FluentDownloader.Pages
         /// <param name="url">The URL from which to fetch video data.</param>
         /// <returns>
         /// A task that returns a tuple where the first item indicates success,
-        /// and the second item contains the fetched <see cref="VideoData"/> if successful.
+        /// and the second item contains the fetched <see cref="Models.VideoData"/> if successful.
         /// </returns>
         private async Task<(bool success, VideoData? videoData)> TryFetchVideoData(string url)
         {
             try
             {
                 SetProcessingState();
+                VideoDownloadViewModel.YtdlpServiceIsAvailable = false;
                 LogsTextBoxWriteLine(string.Format(LocalizedStrings.GetMessagesString("FetchingVideoDataLogMessage"), url));
 
                 var videoData = await ytDlpDownloader.FetchVideoDataAsync(url);
-                _videoData = videoData;
+                VideoData = videoData;
 
                 return (true, videoData);
             }
@@ -101,6 +102,10 @@ namespace FluentDownloader.Pages
             {
                 AddPopUpErrorNotification(ex);
                 return (false, null);
+            }
+            finally
+            {
+                VideoDownloadViewModel.YtdlpServiceIsAvailable = true;
             }
         }
 
@@ -164,7 +169,7 @@ namespace FluentDownloader.Pages
         private void SetSuccessState()
         {
             SetDownloadButtonState(DownloadButtonState.DownloadVideo);
-            ThumbnailImage.DataContext = _videoData;
+            ThumbnailImage.DataContext = VideoData;
         }
 
         /// <summary>
@@ -172,8 +177,8 @@ namespace FluentDownloader.Pages
         /// </summary>
         private void HandleVideoDataErrors()
         {
-            var errorDetails = _videoData.HasValue && _videoData.Value.Errors.Any()
-                ? string.Join(Environment.NewLine, _videoData.Value.Errors)
+            var errorDetails = VideoData.HasValue && VideoData.Value.Errors.Any()
+                ? string.Join(Environment.NewLine, VideoData.Value.Errors)
                 : "Null";
             var description = string.Format(LocalizedStrings.GetMessagesString("FormatRetrievalErrorDescription"), errorDetails);
 

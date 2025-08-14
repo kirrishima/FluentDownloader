@@ -22,10 +22,8 @@
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing"
-  mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework
-  object]</value>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
                 
@@ -61,8 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -115,143 +112,132 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0,
-      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
-      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-
   <data name="NotificationDialogCloseButton" xml:space="preserve">
     <value>Ок</value>
-</data>
+  </data>
   <data name="NotificationDialogPrimaryButtonText" xml:space="preserve">
     <value>Установить</value>
-</data>
+  </data>
   <data name="NotificationDialogCloseButtonText" xml:space="preserve">
     <value>Не устанавливать</value>
-</data>
-  <!-- Dependency info -->
+  </data>
   <data name="DependencyInfoVersion" xml:space="preserve">
     <value>Версия: {0}</value>
-</data>
+  </data>
   <data name="DependencyInfoPath" xml:space="preserve">
     <value>Путь к {0}: "{1}"</value>
-</data>
+  </data>
   <data name="DependencyInfoRevealInExplorer" xml:space="preserve">
     <value>Показать в проводнике</value>
-</data>
-
-  <!-- ffmpeg info -->
+  </data>
   <data name="FfmpegInfoTitle" xml:space="preserve">
     <value>Информация о Ffmpeg</value>
-</data>
+  </data>
   <data name="FfmpegInfoGithubLinkText" xml:space="preserve">
     <value>Страница на GitHub</value>
-</data>
-
-  <!-- Ytdlp info -->
+  </data>
   <data name="YtdlpInfoTitle" xml:space="preserve">
     <value>Информация о yt-dlp</value>
-</data>
+  </data>
   <data name="YtdlpInfoGithubLinkText" xml:space="preserve">
     <value>Страница на GitHub</value>
-</data>
-
-  <!-- Диалог "Требуется установка YT-DLP" -->
+  </data>
   <data name="InstallYtDlpDialogTitle.Text" xml:space="preserve">
     <value>Требуется установка YT-DLP</value>
-</data>
+  </data>
   <data name="InstallYtDlpDescriptionPart1.Text" xml:space="preserve">
     <value>Для работы этого приложения требуется </value>
-</data>
+  </data>
   <data name="InstallYtDlpDescriptionPart2.Text" xml:space="preserve">
     <value>yt-dlp</value>
-</data>
+  </data>
   <data name="InstallYtDlpDescriptionPart3.Text" xml:space="preserve">
     <value>. Вы можете скачать его, нажав кнопку "Установить", или вручную из репозитория GitHub ниже:</value>
-</data>
+  </data>
   <data name="YtDlpGithubReposNavigateUriText.Text" xml:space="preserve">
     <value>Репозиторий yt-dlp на GitHub</value>
-</data>
+  </data>
   <data name="InstallYtDlpDialogCaption.Text" xml:space="preserve">
     <value>После загрузки yt-dlp его необходимо добавить в PATH.</value>
-</data>
-
-  <!-- Русские ресурсы -->
+  </data>
   <data name="InstallFfmpegDialogTitle.Text" xml:space="preserve">
     <value>Требуется установка FFmpeg</value>
-</data>
+  </data>
   <data name="InstallFfmpegDescriptionPart1.Text" xml:space="preserve">
     <value>Для работы этого приложения требуется </value>
-</data>
+  </data>
   <data name="InstallFfmpegDescriptionPart2.Text" xml:space="preserve">
     <value>FFmpeg</value>
-</data>
+  </data>
   <data name="InstallFfmpegDescriptionPart3.Text" xml:space="preserve">
     <value> для загрузки видео в высоком качестве. Вы можете скачать его, нажав кнопку "Установить", или вручную из репозитория GitHub ниже:</value>
-</data>
+  </data>
   <data name="FfmpegGithubReposNavigateUri.NavigateUri" xml:space="preserve">
     <value>https://github.com/yt-dlp/FFmpeg-Builds</value>
-</data>
+  </data>
   <data name="FfmpegGithubReposNavigateUriText.Text" xml:space="preserve">
     <value>Репозиторий FFmpeg на GitHub</value>
-</data>
+  </data>
   <data name="InstallFfmpegNotePart1.Text" xml:space="preserve">
     <value>Поскольку FFmpeg является важной зависимостью, </value>
-</data>
+  </data>
   <data name="InstallFfmpegNotePart2.Text" xml:space="preserve">
     <value>yt-dlp</value>
-</data>
+  </data>
   <data name="InstallFfmpegNotePart3.Text" xml:space="preserve">
     <value> предоставляет собственные сборки, которые вы можете использовать.</value>
-</data>
+  </data>
   <data name="InstallFfmpegCaption.Text" xml:space="preserve">
     <value>После загрузки FFmpeg его необходимо добавить в PATH.</value>
-</data>
-
-  <!-- Заголовок -->
+  </data>
   <data name="InstallYtDlpAndFfmpegDialogTitle.Text" xml:space="preserve">
     <value>Требуется установка YT-DLP и FFmpeg</value>
-</data>
-
-  <!-- Описание -->
+  </data>
   <data name="InstallYtDlpAndFfmpegDescriptionPart1.Text" xml:space="preserve">
     <value>Для работы этого приложения требуется </value>
-</data>
+  </data>
   <data name="InstallYtDlpAndFfmpegDescriptionPart2.Text" xml:space="preserve">
     <value>yt-dlp</value>
-</data>
+  </data>
   <data name="InstallYtDlpAndFfmpegDescriptionPart3.Text" xml:space="preserve">
     <value> и </value>
-</data>
+  </data>
   <data name="InstallYtDlpAndFfmpegDescriptionPart4.Text" xml:space="preserve">
     <value>FFmpeg</value>
-</data>
+  </data>
   <data name="InstallYtDlpAndFfmpegDescriptionPart5.Text" xml:space="preserve">
     <value>. Пожалуйста, скачайте и установите их по следующим ссылкам:</value>
-</data>
-
-  <!-- Инструкция -->
+  </data>
   <data name="InstallYtDlpAndFfmpegInstructionPart1.Text" xml:space="preserve">
     <value>Вы можете автоматически скачать </value>
-</data>
+  </data>
   <data name="InstallYtDlpAndFfmpegInstructionPart2.Text" xml:space="preserve">
     <value>yt-dlp</value>
-</data>
+  </data>
   <data name="InstallYtDlpAndFfmpegInstructionPart3.Text" xml:space="preserve">
     <value> и </value>
-</data>
+  </data>
   <data name="InstallYtDlpAndFfmpegInstructionPart4.Text" xml:space="preserve">
     <value>FFmpeg</value>
-</data>
+  </data>
   <data name="InstallYtDlpAndFfmpegInstructionPart5.Text" xml:space="preserve">
     <value>, нажав кнопку "Установить", или скачать их вручную из репозиториев.</value>
-</data>
-
-  <!-- Подпись -->
+  </data>
   <data name="InstallYtDlpAndFfmpegCaption.Text" xml:space="preserve">
     <value>После загрузки yt-dlp и ffmpeg их необходимо добавить в PATH.</value>
-</data>
+  </data>
+  <data name="InstallFfmpegAndYtdlpDialogTitle.Text" xml:space="preserve">
+    <value>Необходимы YT-DLP и FFmpeg</value>
+  </data>
+  <data name="InstallFfmpegAndYtdlpDialogDescriptionPart1.Text" xml:space="preserve">
+    <value>Для работы приложения требуется</value>
+  </data>
+  <data name="InstallFfmpegAndYtdlpDialogDescriptionPart2.Text" xml:space="preserve">
+    <value>Для работы приложения требуется</value>
+  </data>
 </root>

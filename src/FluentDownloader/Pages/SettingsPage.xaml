@@ -10,7 +10,7 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <StackPanel Padding="20" Spacing="0">
+    <StackPanel Padding="20,0,20,20" Spacing="0">
         <Button
             x:Name="GoBackButton"
             Grid.Column="0"

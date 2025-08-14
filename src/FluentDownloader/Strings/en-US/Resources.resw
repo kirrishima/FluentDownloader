@@ -22,10 +22,8 @@
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing"
-  mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework
-  object]</value>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
                 
@@ -61,8 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -115,57 +112,47 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0,
-      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
-      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Header.Text" xml:space="preserve">
-    <value>Fluent Video Downloader</value>
-    <comment>Main Page app name hader</comment>
-  </data>
   <data name="VideoUrlLabel.Text" xml:space="preserve">
-  <value>Video URL:</value>
-</data>
+    <value>Video URL:</value>
+  </data>
   <data name="UrlTextBox.PlaceholderText" xml:space="preserve">
-  <value>Enter video or playlist URL</value>
-</data>
-
+    <value>Enter video or playlist URL</value>
+  </data>
   <data name="OpenEditUrlButton.Content" xml:space="preserve">
-  <value>Expand</value>
-</data>
+    <value>Expand</value>
+  </data>
   <data name="OpenEditUrlButton.ToolTipService.ToolTip" xml:space="preserve">
-  <value>Open advanced URL settings</value>
-</data>
+    <value>Open advanced URL settings</value>
+  </data>
   <data name="SaveToLabel.Text" xml:space="preserve">
     <value>Save to:</value>
-</data>
+  </data>
   <data name="SavePathTextBox.PlaceholderText" xml:space="preserve">
     <value>Select destination folder</value>
-</data>
+  </data>
   <data name="SavePathTextBox.ToolTipService.ToolTip" xml:space="preserve">
     <value>Select folder video will be saved to.</value>
-</data>
+  </data>
   <data name="SavePathTeachingTip.Title" xml:space="preserve">
     <value>Select Destination Folder</value>
-</data>
+  </data>
   <data name="SavePathTeachingTip.Subtitle" xml:space="preserve">
     <value>Choose the folder where the video will be saved.</value>
-</data>
+  </data>
   <data name="SavePathButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Click to select folder with explorer.</value>
-</data>
+  </data>
   <data name="SavePathButtonTextBlock.Text" xml:space="preserve">
     <value>Browse</value>
-</data>
-  <!-- Format TextBlock -->
+  </data>
   <data name="FormatTextBlock.Text" xml:space="preserve">
     <value>Format:</value>
   </data>
-
-  <!-- FormatComboBox -->
   <data name="FormatComboBox.Header" xml:space="preserve">
     <value>Resolution</value>
   </data>
@@ -184,8 +171,6 @@
   <data name="FormatComboBoxItem3.Content" xml:space="preserve">
     <value>Bestvideo+Bestaudio</value>
   </data>
-
-  <!-- VideoFormatComboBox -->
   <data name="VideoFormatComboBox.Header" xml:space="preserve">
     <value>Video format</value>
   </data>
@@ -195,8 +180,6 @@
   <data name="VideoFormatComboBox.ToolTipService.ToolTip" xml:space="preserve">
     <value>--merge-output-format: This option specifies the container format for the final output file when merging video and audio streams. If not merging, format can be distinct from chosen.</value>
   </data>
-
-  <!-- AudioFormatComboBox -->
   <data name="AudioFormatComboBox.Header" xml:space="preserve">
     <value>Audio format</value>
   </data>
@@ -206,8 +189,6 @@
   <data name="AudioFormatComboBox.ToolTipService.ToolTip" xml:space="preserve">
     <value>--audio-format: This option specifies the format in which the audio should be downloaded or converted. If the specified format is not available, yt-dlp will attempt to convert the audio to the desired format.</value>
   </data>
-
-  <!-- RecodeVideFormatComboBox -->
   <data name="RecodeVideFormatComboBox.Header" xml:space="preserve">
     <value>Recode video</value>
   </data>
@@ -217,15 +198,12 @@
   <data name="RecodeVideFormatComboBox.ToolTipService.ToolTip" xml:space="preserve">
     <value>This option allows you to recode the video into a different format after downloading. Significantly uses CPU, can be *slow*.</value>
   </data>
-
-  <!-- FormatTeachingTip -->
   <data name="FormatTeachingTip.Title" xml:space="preserve">
     <value>Select a format</value>
   </data>
   <data name="FormatTeachingTip.Subtitle" xml:space="preserve">
     <value>You need to select a format for the download.</value>
   </data>
-
   <data name="EditTextDialog.Title" xml:space="preserve">
     <value>Edit URL</value>
   </data>
@@ -235,7 +213,6 @@
   <data name="EditTextDialog.PrimaryButtonText" xml:space="preserve">
     <value>Save</value>
   </data>
-
   <data name="DownloadButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Use this button to download video formats and video in selected format</value>
   </data>
@@ -250,30 +227,45 @@
   </data>
   <data name="ResetDownloadFieldsButtonText.Text" xml:space="preserve">
     <value>Reset all</value>
-</data>
+  </data>
   <data name="ResetDownloadFieldsButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Resets the state of input fields, buttons and clears logs</value>
-</data>
-
+  </data>
   <data name="LogsBlockHeader.Text" xml:space="preserve">
     <value>Download Logs:</value>
-</data>
-
-  <!-- кнопки разные -->
+  </data>
   <data name="SaveButtonTextContent.Content" xml:space="preserve">
     <value>Save</value>
-</data>
+  </data>
   <data name="ResetButtonTextContent.Content" xml:space="preserve">
     <value>Reset</value>
-</data>
+  </data>
   <data name="ResetToDefaultButtonTextContent.Content" xml:space="preserve">
     <value>Default</value>
-</data>
+  </data>
   <data name="ConfirmButtonTextContent.Content" xml:space="preserve">
     <value>Confirm</value>
-</data>
+  </data>
   <data name="NotImplementedYetInfoBar.Message" xml:space="preserve">
-  <value>This feature has not been implemented in this version of the application yet. It may be added in one of the upcoming updates.</value>
-</data>
-
+    <value>This feature has not been implemented in this version of the application yet. It may be added in one of the upcoming updates.</value>
+  </data>
+  <data name="Header.Text" xml:space="preserve">
+    <value>Fluent Video Downloader</value>
+    <comment>Main Page app name hader</comment>
+  </data>
+  <data name="AddToQueue.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Add to queue</value>
+  </data>
+  <data name="VideoInQueueStatus_Downloading" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
+  <data name="VideoInQueueStatus_Failed" xml:space="preserve">
+    <value>Faild</value>
+  </data>
+  <data name="VideoInQueueStatus_InQueue" xml:space="preserve">
+    <value>In queue</value>
+  </data>
+  <data name="VideoInQueueStatus_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
 </root>

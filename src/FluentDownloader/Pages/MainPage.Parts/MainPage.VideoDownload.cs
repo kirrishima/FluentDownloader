@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using FluentDownloader.ViewModels;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
@@ -62,7 +63,7 @@ namespace FluentDownloader.Pages
         /// <remarks>
         /// Manages visibility of progress ring, text labels and cancel UI
         /// </remarks>
-        private void SetDownloadButtonState(DownloadButtonState state)
+        public void SetDownloadButtonState(DownloadButtonState state)
         {
             ResetDownloadFieldsButton.IsEnabled = state != DownloadButtonState.Processing;
 
@@ -96,7 +97,7 @@ namespace FluentDownloader.Pages
         /// <summary>
         /// Represents possible states of the download button UI
         /// </summary>
-        private enum DownloadButtonState
+        public enum DownloadButtonState
         {
             /// <summary>Format parsing state</summary>
             ParseFormats,
@@ -133,7 +134,7 @@ namespace FluentDownloader.Pages
                 FormatComboBox.Items.Add(item);
             }
 
-            _videoData?.ResetToNull();
+            VideoData?.ResetToNull();
             ThumbnailImage.Visibility = Visibility.Collapsed;
             ThumbnailImage.DataContext = null;
 

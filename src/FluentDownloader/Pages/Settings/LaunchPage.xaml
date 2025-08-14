@@ -16,7 +16,7 @@
     <Page.Resources>
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     </Page.Resources>
-    <StackPanel Padding="8" Spacing="4">
+    <StackPanel Spacing="4">
         <StackPanel.ChildrenTransitions>
             <EntranceThemeTransition FromVerticalOffset="50" />
             <RepositionThemeTransition IsStaggeringEnabled="False" />
