@@ -22,18 +22,13 @@
         <converters:InverseNullToBooleanConverter x:Key="InverseNullToBooleanConverter" />
     </Page.Resources>
 
-    <ScrollViewer Background="Transparent" VerticalScrollBarVisibility="Auto">
+    <Grid Background="Transparent">
         <Border x:Name="border">
             <StackPanel
                 Grid.Column="0"
-                MaxWidth="1000"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Center"
-                Spacing="5">
-                <StackPanel.ChildrenTransitions>
-                    <EntranceThemeTransition FromVerticalOffset="50" />
-                    <RepositionThemeTransition IsStaggeringEnabled="False" />
-                </StackPanel.ChildrenTransitions>
+                ChildrenTransitions="{StaticResource CardEntranceTransitions}"
+                Style="{StaticResource SettingsStackPanel}">
+
                 <!--  Пример для UseThemeButton  -->
                 <TextBlock x:Uid="/Settings/AppearanceThemeSectionHeader" Style="{StaticResource SettingsSectionHeader}" />
                 <!--  тема  -->
@@ -195,7 +190,6 @@
                     </ctk:SettingsCard.Header>
                 </ctk:SettingsCard>
 
-
                 <ctk:SettingsCard HeaderIcon="{ui:FontIcon Glyph=&#xE771;}">
                     <ctk:SettingsCard.Header>
                         <TextBlock x:Uid="/Settings/AppearanceSectionWindowBGColorHeader" Style="{StaticResource SettingsCardHeader}" />
@@ -205,6 +199,7 @@
                     </ctk:SettingsCard.Description>
                     <Button
                         x:Name="ShowColorPickerButton"
+                        MinWidth="150"
                         HorizontalAlignment="Stretch"
                         Click="ShowColorPickerButton_Click"
                         Style="{StaticResource AccentButtonStyle}">
@@ -223,11 +218,13 @@
                     <Button
                         x:Name="ResetToDefaultButton"
                         x:Uid="/LeftSideBar/ResetToDefaultButton"
+                        MinWidth="150"
                         HorizontalAlignment="Stretch"
                         Click="ResetToDefaultButton_Click"
+                        FontSize="16"
                         Style="{ThemeResource AccentButtonStyle}" />
                 </ctk:SettingsCard>
             </StackPanel>
         </Border>
-    </ScrollViewer>
+    </Grid>
 </Page>

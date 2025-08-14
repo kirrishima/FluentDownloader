@@ -13,18 +13,9 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Border>
-            <StackPanel Style="{StaticResource SettingsStackPanel}">
-                <StackPanel.ChildrenTransitions>
-                    <EntranceThemeTransition FromVerticalOffset="50" />
-                    <RepositionThemeTransition IsStaggeringEnabled="False" />
-                </StackPanel.ChildrenTransitions>
+            <StackPanel ChildrenTransitions="{StaticResource CardEntranceTransitions}" Style="{StaticResource SettingsStackPanel}">
 
-                <StackPanel Style="{StaticResource SettingsSectionStackPanel}">
-                    <StackPanel.ChildrenTransitions>
-                        <EntranceThemeTransition FromVerticalOffset="50" />
-                        <RepositionThemeTransition IsStaggeringEnabled="False" />
-                    </StackPanel.ChildrenTransitions>
-
+                <StackPanel ChildrenTransitions="{StaticResource CardEntranceTransitions}" Style="{StaticResource SettingsSectionStackPanel}">
                     <controls:SettingsExpander HeaderIcon="{ui:FontIcon Glyph=&#xF6FA;}">
                         <controls:SettingsExpander.Header>
                             <TextBlock x:Uid="/Settings/CheckYtdlpAndFfmpegUpdatesHeader" Style="{StaticResource SettingsCardHeader}" />

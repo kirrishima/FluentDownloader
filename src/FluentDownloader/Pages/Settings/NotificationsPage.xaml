@@ -16,11 +16,7 @@
     </Page.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
         <Border>
-            <StackPanel Style="{StaticResource SettingsStackPanel}">
-                <StackPanel.ChildrenTransitions>
-                    <EntranceThemeTransition FromVerticalOffset="50" />
-                    <RepositionThemeTransition IsStaggeringEnabled="False" />
-                </StackPanel.ChildrenTransitions>
+            <StackPanel ChildrenTransitions="{StaticResource CardEntranceTransitions}" Style="{StaticResource SettingsStackPanel}">
                 <StackPanel>
                     <InfoBar
                         x:Uid="/Settings/DesktopNotificationsAreNotSupported"

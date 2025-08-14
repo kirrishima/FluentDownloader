@@ -93,10 +93,6 @@
             <EntranceThemeTransition FromVerticalOffset="20" />
         </TransitionCollection>
 
-        <TransitionCollection x:Key="CardEntranceTransitions">
-            <EntranceThemeTransition FromVerticalOffset="50" />
-            <RepositionThemeTransition IsStaggeringEnabled="False" />
-        </TransitionCollection>
         <TransitionCollection x:Key="NotificationsEntranceTransitions">
             <EntranceThemeTransition FromVerticalOffset="-50" />
             <RepositionThemeTransition IsStaggeringEnabled="False" />

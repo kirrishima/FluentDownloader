@@ -12,12 +12,7 @@
     Name="Home"
     mc:Ignorable="d">
 
-    <StackPanel Spacing="4">
-        <StackPanel.ChildrenTransitions>
-            <EntranceThemeTransition FromVerticalOffset="50" />
-            <RepositionThemeTransition IsStaggeringEnabled="False" />
-        </StackPanel.ChildrenTransitions>
-
+    <StackPanel ChildrenTransitions="{StaticResource CardEntranceTransitions}" Style="{StaticResource SettingsStackPanel}">
         <!--  настройки загрузки  -->
         <controls:SettingsCard
             Click="NavigateToDownloadSections_Click"

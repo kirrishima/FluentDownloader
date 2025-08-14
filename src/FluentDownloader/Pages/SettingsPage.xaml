@@ -10,9 +10,14 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <StackPanel Padding="20,0,20,20" Spacing="0">
+    <Grid Padding="20,0,20,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Button
             x:Name="GoBackButton"
+            Grid.Row="0"
             Grid.Column="0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -24,13 +29,17 @@
             </StackPanel>
         </Button>
 
-        <ScrollViewer MaxWidth="1000" VerticalAlignment="Top">
-            <StackPanel>
-                <!--  BreadcrumbBar с обновлённым шаблоном  -->
-                <BreadcrumbBar
-                    x:Name="Breadcrumb"
-                    Margin="10,0,0,8"
-                    ItemClicked="Breadcrumb_ItemClick">
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <!--  BreadcrumbBar с обновлённым шаблоном  -->
+            <Grid
+                Grid.Row="0"
+                MaxWidth="{StaticResource SettingsCardMaxWidth}"
+                Padding="10,0">
+                <BreadcrumbBar x:Name="Breadcrumb" ItemClicked="Breadcrumb_ItemClick">
                     <BreadcrumbBar.ItemTemplate>
                         <DataTemplate x:DataType="local:BreadcrumbItem">
                             <StackPanel Orientation="Horizontal" Spacing="4">
@@ -44,18 +53,26 @@
                         </DataTemplate>
                     </BreadcrumbBar.ItemTemplate>
                 </BreadcrumbBar>
+            </Grid>
 
-                <!--  Контейнер для навигации по подстраницам  -->
-                <Frame x:Name="ContentFrame" Navigated="ContentFrame_Navigated">
-                    <Frame.ContentTransitions>
-                        <TransitionCollection>
-                            <NavigationThemeTransition>
-                                <DrillInNavigationTransitionInfo />
-                            </NavigationThemeTransition>
-                        </TransitionCollection>
-                    </Frame.ContentTransitions>
-                </Frame>
-            </StackPanel>
-        </ScrollViewer>
-    </StackPanel>
+            <ScrollViewer
+                Grid.Row="1"
+                MaxWidth="{StaticResource SettingsCardMaxWidth}"
+                Padding="10,0"
+                VerticalAlignment="Top">
+                <StackPanel ChildrenTransitions="{StaticResource CardEntranceTransitions}">
+                    <!--  Контейнер для навигации по подстраницам  -->
+                    <Frame x:Name="ContentFrame" Navigated="ContentFrame_Navigated">
+                        <Frame.ContentTransitions>
+                            <TransitionCollection>
+                                <NavigationThemeTransition>
+                                    <DrillInNavigationTransitionInfo />
+                                </NavigationThemeTransition>
+                            </TransitionCollection>
+                        </Frame.ContentTransitions>
+                    </Frame>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
 </Page>

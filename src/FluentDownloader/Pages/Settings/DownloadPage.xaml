@@ -18,11 +18,7 @@
     </Page.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Style="{StaticResource SettingsStackPanel}">
-            <StackPanel.ChildrenTransitions>
-                <EntranceThemeTransition FromVerticalOffset="50" />
-                <RepositionThemeTransition IsStaggeringEnabled="False" />
-            </StackPanel.ChildrenTransitions>
+        <StackPanel ChildrenTransitions="{StaticResource CardEntranceTransitions}" Style="{StaticResource SettingsStackPanel}">
 
             <!--  превью видео и названия  -->
             <controls:SettingsCard HeaderIcon="{ui:FontIcon Glyph=&#xE8B9;}">

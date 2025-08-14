@@ -10,9 +10,13 @@
 
     <StackPanel
         Padding="10"
+        ChildrenTransitions="{StaticResource CardEntranceTransitions}"
         CornerRadius="5"
         Spacing="10">
-        <StackPanel HorizontalAlignment="Stretch" Spacing="10">
+        <StackPanel
+            HorizontalAlignment="Stretch"
+            ChildrenTransitions="{StaticResource CardEntranceTransitions}"
+            Spacing="10">
             <TextBox
                 x:Name="TemplateTextBox"
                 x:Uid="/Settings/OutputTemplateHeaderTextBox"
