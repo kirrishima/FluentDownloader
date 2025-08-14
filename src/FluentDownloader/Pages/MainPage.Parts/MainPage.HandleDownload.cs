@@ -137,14 +137,24 @@ namespace FluentDownloader.Pages
             AudioConversionFormat audioFormat, VideoRecodeFormat recodeFormat, CancellationToken cancellationToken)
         {
             bool result = false;
+            var playlistSettings = new PlaylistDownloadSettings()
+            {
+                EndVideoIndex = PlaylistRangeViewModel.FinalEndIndex,
+                StartVideoIndex = PlaylistRangeViewModel.FinalStartIndex,
+                PlaylistItems = PlaylistRangeViewModel.FinalPlaylistItems
+            };
+
             if (IsDefaultFormatSelected())
             {
-                result = await HandleDefaultFormatDownload(url, savePath, GetSelectedDefaultFormat()!.Value, mergeFormat, audioFormat, recodeFormat, cancellationToken);
+                result = await HandleDefaultFormatDownload(url, savePath, GetSelectedDefaultFormat()!.Value, mergeFormat,
+                                                           audioFormat, recodeFormat, playlistSettings,
+                                                           cancellationToken);
             }
             else
             {
                 var selectedFormat = GetSelectedFormat();
-                result = await HandleCustomFormatDownload(url, savePath, selectedFormat, mergeFormat, audioFormat, recodeFormat, cancellationToken);
+                result = await HandleCustomFormatDownload(url, savePath, selectedFormat, mergeFormat, audioFormat,
+                                                          recodeFormat, playlistSettings, cancellationToken);
             }
             if (!result)
             {
@@ -168,7 +178,7 @@ namespace FluentDownloader.Pages
         /// <param name="recodeFormat">The selected video recode format.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
         public async Task<bool> HandleDefaultFormatDownload(string url, string savePath, DownloadType downloadType, DownloadMergeFormat mergeFormat,
-            AudioConversionFormat audioFormat, VideoRecodeFormat recodeFormat, CancellationToken cancellationToken)
+            AudioConversionFormat audioFormat, VideoRecodeFormat recodeFormat, PlaylistDownloadSettings? playlistSettings, CancellationToken cancellationToken)
         {
             var res = await ytDlpDownloader.DownloadVideo(
                  null,
@@ -180,6 +190,7 @@ namespace FluentDownloader.Pages
                 onlyvideo: downloadType == DownloadType.BestVideo,
                 bv_ba: downloadType == DownloadType.Merged,
                 recodeFormat: recodeFormat,
+                playlistSettings: playlistSettings,
                 cancellationToken: cancellationToken,
                 videoData: VideoData
             );
@@ -240,7 +251,7 @@ namespace FluentDownloader.Pages
         /// <param name="recodeFormat">The selected video recode format.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
         public async Task<bool> HandleCustomFormatDownload(string url, string savePath, VideoFormatInfo? selectedFormat, DownloadMergeFormat mergeFormat,
-            AudioConversionFormat audioFormat, VideoRecodeFormat recodeFormat, CancellationToken cancellationToken)
+            AudioConversionFormat audioFormat, VideoRecodeFormat recodeFormat, PlaylistDownloadSettings? playlistSettings, CancellationToken cancellationToken)
         {
             if (selectedFormat == null)
             {
@@ -254,6 +265,7 @@ namespace FluentDownloader.Pages
                 mergeFormat,
                 audioFormat,
                 recodeFormat: recodeFormat,
+                playlistSettings: playlistSettings,
                 cancellationToken: cancellationToken,
                 videoData: VideoData
             );

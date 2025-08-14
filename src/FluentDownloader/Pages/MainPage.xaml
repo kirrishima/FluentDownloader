@@ -8,13 +8,16 @@
     xmlns:converters="using:FluentDownloader.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:local="using:FluentDownloader.ViewModels"
+    xmlns:local="using:FluentDownloader.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
+    xmlns:models="using:FluentDownloader.Models"
     xmlns:muxc="using:CommunityToolkit.WinUI.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    xmlns:vm="using:FluentDownloader.Models"
+    xmlns:vm="using:FluentDownloader.ViewModels"
     x:Name="RootPage"
+    d:DataContext="{d:DesignInstance Type=local:MainPage,
+                                     IsDesignTimeCreatable=True}"
     mc:Ignorable="d">
     <Page.Resources>
         <converters:LanguageBasedVerticalAlignmentConverter x:Key="LangAlignmentConverter" />
@@ -92,6 +95,10 @@
 
         <TransitionCollection x:Key="CardEntranceTransitions">
             <EntranceThemeTransition FromVerticalOffset="50" />
+            <RepositionThemeTransition IsStaggeringEnabled="False" />
+        </TransitionCollection>
+        <TransitionCollection x:Key="NotificationsEntranceTransitions">
+            <EntranceThemeTransition FromVerticalOffset="-50" />
             <RepositionThemeTransition IsStaggeringEnabled="False" />
         </TransitionCollection>
     </Page.Resources>
@@ -477,26 +484,90 @@
                         <StackPanel
                             x:Name="ThumbnailImage"
                             Grid.Row="0"
+                            d:DataContext="{d:DesignInstance Type=vm:DownloadPreviewViewModel,
+                                                             IsDesignTimeCreatable=True}"
+                            DataContext="{Binding DownloadPreviewViewModel}"
                             Spacing="10"
                             Visibility="Collapsed">
+
                             <StackPanel.RenderTransform>
-                                <TranslateTransform x:Name="ThumbnailTransform" Y="-200" />
+                                <TransformGroup>
+                                    <ScaleTransform x:Name="ThumbnailScale" ScaleX="1" ScaleY="1" />
+                                    <TranslateTransform x:Name="ThumbnailTransform" Y="-8" />
+                                </TransformGroup>
                             </StackPanel.RenderTransform>
                             <StackPanel.Resources>
+                                <!--  Easing  -->
+                                <CubicEase x:Key="EaseOutCubic" EasingMode="EaseOut" />
+
+                                <!--  Нетривиальная, но сдержанная анимация  -->
                                 <Storyboard x:Name="ThumbnailAnimation">
+                                    <!--  лёгкое подъём->встаёт на место, короткая и плавная  -->
                                     <DoubleAnimation
                                         EnableDependentAnimation="True"
                                         Storyboard.TargetName="ThumbnailTransform"
                                         Storyboard.TargetProperty="Y"
-                                        From="-200"
+                                        From="-8"
                                         To="0"
-                                        Duration="0:0:0.25" />
+                                        Duration="0:0:0.28">
+                                        <DoubleAnimation.EasingFunction>
+                                            <StaticResource ResourceKey="EaseOutCubic" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+
+                                    <!--  мягкое "проявление" картинки  -->
                                     <DoubleAnimation
                                         Storyboard.TargetName="ThumbnailImage"
                                         Storyboard.TargetProperty="Opacity"
                                         From="0"
                                         To="1"
-                                        Duration="0:0:0.1" />
+                                        Duration="0:0:0.32" />
+
+                                    <!--  лёгкий scale для ощущения "выплывания"  -->
+                                    <DoubleAnimation
+                                        EnableDependentAnimation="True"
+                                        Storyboard.TargetName="ThumbnailScale"
+                                        Storyboard.TargetProperty="ScaleX"
+                                        From="0.985"
+                                        To="1"
+                                        Duration="0:0:0.28">
+                                        <DoubleAnimation.EasingFunction>
+                                            <StaticResource ResourceKey="EaseOutCubic" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                    <DoubleAnimation
+                                        EnableDependentAnimation="True"
+                                        Storyboard.TargetName="ThumbnailScale"
+                                        Storyboard.TargetProperty="ScaleY"
+                                        From="0.985"
+                                        To="1"
+                                        Duration="0:0:0.28">
+                                        <DoubleAnimation.EasingFunction>
+                                            <StaticResource ResourceKey="EaseOutCubic" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+
+                                    <!--  заголовок появляется чуть позже, с небольшой вертикальной подпиткой  -->
+                                    <DoubleAnimation
+                                        BeginTime="0:0:0.12"
+                                        Storyboard.TargetName="ThumbnailTitle"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="0"
+                                        To="1"
+                                        Duration="0:0:0.22" />
+
+                                    <DoubleAnimation
+                                        BeginTime="0:0:0.12"
+                                        EnableDependentAnimation="True"
+                                        Storyboard.TargetName="ThumbnailTitleTransform"
+                                        Storyboard.TargetProperty="Y"
+                                        From="6"
+                                        To="0"
+                                        Duration="0:0:0.22">
+                                        <DoubleAnimation.EasingFunction>
+                                            <StaticResource ResourceKey="EaseOutCubic" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
                                 </Storyboard>
                             </StackPanel.Resources>
                             <Border
@@ -510,16 +581,21 @@
                                     Stretch="Uniform" />
                             </Border>
                             <TextBlock
+                                x:Name="ThumbnailTitle"
                                 Padding="0,0,0,20"
                                 HorizontalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
                                 Text="{Binding Title}"
-                                TextTrimming="CharacterEllipsis" />
-                            <StackPanel.Transitions>
+                                TextTrimming="CharacterEllipsis">
+                                <TextBlock.RenderTransform>
+                                    <TranslateTransform x:Name="ThumbnailTitleTransform" Y="6" />
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                            <!--<StackPanel.Transitions>
                                 <TransitionCollection>
                                     <EntranceThemeTransition />
                                 </TransitionCollection>
-                            </StackPanel.Transitions>
+                            </StackPanel.Transitions>-->
                         </StackPanel>
 
                         <!--  Main Layout  -->
@@ -527,7 +603,7 @@
                             x:Name="MainLayout"
                             Grid.Row="1"
                             VerticalAlignment="Top"
-                            RowSpacing="20">
+                            ColumnSpacing="8">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -547,9 +623,7 @@
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 MaxWidth="600"
-                                Margin="0,0,10,0"
                                 VerticalAlignment="Center" />
-
                             <TextBox
                                 x:Name="UrlTextBox"
                                 x:Uid="UrlTextBox"
@@ -557,6 +631,7 @@
                                 Grid.Column="1"
                                 Height="45"
                                 Padding="10,10,40,10"
+                                InputScope="Url"
                                 ScrollViewer.HorizontalScrollBarVisibility="Auto" />
                             <TeachingTip x:Name="UrlTextBoxTeachingTip" Target="{x:Bind UrlTextBox}">
                                 <TeachingTip.IconSource>
@@ -568,13 +643,11 @@
                                 x:Uid="OpenEditUrlButton"
                                 Grid.Row="0"
                                 Grid.Column="2"
-                                Margin="10,0,0,0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 Click="OpenEditUrlDialog_Click"
                                 FontSize="16"
                                 Style="{StaticResource ButtonRevealStyle}" />
-
                             <ContentDialog
                                 x:Name="EditTextDialog"
                                 x:Uid="EditTextDialog"
@@ -596,15 +669,15 @@
                                 x:Uid="FormatTextBlock"
                                 Grid.Row="1"
                                 Grid.Column="0"
-                                Margin="0,0,10,0"
+                                Margin="0,16,0,0"
                                 VerticalAlignment="Center" />
-
                             <!--  Format Grid  -->
                             <RelativePanel
                                 x:Name="FormatGrid"
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 Grid.ColumnSpan="2"
+                                Margin="0,16,0,0"
                                 ChildrenTransitions="{StaticResource CardEntranceTransitions}">
                                 <!--<RelativePanel.ChildrenTransitions>
                                     <EntranceThemeTransition FromVerticalOffset="50" />
@@ -663,28 +736,203 @@
                                     RelativePanel.AlignTopWith="AudioFormatComboBox"
                                     RelativePanel.RightOf="AudioFormatComboBox" />
                             </RelativePanel>
+                            <!--  Подключи пространство имён vm=using:YourApp.ViewModels если нужно  -->
+
+
+                            <StackPanel
+                                x:Name="PlaylistRangeHeader"
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical"
+                                Visibility="{Binding VideoDownloadViewModel.IsCurrentUrlIsPlaylist}">
+                                <TextBlock Text="Диапазон" />
+
+                            </StackPanel>
+
+                            <Grid
+                                x:Name="PlaylistRangePanel"
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Grid.ColumnSpan="2"
+                                Margin="0,16,0,0"
+                                d:DataContext="{d:DesignInstance Type=vm:PlaylistRangeViewModel,
+                                                                 IsDesignTimeCreatable=True}"
+                                ColumnSpacing="8"
+                                DataContext="{Binding PlaylistRangeViewModel}"
+                                Opacity="0"
+                                Visibility="Collapsed">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.RenderTransform>
+                                    <TranslateTransform x:Name="PlaylistTranslate" Y="8" />
+                                </Grid.RenderTransform>
+                                <Grid.Resources>
+                                    <Storyboard x:Key="ShowPlaylistStoryboard">
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PlaylistRangePanel"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0"
+                                            To="1"
+                                            Duration="0:0:0.28" />
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="PlaylistTranslate"
+                                            Storyboard.TargetProperty="Y"
+                                            From="8"
+                                            To="0"
+                                            Duration="0:0:0.28">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+
+                                    <Storyboard x:Key="HidePlaylistStoryboard" />
+                                </Grid.Resources>
+
+                                <!--  Первый индекс  -->
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Stretch"
+                                    Orientation="Vertical">
+
+                                    <TextBox
+                                        HorizontalAlignment="Stretch"
+                                        FontSize="14"
+                                        Header="Стартовый индекс"
+                                        InputScope="Number"
+                                        PlaceholderText="0, 1, 2, etc"
+                                        Text="{Binding StartText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="Red"
+                                        Text="{Binding StartError}"
+                                        Visibility="{Binding StartError, Converter={StaticResource ObjectToVisibility}}" />
+                                </StackPanel>
+
+                                <!--  Конечный индекс  -->
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Orientation="Vertical">
+
+                                    <TextBox
+                                        FontSize="14"
+                                        Header="Конечный индекс"
+                                        InputScope="Number"
+                                        Text="{Binding EndText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        ToolTipService.ToolTip="Оставьте пустым, чтобы скачать все" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="Red"
+                                        Text="{Binding EndError}"
+                                        TextWrapping="Wrap"
+                                        Visibility="{Binding EndError, Converter={StaticResource ObjectToVisibility}}" />
+                                </StackPanel>
+
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Orientation="Vertical">
+
+                                    <TextBox
+                                        FontSize="14"
+                                        Header="Число видео"
+                                        InputScope="Number"
+                                        Text="{Binding CountText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        ToolTipService.ToolTip="Сколько скачать. Оставьте пустым, чтобы скачать все" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="Red"
+                                        Text="{Binding CountError}"
+                                        Visibility="{Binding CountError, Converter={StaticResource ObjectToVisibility}}" />
+                                </StackPanel>
+
+                                <!--  Количество  -->
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Grid.Column="3"
+                                    Orientation="Vertical">
+
+                                    <TextBox
+                                        FontSize="14"
+                                        Header="Номера видео"
+                                        InputScope="Default"
+                                        Text="{Binding PlaylistItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        ToolTipService.ToolTip="Перечислите видео для скачивания через запятую без пробелов" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="Red"
+                                        Text="{Binding PlaylistItemsError}"
+                                        Visibility="{Binding PlaylistItemsError, Converter={StaticResource ObjectToVisibility}}" />
+                                </StackPanel>
+
+                                <!--  Кнопка применить (опционально)  -->
+                                <SplitButton
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,8,0,0"
+                                    VerticalAlignment="Top"
+                                    Command="{Binding ApplyRangeCommand}"
+                                    Content="Применить"
+                                    FontSize="16">
+                                    <SplitButton.Flyout>
+                                        <Flyout>
+                                            <Flyout.FlyoutPresenterStyle>
+                                                <Style TargetType="FlyoutPresenter">
+                                                    <!--  фон  -->
+
+                                                    <!--  граница  -->
+                                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                                    <Setter Property="BorderThickness" Value="0" />
+                                                    <!--  скругление углов  -->
+                                                    <Setter Property="CornerRadius" Value="4" />
+                                                    <Setter Property="Padding" Value="0" />
+                                                </Style>
+                                            </Flyout.FlyoutPresenterStyle>
+
+                                            <Flyout.Content>
+                                                <Button>
+                                                    <TextBlock>Сбросить</TextBlock>
+                                                </Button>
+                                            </Flyout.Content>
+                                        </Flyout>
+                                    </SplitButton.Flyout>
+                                </SplitButton>
+
+                            </Grid>
+
 
                             <!--  Save to label  -->
                             <TextBlock
                                 x:Uid="SaveToLabel"
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 Grid.Column="0"
-                                Margin="0,0,10,0"
+                                Margin="0,16,0,0"
                                 VerticalAlignment="Center" />
-
                             <TextBox
                                 x:Name="SavePathTextBox"
                                 x:Uid="SavePathTextBox"
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 Grid.Column="1"
                                 Height="45"
+                                Margin="0,16,0,0"
                                 Padding="10,10,40,10"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 AllowFocusWhenDisabled="False"
                                 IsEnabled="False"
                                 ScrollViewer.HorizontalScrollBarVisibility="Auto" />
-
                             <TeachingTip
                                 x:Name="SavePathTeachingTip"
                                 x:Uid="SavePathTeachingTip"
@@ -693,13 +941,12 @@
                                     <SymbolIconSource Symbol="Folder" />
                                 </TeachingTip.IconSource>
                             </TeachingTip>
-
                             <Button
                                 x:Name="SavePathButton"
                                 x:Uid="SavePathButton"
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 Grid.Column="2"
-                                Margin="10,0,0,0"
+                                Margin="0,16,0,0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 AllowFocusWhenDisabled="False"
@@ -723,10 +970,11 @@
 
                             <!--  Download Button  -->
                             <StackPanel
-                                Grid.Row="3"
+                                Grid.Row="4"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
                                 Height="40"
+                                Margin="0,24,0,0"
                                 Orientation="Horizontal"
                                 Spacing="24">
                                 <StackPanel
@@ -843,8 +1091,9 @@
 
                             <Expander
                                 x:Name="LogsBlockExpander"
-                                Grid.Row="4"
+                                Grid.Row="5"
                                 Grid.ColumnSpan="3"
+                                Margin="0,24,0,0"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
                                 ExpandDirection="Down"
@@ -888,7 +1137,7 @@
                 Margin="10,0,10,10"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
-                ChildrenTransitions="{StaticResource CardEntranceTransitions}"
+                ChildrenTransitions="{StaticResource NotificationsEntranceTransitions}"
                 Orientation="Vertical"
                 Spacing="10">
                 <!--<StackPanel.ChildrenTransitions>
@@ -971,7 +1220,7 @@
                         </ListView.ItemContainerStyle>
 
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="vm:QueueItem">
+                            <DataTemplate x:DataType="models:QueueItem">
                                 <!--  Вставлен ваш шаблон без изменений  -->
                                 <Grid
                                     Padding="8"

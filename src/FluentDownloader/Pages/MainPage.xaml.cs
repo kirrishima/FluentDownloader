@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;
+using MyApp.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -106,8 +107,10 @@ namespace FluentDownloader.Pages
         private ToolTip _DownloadButtonToolTip = null!;
 
         public DownloadQueueViewModel DownloadQueueViewModel { get; private set; } = null!;
-
         public VideoDownloadViewModel VideoDownloadViewModel { get; private set; } = new();
+        public DownloadPreviewViewModel DownloadPreviewViewModel { get; private set; } = new();
+        public PlaylistRangeViewModel PlaylistRangeViewModel { get; private set; } = null!;
+        private VisibilityAnimator? _playlistAnimator;
 
         public MainPage()
         {
@@ -243,6 +246,7 @@ namespace FluentDownloader.Pages
               );
 
             DownloadQueueViewModel = new DownloadQueueViewModel(animator);
+            PlaylistRangeViewModel = new(VideoDownloadViewModel);
         }
 
         /// <summary>
@@ -260,6 +264,33 @@ namespace FluentDownloader.Pages
 
             _ytdlpInstallerService = new(this, this, this, ytDlpDownloader, confirmationHandler);
             _ffmpegInstallerService = new(this, this, this, ytDlpDownloader, confirmationHandler);
+
+            // ѕолучаем сториборды из ресурсов PlaylistRangePanel
+            var show = (Storyboard)PlaylistRangePanel.Resources["ShowPlaylistStoryboard"];
+            var hide = (Storyboard)PlaylistRangePanel.Resources["HidePlaylistStoryboard"];
+
+            // ѕодготовительна€ логика перед показом: установить начальные значени€
+            Action prepare = () =>
+            {
+                // гарантируем стартовые значени€ перед проигрыванием show
+                PlaylistRangePanel.Opacity = 0;
+                PlaylistTranslate.Y = 8;
+            };
+
+            // —оздаЄм аниматор: следит за свойством IsCurrentUrlIsPlaylist
+            _playlistAnimator = new VisibilityAnimator(
+                target: PlaylistRangePanel,
+                source: VideoDownloadViewModel,
+                propertyName: nameof(VideoDownloadViewModel.IsCurrentUrlIsPlaylist),
+                valueGetter: () => VideoDownloadViewModel.IsCurrentUrlIsPlaylist,
+                showStoryboard: show,
+                hideStoryboard: hide,
+                prepareShowAction: prepare,
+                dispatcher: DispatcherQueue
+            );
+            Unloaded += (_, _) => _playlistAnimator?.Dispose();
+
+
         }
 
         /// <summary>

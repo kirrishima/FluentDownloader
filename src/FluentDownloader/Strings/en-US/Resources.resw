@@ -268,4 +268,7 @@
   <data name="VideoInQueueStatus_Success" xml:space="preserve">
     <value>Success</value>
   </data>
+  <data name="DownloadPlaylistTitleTemplate" xml:space="preserve">
+    <value>Playlist with {0} videos</value>
+  </data>
 </root>

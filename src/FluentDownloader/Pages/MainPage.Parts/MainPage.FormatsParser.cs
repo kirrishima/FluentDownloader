@@ -1,5 +1,6 @@
 ﻿using FluentDownloader.Helpers;
 using FluentDownloader.Models;
+using FluentDownloader.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Linq;
@@ -95,6 +96,7 @@ namespace FluentDownloader.Pages
 
                 var videoData = await ytDlpDownloader.FetchVideoDataAsync(url);
                 VideoData = videoData;
+                VideoDownloadViewModel.VideoData = VideoData.Value;
 
                 return (true, videoData);
             }
@@ -169,7 +171,8 @@ namespace FluentDownloader.Pages
         private void SetSuccessState()
         {
             SetDownloadButtonState(DownloadButtonState.DownloadVideo);
-            ThumbnailImage.DataContext = VideoData;
+            DownloadPreviewViewModel.SetData(VideoData?.ThumbnailUri, VideoData?.Title);
+            VideoDownloadViewModel.IsCurrentUrlIsPlaylist = VideoData?.IsPlaylist ?? false;
         }
 
         /// <summary>

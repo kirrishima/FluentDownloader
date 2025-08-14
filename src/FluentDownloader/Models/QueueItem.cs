@@ -17,6 +17,7 @@ namespace FluentDownloader.Models
         public VideoRecodeFormat RecodeFormat { get; set; }
         public AudioConversionFormat AudioFormat { get; set; }
         public VideoFormatInfo? VideoFormatInfo { get; set; }
+        public PlaylistDownloadSettings? PlaylistDownloadSettings { get; set; }
         public DownloadType? DownloadType { get; set; }
         public bool IsDefaultFormatSelected { get; set; }
         public string Title { get; set; } = null!;

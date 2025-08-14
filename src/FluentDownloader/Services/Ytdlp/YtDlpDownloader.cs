@@ -144,11 +144,11 @@ namespace FluentDownloader.Services.Ytdlp
         /// </summary>
         /// <param name="url">Video URL.</param>
         /// <returns>A <see cref="VideoData"/> object containing video information.</returns>
-        public async Task<VideoData?> FetchVideoDataAsync(string url)
+        public async Task<VideoData> FetchVideoDataAsync(string url)
         {
             if (!EnsureYoutubeDL())
             {
-                return null;
+                throw new InvalidOperationException("Ytdlp was not found or nor responding");
             }
 
             var videoInfo = await youtubeDl.RunVideoDataFetch(url);
@@ -157,16 +157,18 @@ namespace FluentDownloader.Services.Ytdlp
                 videoInfo.Data.Entries != null && videoInfo.Data.Entries.Any())
             {
                 var entry = videoInfo.Data.Entries.First();
-                var data = (await FetchVideoDataAsync(entry.Url)).Value;
+                var data = (await FetchVideoDataAsync(entry.Url));
+
+                var titleTemplate = LocalizedStrings.GetResourceString("DownloadPlaylistTitleTemplate");
 
                 return new VideoData(
                     [],
-                    url,
                     data.ThumbnailUri,
-                    "Playlist",
+                    url,
+                    string.Format(titleTemplate, videoInfo.Data.Entries.Length),
                     videoInfo.Data.ID,
                     videoInfo.ErrorOutput)
-                { IsPlaylist = true };
+                { IsPlaylist = true, PlaylistEntries = videoInfo.Data.Entries };
             }
 
             if (videoInfo.Success)
@@ -215,6 +217,7 @@ namespace FluentDownloader.Services.Ytdlp
             AudioConversionFormat audioFormat,
             VideoRecodeFormat recodeFormat,
             CancellationToken cancellationToken,
+            PlaylistDownloadSettings? playlistSettings,
             bool onlyaudio = false,
             bool onlyvideo = false,
             bool bv_ba = false, VideoData? videoData = null)
@@ -251,6 +254,15 @@ namespace FluentDownloader.Services.Ytdlp
 
                 optionSet.YesPlaylist = videoData.HasValue && videoData.Value.IsPlaylist;
 
+                if (optionSet.YesPlaylist && playlistSettings.HasValue && playlistSettings.Value.StartVideoIndex is not null)
+                {
+                    var template = playlistSettings.Value.PlaylistItems?.Count > 0 ? "{0}:{1},{2}" : "{0}:{1}";
+                    optionSet.PlaylistItems = string.Format(template,
+                        playlistSettings.Value.StartVideoIndex,
+                        playlistSettings.Value.EndVideoIndex,
+                        string.Join(',', playlistSettings.Value.PlaylistItems ?? []));
+                }
+
                 var progress = new LogBoxProgress(_dialogService, _downloadDependencies, _progressBar);
 
                 youtubeDl.OutputFolder = downloadPath;
@@ -276,8 +288,9 @@ namespace FluentDownloader.Services.Ytdlp
 
                         if (App.AppSettings.Notifications.EnableDesktopNotifications)
                         {
+                            var savedAs = videoData?.IsPlaylist == true ? downloadPath : downloadResult.Data;
                             NotificationService.ShowNotificationWithImage(LocalizedStrings.GetMessagesString("FileDownloadedSuccessfully"),
-                               string.Format(LocalizedStrings.GetMessagesString("FileSavedAs"), downloadResult.Data),
+                               string.Format(LocalizedStrings.GetMessagesString("FileSavedAs"), savedAs),
                                videoData?.ThumbnailUri);
                         }
                     }
