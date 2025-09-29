@@ -87,7 +87,8 @@
                                     x:Name="AccentColorPreview2"
                                     VerticalAlignment="Stretch"
                                     Background="{Binding Background}"
-                                    Content="{Binding Text}" />
+                                    Content="{Binding Text}"
+                                    IsHitTestVisible="False" />
                                 <Button
                                     x:Name="SelectAccentColorButton"
                                     Click="SelectAccentColorButton_Click"
@@ -100,7 +101,8 @@
                     <Button
                         x:Name="AccentColorPreview1"
                         Background="{Binding Background}"
-                        Content="{Binding Text}" />
+                        Content="{Binding Text}"
+                        IsHitTestVisible="False" />
                 </ctk:SettingsExpander>
 
                 <!--  фоновый цвет  -->
