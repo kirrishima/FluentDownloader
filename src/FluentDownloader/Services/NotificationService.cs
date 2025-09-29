@@ -99,6 +99,11 @@ public static class NotificationService
     {
         try
         {
+            if (!App.AppSettings.Notifications.EnableDesktopNotifications)
+            {
+                return false;
+            }
+
             if (App.AppSettings.Notifications.ShowOnlyIfTheWindowIsInactive)
             {
                 IntPtr hWnd = WindowNative.GetWindowHandle(App.MainWindow);
@@ -110,11 +115,6 @@ public static class NotificationService
                 {
                     return false;
                 }
-            }
-
-            if (!App.AppSettings.Notifications.EnableDesktopNotifications)
-            {
-                return false;
             }
 
             return AppNotificationManager.IsSupported();
