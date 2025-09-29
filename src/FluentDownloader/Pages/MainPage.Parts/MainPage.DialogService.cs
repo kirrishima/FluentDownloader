@@ -26,6 +26,7 @@ namespace FluentDownloader.Pages
                  var Content = new TextBlock
                  {
                      Text = content,
+                     IsTextSelectionEnabled = true,
                      TextWrapping = TextWrapping.Wrap,
                      FontSize = 16
                  };
