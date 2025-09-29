@@ -1130,7 +1130,7 @@
                 Grid.Row="0"
                 Grid.Column="3"
                 MaxWidth="600"
-                Margin="10,0,10,10"
+                Margin="10,25,10,10"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
                 ChildrenTransitions="{StaticResource NotificationsEntranceTransitions}"
@@ -1151,7 +1151,7 @@
                 x:Name="DownloadQueue"
                 Grid.Row="0"
                 Grid.Column="3"
-                Margin="0,0,1,8"
+                Margin="0,25,1,8"
                 Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
                 CornerRadius="4,8,8,8">
                 <Grid.RowDefinitions>
