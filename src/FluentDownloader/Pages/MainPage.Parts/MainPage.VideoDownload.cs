@@ -56,6 +56,8 @@ namespace FluentDownloader.Pages
             }
         }
 
+        public DownloadButtonStates DownloadButtonState { get; private set; }
+
         /// <summary>
         /// Controls visual state of the download button
         /// </summary>
@@ -63,23 +65,23 @@ namespace FluentDownloader.Pages
         /// <remarks>
         /// Manages visibility of progress ring, text labels and cancel UI
         /// </remarks>
-        public void SetDownloadButtonState(DownloadButtonState state)
+        public void SetDownloadButtonState(DownloadButtonStates state)
         {
-            ResetDownloadFieldsButton.IsEnabled = state != DownloadButtonState.Processing;
+            ResetDownloadFieldsButton.IsEnabled = state != DownloadButtonStates.Processing;
 
-            DownloadButtonProgressRing.Visibility = state == DownloadButtonState.Processing
+            DownloadButtonProgressRing.Visibility = state == DownloadButtonStates.Processing
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
-            DownloadButtonDownloadTextBlock.Visibility = state == DownloadButtonState.DownloadVideo
+            DownloadButtonDownloadTextBlock.Visibility = state == DownloadButtonStates.DownloadVideo
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
-            DownloadButtonGetFormatsTextBlock.Visibility = state == DownloadButtonState.ParseFormats
+            DownloadButtonGetFormatsTextBlock.Visibility = state == DownloadButtonStates.ParseFormats
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
-            DownloadButtonCancelPanel.Visibility = state == DownloadButtonState.Cancel
+            DownloadButtonCancelPanel.Visibility = state == DownloadButtonStates.Cancel
                 ? Visibility.Visible
                 : Visibility.Collapsed;
         }
@@ -97,7 +99,7 @@ namespace FluentDownloader.Pages
         /// <summary>
         /// Represents possible states of the download button UI
         /// </summary>
-        public enum DownloadButtonState
+        public enum DownloadButtonStates
         {
             /// <summary>Format parsing state</summary>
             ParseFormats,

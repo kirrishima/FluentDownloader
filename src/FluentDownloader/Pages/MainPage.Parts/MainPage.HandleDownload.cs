@@ -24,12 +24,12 @@ namespace FluentDownloader.Pages
             DownloadCts = new CancellationTokenSource();
             try
             {
-                SetDownloadButtonState(DownloadButtonState.Processing);
+                SetDownloadButtonState(DownloadButtonStates.Processing);
 
                 if (!ValidateSelection() || !ValidateDirectoryAccess(out var savePath))
                     return;
 
-                SetDownloadButtonState(DownloadButtonState.Cancel);
+                SetDownloadButtonState(DownloadButtonStates.Cancel);
 
                 var (mergeFormat, audioFormat, recodeFormat) = GetSelectedFormats();
 
@@ -281,7 +281,7 @@ namespace FluentDownloader.Pages
         public void HandleSuccessfulDownload()
         {
             LogsTextBoxWriteLine();
-            SetDownloadButtonState(DownloadButtonState.DownloadVideo);
+            SetDownloadButtonState(DownloadButtonStates.DownloadVideo);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace FluentDownloader.Pages
             SetProgressBarError(false);
             SetProgressBarPaused(false);
             UpdateInstallProgress(0);
-            SetDownloadButtonState(DownloadButtonState.DownloadVideo);
+            SetDownloadButtonState(DownloadButtonStates.DownloadVideo);
             SetButtonState(button: null, true);
         }
 
@@ -319,7 +319,7 @@ namespace FluentDownloader.Pages
         /// <param name="ex">The exception that occurred during the download process.</param>
         public void HandleDownloadError(Exception ex)
         {
-            SetDownloadButtonState(DownloadButtonState.DownloadVideo);
+            SetDownloadButtonState(DownloadButtonStates.DownloadVideo);
             AddPopUpErrorNotification(ex);
         }
 

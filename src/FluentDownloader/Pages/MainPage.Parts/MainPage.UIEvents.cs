@@ -153,7 +153,7 @@ namespace FluentDownloader.Pages
                 SetButtonState(button, false);
                 DownloadCts?.Cancel();
 
-                SetDownloadButtonState(DownloadButtonState.DownloadVideo);
+                SetDownloadButtonState(DownloadButtonStates.DownloadVideo);
                 SetButtonState(button, true);
             }
             else

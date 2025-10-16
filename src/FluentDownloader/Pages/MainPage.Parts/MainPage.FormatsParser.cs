@@ -58,7 +58,7 @@ namespace FluentDownloader.Pages
 
             ShowIncorrectURITeachingTip();
 
-            SetDownloadButtonState(DownloadButtonState.ParseFormats);
+            SetDownloadButtonState(DownloadButtonStates.ParseFormats);
             return false;
         }
 
@@ -116,7 +116,7 @@ namespace FluentDownloader.Pages
         /// </summary>
         private void SetProcessingState()
         {
-            SetDownloadButtonState(DownloadButtonState.Processing);
+            SetDownloadButtonState(DownloadButtonStates.Processing);
             UrlTextBox.IsEnabled = false;
             OpenEditUrlButton.IsEnabled = false;
         }
@@ -170,7 +170,7 @@ namespace FluentDownloader.Pages
         /// </summary>
         private void SetSuccessState()
         {
-            SetDownloadButtonState(DownloadButtonState.DownloadVideo);
+            SetDownloadButtonState(DownloadButtonStates.DownloadVideo);
             DownloadPreviewViewModel.SetData(VideoData?.ThumbnailUri, VideoData?.Title);
             VideoDownloadViewModel.IsCurrentUrlIsPlaylist = VideoData?.IsPlaylist ?? false;
         }
@@ -199,7 +199,7 @@ namespace FluentDownloader.Pages
         {
             UrlTextBox.IsEnabled = true;
             OpenEditUrlButton.IsEnabled = true;
-            SetDownloadButtonState(DownloadButtonState.ParseFormats);
+            SetDownloadButtonState(DownloadButtonStates.ParseFormats);
             SetProgressBarError(false);
             SetProgressBarPaused(false);
         }
