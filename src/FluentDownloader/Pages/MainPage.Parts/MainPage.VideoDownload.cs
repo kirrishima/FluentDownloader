@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Linq;
+using static FluentDownloader.Pages.MainPage;
 
 namespace FluentDownloader.Pages
 {
@@ -56,7 +57,21 @@ namespace FluentDownloader.Pages
             }
         }
 
-        public DownloadButtonStates DownloadButtonState { get; private set; }
+        private DownloadButtonStates _downloadButtonState;
+        public DownloadButtonStates DownloadButtonState
+        {
+            get { return _downloadButtonState; }
+            private set
+            {
+                if (_downloadButtonState == value)
+                {
+                    return;
+                }
+                _downloadButtonState = value;
+                SetProperty(ref _downloadButtonState, value);
+                DownloadQueueViewModel.IsAddToQueueButtonEnabled = _downloadButtonState != DownloadButtonStates.ParseFormats && _downloadButtonState != DownloadButtonStates.Processing;
+            }
+        }
 
         /// <summary>
         /// Controls visual state of the download button
@@ -67,6 +82,8 @@ namespace FluentDownloader.Pages
         /// </remarks>
         public void SetDownloadButtonState(DownloadButtonStates state)
         {
+            DownloadButtonState = state;
+
             ResetDownloadFieldsButton.IsEnabled = state != DownloadButtonStates.Processing;
 
             DownloadButtonProgressRing.Visibility = state == DownloadButtonStates.Processing

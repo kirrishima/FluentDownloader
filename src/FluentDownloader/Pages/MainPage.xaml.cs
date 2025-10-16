@@ -1,10 +1,6 @@
-using CommunityToolkit.WinUI;
-using FluentDownloader;
 using FluentDownloader.Dialogs;
 using FluentDownloader.Helpers;
-using FluentDownloader.Models;
 using FluentDownloader.Services;
-using FluentDownloader.Services.Dependencies.Helpers;
 using FluentDownloader.Services.Dependencies.Installations;
 using FluentDownloader.Services.Ytdlp;
 using FluentDownloader.ViewModels;
@@ -12,19 +8,13 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
-using Microsoft.Windows.AppNotifications;
-using Microsoft.Windows.AppNotifications.Builder;
 using MyApp.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Globalization;
-using Windows.Storage;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -33,7 +23,7 @@ namespace FluentDownloader.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page, IDialogService, IDownloadDependencies, IProgressBar
+    public sealed partial class MainPage : Page, IDialogService, IDownloadDependencies, IProgressBar, INotifyPropertyChanged
     {
         public static MainPage? Instance { get; private set; }
         /// <summary>
@@ -110,6 +100,7 @@ namespace FluentDownloader.Pages
         public VideoDownloadViewModel VideoDownloadViewModel { get; private set; } = new();
         public DownloadPreviewViewModel DownloadPreviewViewModel { get; private set; } = new();
         public PlaylistRangeViewModel PlaylistRangeViewModel { get; private set; } = null!;
+
         private VisibilityAnimator? _playlistAnimator;
 
         public MainPage()
@@ -130,6 +121,35 @@ namespace FluentDownloader.Pages
             this.SizeChanged += MainPage_SizeChanged;
 
             DataContext = this;
+        }
+
+        private PropertyChangedEventHandler? _propertyChanged;
+
+        public event PropertyChangedEventHandler? PropertyChanged
+        {
+            add
+            {
+                _propertyChanged += value;
+            }
+            remove
+            {
+                _propertyChanged -= value;
+            }
+        }
+
+        /// <summary>
+        /// Устанавливает значение поля, если оно изменилось, и вызывает OnPropertyChanged.
+        /// Подходит для значимых и ссылочных типов.
+        /// </summary>
+        private bool SetProperty<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        {
+            // Для ссылочных типов сравнивает по ссылке, для значимых — по значению
+            if (Equals(field, value))
+                return false;
+
+            field = value;
+            _propertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            return true;
         }
 
         bool _isSmallView = false;
