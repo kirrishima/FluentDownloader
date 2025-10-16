@@ -56,6 +56,20 @@ namespace FluentDownloader.ViewModels
             StartDownloadCommand.NotifyCanExecuteChanged();
         }
 
+        private bool _isAddToQueueButtonEnabled;
+        public bool IsAddToQueueButtonEnabled
+        {
+            get => MainPage.DownloadButtonState != MainPage.DownloadButtonStates.ParseFormats;
+            set
+            {
+                if (_isAddToQueueButtonEnabled != value)
+                {
+                    _isAddToQueueButtonEnabled = value;
+                    OnPropertyChanged(nameof(IsAddToQueueButtonEnabled));
+                }
+            }
+        }
+
         [RelayCommand(CanExecute = nameof(CanMoveUp))]
         private void MoveUp(QueueItem? item)
         {
@@ -222,12 +236,12 @@ namespace FluentDownloader.ViewModels
 
                 try
                 {
-                    MainPage.SetDownloadButtonState(MainPage.DownloadButtonState.Processing);
+                    MainPage.SetDownloadButtonState(MainPage.DownloadButtonStates.Processing);
 
                     if (!MainPage.ValidateDirectoryAccess(out var savePath))
                         return;
 
-                    MainPage.SetDownloadButtonState(MainPage.DownloadButtonState.Cancel);
+                    MainPage.SetDownloadButtonState(MainPage.DownloadButtonStates.Cancel);
 
                     var mergeFormat = queueItem.MergeFormat;
                     var audioFormat = queueItem.AudioFormat;
