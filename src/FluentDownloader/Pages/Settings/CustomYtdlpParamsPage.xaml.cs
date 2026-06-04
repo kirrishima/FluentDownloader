@@ -1,167 +1,225 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 
-namespace FluentDownloader.Pages.Settings
+namespace FluentDownloader.Pages.Settings;
+
+public sealed partial class CustomYtdlpParamsPage : Page, INotifyPropertyChanged
 {
-    public sealed partial class CustomYtdlpParamsPage : Page, INotifyPropertyChanged
+    public ObservableCollection<YtdlpOptionItem> Options { get; } = new();
+
+    private string _newKey = "";
+    public string NewKey
     {
-        public ObservableCollection<YtdlpOptionItem> Options { get; } = new();
+        get => _newKey;
+        set => SetProperty(ref _newKey, value);
+    }
 
-        public string NewKey { get; set; } = "";
-        public string NewValue { get; set; } = "";
+    private string _newValue = "";
+    public string NewValue
+    {
+        get => _newValue;
+        set => SetProperty(ref _newValue, value);
+    }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private bool IsInitialized { get; init; } = false;
-        private bool _isLoading;
-        public CustomYtdlpParamsPage()
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    public CustomYtdlpParamsPage()
+    {
+        InitializeComponent();
+        Load();
+    }
+
+    private void Load()
+    {
+        Options.Clear();
+
+        var dict = App.AppSettings.Download.CustomYtdlpOptions;
+
+        foreach (var kv in dict)
         {
-            InitializeComponent();
-
-            Load();
-
-            Options.CollectionChanged += Options_CollectionChanged;
-
-            IsInitialized = true;
-        }
-
-        private void Options_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (_isLoading) return;
-
-            Save();
-        }
-
-        private void Load()
-        {
-            _isLoading = true;
-
-            Options.Clear();
-
-            var dict = App.AppSettings.Download.CustomYtdlpOptions;
-
-            foreach (var kv in dict)
+            Options.Add(new YtdlpOptionItem
             {
-                var item = new YtdlpOptionItem
-                {
-                    Key = kv.Key,
-                    Value = kv.Value
-                };
-
-                item.PropertyChanged += Item_PropertyChanged;
-
-                Options.Add(item);
-            }
-
-            _isLoading = false;
-        }
-
-        private void Item_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (_isLoading) return;
-
-            Save();
-        }
-
-        private void Save()
-        {
-            if (!IsInitialized) return;
-
-            var dict = Options
-                .Where(x => !string.IsNullOrWhiteSpace(x.Key))
-                .GroupBy(x => x.Key)
-                .ToDictionary(g => g.Key, g => g.Last().Value);
-
-            App.AppSettings.Download.CustomYtdlpOptions = new ReadOnlyDictionary<string, string>(dict);
-        }
-
-        private void Add_Click(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(NewKey))
-                return;
-
-            // защита от дублей
-            var existing = Options.FirstOrDefault(x => x.Key == NewKey);
-            if (existing != null)
-            {
-                existing.Value = NewValue;
-            }
-            else
-            {
-                var item = new YtdlpOptionItem
-                {
-                    Key = NewKey,
-                    Value = NewValue
-                };
-
-                item.PropertyChanged += Item_PropertyChanged;
-
-                Options.Add(item);
-            }
-
-            NewKey = "";
-            NewValue = "";
-
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NewKey)));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NewValue)));
-
-            Save();
-        }
-
-        private void Delete(YtdlpOptionItem item)
-        {
-            Options.Remove(item);
-            Save();
-        }
-
-        private void ValueChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_isLoading) return;
-
-            Save();
-        }
-
-        private void Delete_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.Tag is YtdlpOptionItem item)
-            {
-                Delete(item);
-            }
+                Key = kv.Key,
+                Value = kv.Value
+            });
         }
     }
 
-    public class YtdlpOptionItem : INotifyPropertyChanged
+    private void Save()
     {
-        private string _key = "";
-        public string Key
-        {
-            get => _key;
-            set
-            {
-                _key = value;
-                OnPropertyChanged();
-            }
-        }
+        var dict = Options
+            .Where(x => !string.IsNullOrWhiteSpace(x.Key))
+            .GroupBy(x => x.Key)
+            .ToDictionary(g => g.Key, g => g.Last().Value);
 
-        private string _value = "";
-        public string Value
-        {
-            get => _value;
-            set
-            {
-                _value = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string? name = null)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        App.AppSettings.Download.CustomYtdlpOptions =
+            new ReadOnlyDictionary<string, string>(dict);
     }
+
+    private void Add_Click(object sender, RoutedEventArgs e)
+    {
+        var key = NewKey.Trim();
+        if (string.IsNullOrWhiteSpace(key))
+            return;
+
+        var existing = Options.FirstOrDefault(x =>
+            string.Equals(x.Key, key, StringComparison.OrdinalIgnoreCase));
+
+        if (existing != null)
+        {
+            existing.Value = NewValue;
+        }
+        else
+        {
+            Options.Add(new YtdlpOptionItem
+            {
+                Key = key,
+                Value = NewValue
+            });
+        }
+
+        NewKey = "";
+        NewValue = "";
+
+        Save();
+    }
+
+    private void Edit_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button btn && btn.Tag is YtdlpOptionItem item)
+        {
+            item.BeginEdit();
+        }
+    }
+
+    private void SaveItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button btn || btn.Tag is not YtdlpOptionItem item)
+            return;
+
+        var newKey = item.Key.Trim();
+        if (string.IsNullOrWhiteSpace(newKey))
+        {
+            item.CancelEdit();
+            return;
+        }
+
+        var duplicateExists = Options.Any(x =>
+            !ReferenceEquals(x, item) &&
+            string.Equals(x.Key, newKey, StringComparison.OrdinalIgnoreCase));
+
+        if (duplicateExists)
+        {
+            item.CancelEdit();
+            return;
+        }
+
+        item.Key = newKey;
+        item.CommitEdit();
+        Save();
+    }
+
+    private void CancelItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button btn && btn.Tag is YtdlpOptionItem item)
+        {
+            item.CancelEdit();
+        }
+    }
+
+    private void Delete_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button btn || btn.Tag is not YtdlpOptionItem item)
+            return;
+
+        Options.Remove(item);
+        Save();
+    }
+
+    private bool SetProperty<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value))
+            return false;
+
+        field = value;
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        return true;
+    }
+}
+
+public class YtdlpOptionItem : INotifyPropertyChanged
+{
+    private string _key = "";
+    public string Key
+    {
+        get => _key;
+        set
+        {
+            if (_key == value) return;
+            _key = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _value = "";
+    public string Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+            _value = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isEditing;
+    public bool IsEditing
+    {
+        get => _isEditing;
+        private set
+        {
+            if (_isEditing == value) return;
+            _isEditing = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(NotIsEditing));
+        }
+    }
+
+    public bool NotIsEditing => !IsEditing;
+
+    private string _backupKey = "";
+    private string _backupValue = "";
+
+    public void BeginEdit()
+    {
+        _backupKey = Key;
+        _backupValue = Value;
+        IsEditing = true;
+    }
+
+    public void CancelEdit()
+    {
+        Key = _backupKey;
+        Value = _backupValue;
+        IsEditing = false;
+    }
+
+    public void CommitEdit()
+    {
+        _backupKey = Key;
+        _backupValue = Value;
+        IsEditing = false;
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string? name = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 }
