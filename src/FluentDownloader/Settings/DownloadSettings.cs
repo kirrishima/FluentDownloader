@@ -7,6 +7,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.Text.Json;
 
 namespace FluentDownloader.Settings;
 
@@ -375,6 +377,54 @@ public class DownloadSettings : INotifyPropertyChanged
             _isShowVideoThumbnailAndTitleLoaded = true;
             _localSettings.Values["ShowVideoThumbnailAndTitle"] = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShowVideoThumbnailAndTitle)));
+        }
+    }
+
+    private Dictionary<string, string> _customYtdlpOptions = new();
+    private ReadOnlyDictionary<string, string>? _customYtdlpOptionsReadOnly;
+    private bool _isCustomYtdlpOptionsLoaded = false;
+
+    public ReadOnlyDictionary<string, string> CustomYtdlpOptions
+    {
+        get
+        {
+            if (!_isCustomYtdlpOptionsLoaded)
+            {
+                if (_localSettings.Values.TryGetValue("CustomYtdlpOptions", out object? value)
+                    && value is string json
+                    && !string.IsNullOrWhiteSpace(json))
+                {
+                    try
+                    {
+                        _customYtdlpOptions = JsonSerializer.Deserialize<Dictionary<string, string>>(json) ?? [];
+                    }
+                    catch
+                    {
+                        _customYtdlpOptions = [];
+                    }
+                }
+                else
+                {
+                    _customYtdlpOptions = new Dictionary<string, string>();
+                }
+
+                _customYtdlpOptionsReadOnly = new ReadOnlyDictionary<string, string>(_customYtdlpOptions);
+                _isCustomYtdlpOptionsLoaded = true;
+            }
+
+            return _customYtdlpOptionsReadOnly!;
+        }
+
+        set
+        {
+            _customYtdlpOptions = new Dictionary<string, string>(value);
+            _customYtdlpOptionsReadOnly = new ReadOnlyDictionary<string, string>(_customYtdlpOptions);
+            _isCustomYtdlpOptionsLoaded = true;
+
+            var json = JsonSerializer.Serialize(_customYtdlpOptions);
+            _localSettings.Values["CustomYtdlpOptions"] = json;
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CustomYtdlpOptions)));
         }
     }
 }

@@ -76,14 +76,21 @@ public sealed partial class DownloadPage : Page
     private void NavigateToSaveTemplatePage(object sender, RoutedEventArgs e)
     {
         var parentPage = this.FindParent<SettingsPage>();
-        if (parentPage is not null)
-        {
-            parentPage.NavigateTo(
+        parentPage?.NavigateTo(
                 typeof(SaveTemlatePage),
                 LocalizedStrings.GetSettingsString("InstallationSettings/Text"),
                 null
                 );
-        }
+    }
+
+    private void NavigateToCustomYtdlpOptions(object sender, RoutedEventArgs e)
+    {
+        var parentPage = this.FindParent<SettingsPage>();
+        parentPage?.NavigateTo(
+                typeof(CustomYtdlpParamsPage),
+                LocalizedStrings.GetSettingsString("CustomYtdlpOptionsPage/Text"),
+                null
+                );
     }
 
     /// <summary>

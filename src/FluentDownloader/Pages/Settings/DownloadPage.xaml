@@ -37,6 +37,15 @@
                 </controls:SettingsCard.Header>
             </controls:SettingsCard>
 
+            <controls:SettingsCard
+                Click="NavigateToCustomYtdlpOptions"
+                HeaderIcon="{ui:FontIcon Glyph=&#xF785;}"
+                IsClickEnabled="True">
+                <controls:SettingsCard.Header>
+                    <TextBlock x:Uid="/Settings/CustomYtdlpOptionsPage" />
+                </controls:SettingsCard.Header>
+            </controls:SettingsCard>
+
             <controls:SettingsCard HeaderIcon="{ui:FontIcon Glyph=&#xEC7A;}">
                 <controls:SettingsCard.Header>
                     <TextBlock x:Uid="/Settings/LogFinalOptionsSectionHeader" Style="{StaticResource SettingsCardHeader}" />
@@ -96,10 +105,10 @@
                                     MinWidth="80"
                                     VerticalAlignment="Bottom"
                                     Click="SaveRateLimitButton_Click" />
-                                <StackPanel.Transitions>
+                                <!--<StackPanel.Transitions>
                                     <RepositionThemeTransition />
                                     <ReorderThemeTransition />
-                                </StackPanel.Transitions>
+                                </StackPanel.Transitions>-->
                             </StackPanel>
                         </controls:SettingsCard.Header>
                     </controls:SettingsCard>
