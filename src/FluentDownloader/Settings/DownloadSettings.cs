@@ -427,4 +427,38 @@ public class DownloadSettings : INotifyPropertyChanged
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CustomYtdlpOptions)));
         }
     }
+
+
+    private bool _useYtdlpCustomOptions;
+    private bool _isUseYtdlpCustomOptionsLoaded = false;
+
+    public bool UseYtdlpCustomOptions
+    {
+        get
+        {
+            if (!_isUseYtdlpCustomOptionsLoaded)
+            {
+                if (_localSettings.Values.TryGetValue("UseYtdlpCustomOptions", out object? value))
+                {
+                    _useYtdlpCustomOptions = (bool)value;
+                }
+                else
+                {
+                    _useYtdlpCustomOptions = false; // значение по умолчанию
+                }
+                _isUseYtdlpCustomOptionsLoaded = true;
+            }
+            return _useYtdlpCustomOptions;
+        }
+        set
+        {
+            if (_isUseYtdlpCustomOptionsLoaded && _useYtdlpCustomOptions == value)
+                return;
+
+            _useYtdlpCustomOptions = value;
+            _isUseYtdlpCustomOptionsLoaded = true;
+            _localSettings.Values["UseYtdlpCustomOptions"] = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UseYtdlpCustomOptions)));
+        }
+    }
 }

@@ -119,6 +119,14 @@ namespace FluentDownloader.Services.Ytdlp
                 }
             }
 
+            if (App.AppSettings.Download.UseYtdlpCustomOptions)
+            {
+                foreach (var option in App.AppSettings.Download.CustomYtdlpOptions)
+                {
+                    options.AddCustomOption(option.Key, option.Value);
+                }
+            }
+
             return options;
         }
 
@@ -128,14 +136,13 @@ namespace FluentDownloader.Services.Ytdlp
         /// <returns>Returns true if the instance is created.</returns>
         private bool EnsureYoutubeDL()
         {
-            if (youtubeDl is null)
+            youtubeDl ??= new YoutubeDL()
             {
-                youtubeDl = new YoutubeDL()
-                {
-                    YoutubeDLPath = YtDlpInfo.Path,
-                    FFmpegPath = FfmpegInfo.Path
-                };
-            }
+                YoutubeDLPath = YtDlpInfo.Path,
+                FFmpegPath = FfmpegInfo.Path
+            };
+
+
             return youtubeDl != null;
         }
 
@@ -151,7 +158,20 @@ namespace FluentDownloader.Services.Ytdlp
                 throw new InvalidOperationException("Ytdlp was not found or nor responding");
             }
 
-            var videoInfo = await youtubeDl.RunVideoDataFetch(url);
+            OptionSet? options = null;
+
+            if (App.AppSettings.Download.UseYtdlpCustomOptions &&
+                App.AppSettings.Download.CustomYtdlpOptions.Count > 0)
+            {
+                options = new();
+
+                foreach (var option in App.AppSettings.Download.CustomYtdlpOptions)
+                {
+                    options.AddCustomOption(option.Key, option.Value);
+                }
+            }
+
+            var videoInfo = await youtubeDl.RunVideoDataFetch(url, overrideOptions: options);
 
             if (videoInfo.Success && videoInfo.Data != null &&
                 videoInfo.Data.Entries != null && videoInfo.Data.Entries.Any())
