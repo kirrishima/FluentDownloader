@@ -67,14 +67,14 @@
 
                                     <TextBlock
                                         VerticalAlignment="Center"
-                                        Text="{x:Bind Key}"
-                                        TextWrapping="NoWrap" />
+                                        Text="{x:Bind Key, Mode=OneWay}"
+                                        TextWrapping="Wrap" />
 
                                     <TextBlock
                                         Grid.Column="1"
                                         VerticalAlignment="Center"
-                                        Text="{x:Bind Value}"
-                                        TextWrapping="NoWrap" />
+                                        Text="{x:Bind Value, Mode=OneWay}"
+                                        TextWrapping="Wrap" />
 
                                     <StackPanel
                                         Grid.Column="2"

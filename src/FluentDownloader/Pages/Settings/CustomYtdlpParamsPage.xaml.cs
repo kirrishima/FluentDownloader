@@ -65,8 +65,11 @@ public sealed partial class CustomYtdlpParamsPage : Page, INotifyPropertyChanged
     private void Add_Click(object sender, RoutedEventArgs e)
     {
         var key = NewKey.Trim();
-        if (string.IsNullOrWhiteSpace(key))
+
+        if (string.IsNullOrEmpty(NewKey) || NewKey.Contains(' '))
+        {
             return;
+        }
 
         var existing = Options.FirstOrDefault(x =>
             string.Equals(x.Key, key, StringComparison.OrdinalIgnoreCase));
