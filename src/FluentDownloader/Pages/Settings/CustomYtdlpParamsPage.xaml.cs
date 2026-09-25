@@ -38,28 +38,16 @@ public sealed partial class CustomYtdlpParamsPage : Page, INotifyPropertyChanged
     private void Load()
     {
         Options.Clear();
-
-        var dict = App.AppSettings.Download.CustomYtdlpOptions;
-
-        foreach (var kv in dict)
-        {
-            Options.Add(new YtdlpOptionItem
-            {
-                Key = kv.Key,
-                Value = kv.Value
-            });
-        }
+        foreach (var kv in App.AppSettings.Download.CustomYtdlpOptions)
+            Options.Add(new YtdlpOptionItem { Key = kv.Key, Value = kv.Value });
     }
 
     private void Save()
     {
-        var dict = Options
+        App.AppSettings.Download.CustomYtdlpOptions = Options
             .Where(x => !string.IsNullOrWhiteSpace(x.Key))
-            .GroupBy(x => x.Key)
-            .ToDictionary(g => g.Key, g => g.Last().Value);
-
-        App.AppSettings.Download.CustomYtdlpOptions =
-            new ReadOnlyDictionary<string, string>(dict);
+            .Select(x => new KeyValuePair<string, string>(x.Key, x.Value))
+            .ToList();
     }
 
     private void Add_Click(object sender, RoutedEventArgs e)

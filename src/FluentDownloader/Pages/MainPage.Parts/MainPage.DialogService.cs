@@ -173,12 +173,15 @@ namespace FluentDownloader.Pages
         {
             await DispatcherQueue.EnqueueAsync(() =>
             {
-                var paragraph = new Paragraph();
-                paragraph.Inlines.Add(new Run { Text = text });
-                LogsTextBox.Blocks.RemoveAt(LogsTextBox.Blocks.Count - 1);
-                LogsTextBox.Blocks.Add(paragraph);
-                LogsTextBox.UpdateLayout();
-                LogsScrollViewer.ChangeView(null, LogsScrollViewer.ExtentHeight, null);
+                if (LogsTextBox.Blocks.Count > 0)
+                {
+                    var paragraph = new Paragraph();
+                    paragraph.Inlines.Add(new Run { Text = text });
+                    LogsTextBox.Blocks.RemoveAt(LogsTextBox.Blocks.Count - 1);
+                    LogsTextBox.Blocks.Add(paragraph);
+                    LogsTextBox.UpdateLayout();
+                    LogsScrollViewer.ChangeView(null, LogsScrollViewer.ExtentHeight, null);
+                }
             });
         }
 

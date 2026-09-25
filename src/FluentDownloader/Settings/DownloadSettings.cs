@@ -380,11 +380,10 @@ public class DownloadSettings : INotifyPropertyChanged
         }
     }
 
-    private Dictionary<string, string> _customYtdlpOptions = new();
-    private ReadOnlyDictionary<string, string>? _customYtdlpOptionsReadOnly;
+    private List<KeyValuePair<string, string>> _customYtdlpOptions = new();
     private bool _isCustomYtdlpOptionsLoaded = false;
 
-    public ReadOnlyDictionary<string, string> CustomYtdlpOptions
+    public IReadOnlyList<KeyValuePair<string, string>> CustomYtdlpOptions
     {
         get
         {
@@ -396,7 +395,7 @@ public class DownloadSettings : INotifyPropertyChanged
                 {
                     try
                     {
-                        _customYtdlpOptions = JsonSerializer.Deserialize<Dictionary<string, string>>(json) ?? [];
+                        _customYtdlpOptions = JsonSerializer.Deserialize<List<KeyValuePair<string, string>>>(json) ?? [];
                     }
                     catch
                     {
@@ -405,20 +404,18 @@ public class DownloadSettings : INotifyPropertyChanged
                 }
                 else
                 {
-                    _customYtdlpOptions = new Dictionary<string, string>();
+                    _customYtdlpOptions = [];
                 }
 
-                _customYtdlpOptionsReadOnly = new ReadOnlyDictionary<string, string>(_customYtdlpOptions);
                 _isCustomYtdlpOptionsLoaded = true;
             }
 
-            return _customYtdlpOptionsReadOnly!;
+            return _customYtdlpOptions;
         }
 
         set
         {
-            _customYtdlpOptions = new Dictionary<string, string>(value);
-            _customYtdlpOptionsReadOnly = new ReadOnlyDictionary<string, string>(_customYtdlpOptions);
+            _customYtdlpOptions = new List<KeyValuePair<string, string>>(value);
             _isCustomYtdlpOptionsLoaded = true;
 
             var json = JsonSerializer.Serialize(_customYtdlpOptions);
